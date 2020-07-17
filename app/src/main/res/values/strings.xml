@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Eggy</string>
+
+    <string name="welcome_screen_title">Cook\neggs</string>
+    <string name="welcome_screen_subtitle">as you like!</string>
+    <string name="welcome_button">Let\'s cooking!</string>
+
+    <string name="setup_title">Set <b>boiled details</b></string>
+    <string name="setup_subtitle">Prepare eggs as you like!</string>
+    <string name="setup_egg_temperature">Egg <b>temperature</b></string>
+    <string name="setup_egg_temperature_fridge"><b>Fridge</b> temperature</string>
+    <string name="setup_egg_temperature_room"><b>Room</b> temperature</string>
+    <string name="setup_egg_size">Egg <b>size</b></string>
+    <string name="setup_egg_size_S">S</string>
+    <string name="setup_egg_size_M">M</string>
+    <string name="setup_egg_size_L">L</string>
+    <string name="setup_egg_type">Egg <b>boiled type</b></string>
+    <string name="setup_egg_type_soft"><b>Soft</b>\nboiled</string>
+    <string name="setup_egg_type_medium"><b>Medium</b>\nboiled</string>
+    <string name="setup_egg_type_hard"><b>Hard</b>\nboiled</string>
+    <string name="setup_estimated_time">Estimated boiled time</string>
+
+    <string name="cook_eggs_soft">Soft boiled eggs</string>
+    <string name="cook_eggs_medium">Medium boiled eggs</string>
+    <string name="cook_eggs_hard">Hard boiled eggs</string>
+    <string name="cook_boiled_time">Boiled time</string>
+    <string name="cook_water_temperature">Water temperature</string>
+    <string name="cook_boiled_tip_title">Boiled Tip</string>
+    <string name="cook_boiled_tip">After cooking, let the eggs rest in an ice-bath to "shock" them</string>
+    <string name="cook_stop">stop</string>
+    <string name="cook_pause">pause</string>
+    <string name="cook_resume">resume</string>
+
+    <string name="time_template">%1$s min</string>
+</resources>
