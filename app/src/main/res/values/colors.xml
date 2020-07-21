@@ -7,7 +7,9 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorMilk">#FAFAFA</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorGrayLight">#A4A4A4</color>
+    <color name="colorGrayLight">#949494</color>
+    <color name="colorGraySuperLight">#10000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorRipple">#1EE69268</color>
+    <color name="colorIconBackground">#A0E69268</color>
 </resources>

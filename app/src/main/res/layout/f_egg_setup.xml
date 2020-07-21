@@ -181,8 +181,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="@string/setup_subtitle"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toTopOf="@id/text_time"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/group_type_buttons"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/text_time"
@@ -194,7 +198,8 @@
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_time_title" />
 
         <ImageButton
             android:id="@+id/button_start"
