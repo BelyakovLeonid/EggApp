@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_egg_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:outlineProvider="none"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/egg_medium" />
+
+    <View
+        android:id="@+id/view_type_background"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/egg_type_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_egg_type" />
+
+    <TextView
+        android:id="@+id/text_egg_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/monsterrat"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/color_button"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_bias="0.35"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="@string/setup_egg_type_hard" />
+</androidx.constraintlayout.widget.ConstraintLayout>

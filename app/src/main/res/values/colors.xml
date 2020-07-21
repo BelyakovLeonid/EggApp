@@ -8,4 +8,5 @@
     <color name="colorMilk">#FAFAFA</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrayLight">#A4A4A4</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>

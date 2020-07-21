@@ -8,4 +8,14 @@
         <item name="android:windowBackground">@drawable/welcome_background</item>
     </style>
 
+    <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/color_button</item>
+        <item name="android:textColor">@color/color_button</item>
+        <item name="backgroundTint">@color/colorTransparent</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/monsterrat</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
 </resources>
