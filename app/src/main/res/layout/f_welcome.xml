@@ -41,13 +41,12 @@
 
     <TextView
         android:id="@+id/text_welcome_subtitle"
-        style="@style/TitleText"
+        style="@style/TitleBoldText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="@string/welcome_screen_subtitle"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/image_egg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,12 +66,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_welcome"
-        android:layout_width="match_parent"
+        style="@style/FilledButton"
         android:layout_height="70dp"
+        android:layout_width="match_parent"
         android:layout_marginHorizontal="30dp"
         android:text="@string/welcome_button"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_egg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

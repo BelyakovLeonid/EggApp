@@ -10,13 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
         android:paddingTop="50dp">
 
         <ImageView
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:src="@drawable/ic_back"
@@ -25,37 +25,32 @@
 
         <TextView
             android:id="@+id/text_cook_title"
-            style="@style/TitleText"
+            style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cook_eggs_soft"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/view_timer"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="40dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="CUSTOM TIMER"
             android:textStyle="bold"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_cook_title" />
 
         <ImageView
             android:id="@+id/icon_time"
+            style="@style/IconImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/icon_background"
-            android:scaleType="center"
             android:src="@drawable/ic_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_timer"
@@ -75,24 +70,20 @@
 
         <TextView
             android:id="@+id/text_time"
-            style="@style/TitleText"
+            style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
             android:text="8:30 min"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/icon_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/icon_time" />
 
         <ImageView
             android:id="@+id/icon_temperature"
+            style="@style/IconImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/icon_background"
-            android:scaleType="center"
             android:src="@drawable/ic_thermometer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/icon_time"
@@ -112,12 +103,10 @@
 
         <TextView
             android:id="@+id/text_temperature"
-            style="@style/TitleText"
+            style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
             android:text="100C"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/icon_temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/icon_temperature" />
@@ -126,19 +115,17 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="30dp"
             android:background="@color/colorGraySuperLight"
             app:layout_constraintTop_toBottomOf="@id/icon_temperature" />
 
         <TextView
             android:id="@+id/text_tip_title"
-            style="@style/TitleText"
+            style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/cook_boiled_tip_title"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider" />
@@ -148,7 +135,6 @@
             style="@style/SubtitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="12dp"
             android:text="@string/cook_boiled_tip"
             android:textAlignment="center"
@@ -156,13 +142,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_welcome"
+            style="@style/FilledButton"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="40dp"
             android:text="@string/cook_stop"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_tip" />
     </androidx.constraintlayout.widget.ConstraintLayout>
