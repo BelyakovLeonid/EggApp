@@ -9,4 +9,5 @@
     <color name="colorBlack">#000000</color>
     <color name="colorGrayLight">#A4A4A4</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorRipple">#1EE69268</color>
 </resources>

@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="130dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/egg_type_background"
+        android:background="@drawable/ripple_outline_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/image_egg_type" />
@@ -31,7 +31,6 @@
         android:id="@+id/text_egg_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/monsterrat"
         android:letterSpacing="-0.02"
         android:textColor="@color/color_button"
         android:textSize="12sp"

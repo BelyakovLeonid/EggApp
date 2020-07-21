@@ -3,38 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
+    android:background="@drawable/workflow_background"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
         android:paddingStart="30dp">
 
         <TextView
             android:id="@+id/text_setup_title"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:fontFamily="@font/monsterrat"
             android:text="@string/setup_title"
-            android:textColor="@color/colorBlack"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_setup_subtitle"
+            style="@style/SubtitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="@font/monsterrat"
             android:text="@string/setup_subtitle"
-            android:textColor="@color/colorGrayLight"
-            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_setup_title" />
 
@@ -49,12 +43,10 @@
 
         <TextView
             android:id="@+id/text_temperature_title"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/monsterrat"
             android:text="@string/setup_egg_temperature"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_egg_top" />
 
@@ -88,13 +80,11 @@
 
         <TextView
             android:id="@+id/text_size_title"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/monsterrat"
             android:text="@string/setup_egg_size"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_temperature_buttons" />
 
@@ -133,18 +123,15 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_L" />
-
         </com.example.eggyapp.ui.checkable_views.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/text_type_title"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/monsterrat"
             android:text="@string/setup_egg_type"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_size_buttons" />
 
@@ -189,47 +176,37 @@
 
         <TextView
             android:id="@+id/text_time_title"
+            style="@style/SubtitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/monsterrat"
             android:text="@string/setup_subtitle"
-            android:textColor="@color/colorGrayLight"
-            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/text_time"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/text_time"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:fontFamily="@font/monsterrat"
-            android:textColor="@color/colorBlack"
+            android:text="8:30 min"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="8:30 min" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/button_start"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginVertical="5dp"
             android:layout_marginEnd="30dp"
-            android:background="@drawable/button_background"
+            android:background="@drawable/ripple_filled_background"
             android:src="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="@id/text_time"
             app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginVertical="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_time_title" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </ScrollView>
-
-
-

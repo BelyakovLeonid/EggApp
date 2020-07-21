@@ -8,8 +8,7 @@ class CheckableMaterialButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : MaterialButton(context, attrs, defStyleAttr),
-    CheckableListenable {
+) : MaterialButton(context, attrs, defStyleAttr), CheckableListenable {
     private var checkedListener: CheckedListener? = null
 
     init {

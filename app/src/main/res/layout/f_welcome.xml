@@ -10,11 +10,10 @@
         android:id="@+id/text_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/monsterrat"
-        android:textFontWeight="800"
         android:text="@string/app_name"
         android:textAllCaps="true"
         android:textColor="@color/colorPrimary"
+        android:textFontWeight="800"
         android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@id/text_welcome_title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,14 +40,13 @@
 
     <TextView
         android:id="@+id/text_welcome_subtitle"
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/monsterrat"
-        android:textStyle="bold"
         android:includeFontPadding="false"
         android:text="@string/welcome_screen_subtitle"
-        android:textColor="@color/colorBlack"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/image_egg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,19 +61,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.6"
+        tools:ignore="ContentDescription" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_welcome"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textStyle="bold"
+        android:layout_height="70dp"
         android:layout_marginHorizontal="30dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/monsterrat"
         android:text="@string/welcome_button"
         android:textColor="@color/colorWhite"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_egg" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
