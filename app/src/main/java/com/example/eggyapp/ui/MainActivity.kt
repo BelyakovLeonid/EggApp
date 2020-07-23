@@ -1,13 +1,14 @@
-package com.example.eggyapp
+package com.example.eggyapp.ui
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.eggyapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.f_egg_cook)
+        setContentView(R.layout.a_main)
     }
 
     override fun onStart() {

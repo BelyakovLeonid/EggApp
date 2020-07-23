@@ -1,0 +1,19 @@
+package com.example.eggyapp.ui.setup
+
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.eggyapp.R
+import kotlinx.android.synthetic.main.f_egg_setup.*
+
+class SetupFragment : Fragment(R.layout.f_egg_setup) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        button_start.setOnClickListener {
+            findNavController().navigate(R.id.actionToCookScreen)
+        }
+
+    }
+}
