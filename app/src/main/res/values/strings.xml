@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Eggy</string>
 
+    <string name="exit_hint">Press back again to exit</string>
+
     <string name="welcome_screen_title">Cook\neggs</string>
     <string name="welcome_screen_subtitle">as you like!</string>
     <string name="welcome_button">Let\'s cooking!</string>
