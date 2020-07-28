@@ -99,7 +99,6 @@ class TimerService : Service() {
         fun startTimer(millisInFuture: Long, eggType: EggType) =
             this@TimerService.startTimer(millisInFuture, eggType)
 
-        fun pauseTimer() {}
         fun stopTimer() = this@TimerService.stopTimer()
 
     }

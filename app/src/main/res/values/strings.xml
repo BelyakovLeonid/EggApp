@@ -32,6 +32,7 @@
     <string name="cook_stop">stop</string>
     <string name="cook_start">start</string>
 
+    <string name="time_empty">00:00</string>
     <string name="time_template">%1$s min</string>
     <string name="timer_notification_name">Egg timer</string>
     <string name="timer_notification_description">Egg timer description</string>
