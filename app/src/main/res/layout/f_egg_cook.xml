@@ -137,13 +137,12 @@
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/text_tip_title" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.example.eggyapp.ui.cook.ControlButton
             android:id="@+id/button_control"
             style="@style/FilledButton"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginVertical="40dp"
-            android:text="@string/cook_stop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_tip" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@ class TimerView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     private val arcRectangle = RectF()
-    private var background = resources.getBitmap(R.drawable.timer_background)
+    private var background = context.getBitmap(R.drawable.timer_background)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         paint.style = Paint.Style.FILL
@@ -54,14 +54,6 @@ class TimerView @JvmOverloads constructor(
         arcRectangle.top = bigRadius - smallRadius
         arcRectangle.right = bigRadius + smallRadius
         arcRectangle.bottom = bigRadius + smallRadius
-
-        val gradientEndPosition = (currentDegree / 360f) - GRADIENT_END_OFFSET
-        gradient = SweepGradient(
-            bigRadius,
-            bigRadius,
-            intArrayOf(gradientStartColor, gradientEndColor),
-            floatArrayOf(0f, gradientEndPosition)
-        )
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -133,6 +125,15 @@ class TimerView @JvmOverloads constructor(
     fun setCurrentProgress(progress: Float, timeString: String) {
         currentDegree = progress * 360f
         currentText = timeString
+
+        val gradientEndPosition = (currentDegree / 360f) - GRADIENT_END_OFFSET
+        gradient = SweepGradient(
+            bigRadius,
+            bigRadius,
+            intArrayOf(gradientStartColor, gradientEndColor),
+            floatArrayOf(0f, gradientEndPosition)
+        )
+
         invalidate()
     }
 }

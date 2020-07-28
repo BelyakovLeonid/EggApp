@@ -1,11 +1,13 @@
 package com.example.eggyapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.eggyapp.R
+import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.utils.isShowing
 import com.example.eggyapp.utils.showToast
 
@@ -17,6 +19,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.a_main)
         setupBackPressedListener()
+        startTimerService()
+    }
+
+    private fun startTimerService() {
+        startService(Intent(this, TimerService::class.java))
     }
 
     private fun setupBackPressedListener() {

@@ -30,8 +30,10 @@
     <string name="cook_boiled_tip_title">Boiled Tip</string>
     <string name="cook_boiled_tip">After cooking, let the eggs rest in an ice-bath to \"shock\" them</string>
     <string name="cook_stop">stop</string>
-    <string name="cook_pause">pause</string>
-    <string name="cook_resume">resume</string>
+    <string name="cook_start">start</string>
 
     <string name="time_template">%1$s min</string>
+    <string name="timer_notification_name">Egg timer</string>
+    <string name="timer_notification_description">Egg timer description</string>
+    <string name="timer_notification_subtitle">Remains %1$s</string>
 </resources>
