@@ -1,4 +1,4 @@
-package com.example.eggyapp.ui.checkable_views
+package com.example.eggyapp.ui.views.checkable_views
 
 import android.widget.Checkable
 

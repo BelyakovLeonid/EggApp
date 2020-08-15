@@ -15,10 +15,25 @@ class SetupFragment : Fragment(R.layout.f_egg_setup) {
 
     private val viewModel: SetupViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        with(viewModel) {
+            observeLiveData(calculatedTime) {
+                text_time.text = it.toTimerString()
+            }
+            observeLiveData(openCookScreen) {
+                findNavController().navigate(R.id.actionToCookScreen)
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleView()
-        observeViewModel()
     }
 
     private fun handleView() {
@@ -33,17 +48,6 @@ class SetupFragment : Fragment(R.layout.f_egg_setup) {
         }
         group_type_buttons.onCheckedIndexListener = {
             viewModel.onSelectType(findById(it))
-        }
-    }
-
-    private fun observeViewModel() {
-        with(viewModel) {
-            observeLiveData(calculatedTime) {
-                text_time.text = it?.toTimerString() ?: getString(R.string.time_empty)
-            }
-            observeLiveData(openCookScreen) {
-                findNavController().navigate(R.id.actionToCookScreen)
-            }
         }
     }
 }

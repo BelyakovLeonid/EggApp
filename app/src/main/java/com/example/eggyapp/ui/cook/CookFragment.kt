@@ -9,18 +9,22 @@ import android.os.IBinder
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eggyapp.R
 import com.example.eggyapp.timer.EggType
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
+import com.example.eggyapp.utils.observeLiveData
+import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.synthetic.main.f_egg_cook.*
 import java.util.concurrent.TimeUnit
 
 class CookFragment : Fragment(R.layout.f_egg_cook) {
 
-    var timerBinder: TimerBinder? = null
+    private var timerBinder: TimerBinder? = null
+    private val viewModel: CookViewModel by viewModels()
 
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -32,6 +36,21 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
             timerBinder?.getProgressLiveData()?.observe(viewLifecycleOwner, Observer {
                 view_timer.setCurrentProgress(it.currentProgress, it.timerString)
             })
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        with(viewModel) {
+            observeLiveData(calculatedTime) {
+                text_time.text = it.toTimerString()
+                view_timer.setCurrentProgress(it.toTimerString())
+            }
+//            text_cook_title
         }
     }
 

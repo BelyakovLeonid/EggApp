@@ -50,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_egg_top" />
 
-        <com.example.eggyapp.ui.checkable_views.CheckableButtonGroup
+        <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
             android:id="@+id/group_temperature_buttons"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -59,7 +59,7 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/text_temperature_title">
 
-            <com.example.eggyapp.ui.checkable_views.CheckableMaterialButton
+            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
                 android:id="@+id/button_temperature_fridge"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -68,7 +68,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_temperature_fridge" />
 
-            <com.example.eggyapp.ui.checkable_views.CheckableMaterialButton
+            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
                 android:id="@+id/button_temperature_room"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -76,7 +76,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_temperature_room" />
-        </com.example.eggyapp.ui.checkable_views.CheckableButtonGroup>
+        </com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/text_size_title"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_temperature_buttons" />
 
-        <com.example.eggyapp.ui.checkable_views.CheckableButtonGroup
+        <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
             android:id="@+id/group_size_buttons"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -97,7 +97,7 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/text_size_title">
 
-            <com.example.eggyapp.ui.checkable_views.CheckableMaterialButton
+            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
                 android:id="@+id/button_size_s"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -106,7 +106,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_S" />
 
-            <com.example.eggyapp.ui.checkable_views.CheckableMaterialButton
+            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
                 android:id="@+id/button_size_m"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -115,7 +115,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_M" />
 
-            <com.example.eggyapp.ui.checkable_views.CheckableMaterialButton
+            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
                 android:id="@+id/button_size_l"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -123,7 +123,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_L" />
-        </com.example.eggyapp.ui.checkable_views.CheckableButtonGroup>
+        </com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/text_type_title"
@@ -135,7 +135,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_size_buttons" />
 
-        <com.example.eggyapp.ui.checkable_views.CheckableButtonGroup
+        <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
             android:id="@+id/group_type_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/text_type_title">
 
-            <com.example.eggyapp.ui.checkable_views.ButtonWithImage
+            <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
                 android:id="@+id/button_type_soft"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                 app:image="@drawable/egg_soft"
                 app:text="@string/setup_egg_type_soft" />
 
-            <com.example.eggyapp.ui.checkable_views.ButtonWithImage
+            <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
                 android:id="@+id/button_type_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                 app:image="@drawable/egg_medium"
                 app:text="@string/setup_egg_type_medium" />
 
-            <com.example.eggyapp.ui.checkable_views.ButtonWithImage
+            <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
                 android:id="@+id/button_type_hard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                 android:layout_weight="1"
                 app:image="@drawable/egg_hard"
                 app:text="@string/setup_egg_type_hard" />
-        </com.example.eggyapp.ui.checkable_views.CheckableButtonGroup>
+        </com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/text_time_title"

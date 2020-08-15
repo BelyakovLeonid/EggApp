@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.eggyapp.ui.TimerView
+        <com.example.eggyapp.ui.views.TimerView
             android:id="@+id/view_timer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -70,7 +70,7 @@
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8:30 min"
+            android:text="@string/time_empty"
             app:layout_constraintBottom_toBottomOf="@id/icon_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/icon_time" />
@@ -137,7 +137,7 @@
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/text_tip_title" />
 
-        <com.example.eggyapp.ui.cook.ControlButton
+        <com.example.eggyapp.ui.views.ControlButton
             android:id="@+id/button_control"
             style="@style/FilledButton"
             android:layout_width="match_parent"

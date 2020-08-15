@@ -1,4 +1,4 @@
-package com.example.eggyapp.ui
+package com.example.eggyapp.ui.views
 
 import android.content.Context
 import android.graphics.*
@@ -120,6 +120,10 @@ class TimerView @JvmOverloads constructor(
             dpToPx(3),
             paint
         )
+    }
+
+    fun setCurrentProgress(timeString: String) { //todo think about it
+        setCurrentProgress(0f, timeString)
     }
 
     fun setCurrentProgress(progress: Float, timeString: String) {

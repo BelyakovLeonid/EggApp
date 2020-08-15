@@ -1,4 +1,4 @@
-package com.example.eggyapp.ui.cook;
+package com.example.eggyapp.ui.views;
 
 import android.content.Context
 import android.os.Parcelable
@@ -12,7 +12,8 @@ class ControlButton : MaterialButton {
     var onStartListener: (() -> Unit)? = null
     var onPauseListener: (() -> Unit)? = null
 
-    private var currentState = ButtonState.STATE_PAUSED
+    private var currentState =
+        ButtonState.STATE_PAUSED
         set(value) {
             field = value
             updateText()
@@ -30,11 +31,13 @@ class ControlButton : MaterialButton {
         when (currentState) {
             ButtonState.STATE_PAUSED -> {
                 onStartListener?.invoke()
-                currentState = ButtonState.STATE_STARTED
+                currentState =
+                    ButtonState.STATE_STARTED
             }
             ButtonState.STATE_STARTED -> {
                 onPauseListener?.invoke()
-                currentState = ButtonState.STATE_PAUSED
+                currentState =
+                    ButtonState.STATE_PAUSED
             }
         }
         return super.performClick()
@@ -47,7 +50,9 @@ class ControlButton : MaterialButton {
 
     override fun onSaveInstanceState(): Parcelable {
         super.onSaveInstanceState()
-        return ControlSavedState(currentState)
+        return ControlSavedState(
+            currentState
+        )
     }
 
     private fun updateText() {
