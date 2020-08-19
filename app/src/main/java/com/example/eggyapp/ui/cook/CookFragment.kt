@@ -13,13 +13,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eggyapp.R
-import com.example.eggyapp.timer.EggType
+import com.example.eggyapp.data.SetupType.*
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.utils.observeLiveData
 import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.synthetic.main.f_egg_cook.*
-import java.util.concurrent.TimeUnit
 
 class CookFragment : Fragment(R.layout.f_egg_cook) {
 
@@ -32,36 +31,48 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            Log.d("MyTag", "onServiceConnected")
             timerBinder = service as? TimerBinder
             timerBinder?.getProgressLiveData()?.observe(viewLifecycleOwner, Observer {
                 view_timer.setCurrentProgress(it.currentProgress, it.timerString)
             })
+            observeLiveData(viewModel.calculatedTime) {
+                Log.d("MyTag", "calculatedTime")
+                timerBinder?.setTime(it.toLong())
+            }
+            observeLiveData(viewModel.selectedType) {
+                Log.d("MyTag", "selectedType")
+                timerBinder?.setType(it)
+            }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        observeViewModel()
     }
 
     private fun observeViewModel() {
         with(viewModel) {
+            observeLiveData(selectedType) {
+                text_cook_title.text = when (it) {
+                    SOFT_TYPE -> getString(R.string.cook_eggs_soft)
+                    MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
+                    HARD_TYPE -> getString(R.string.cook_eggs_hard)
+                }
+            }
             observeLiveData(calculatedTime) {
                 text_time.text = it.toTimerString()
                 view_timer.setCurrentProgress(it.toTimerString())
+
+                requireContext().bindService(
+                    Intent(requireContext(), TimerService::class.java),
+                    connection,
+                    Context.BIND_AUTO_CREATE
+                )
             }
-//            text_cook_title
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleView()
-        requireContext().bindService(
-            Intent(requireContext(), TimerService::class.java),
-            connection,
-            Context.BIND_AUTO_CREATE
-        )
+        observeViewModel()
     }
 
     private fun handleView() {
@@ -69,10 +80,7 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
             timerBinder?.stopTimer()
         }
         button_control.onStartListener = {
-            timerBinder?.startTimer(
-                TimeUnit.MINUTES.toMillis(2),
-                EggType("Soft egg", R.drawable.egg_soft)
-            )
+            timerBinder?.startTimer()
         }
         button_back.setOnClickListener {
             findNavController().navigateUp()

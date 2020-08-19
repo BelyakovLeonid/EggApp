@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eggyapp.EggApp
-import com.example.eggyapp.data.SetupEggRepositoryImpl
+import com.example.eggyapp.data.SetupSize
+import com.example.eggyapp.data.SetupTemperature
+import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.addToComposite
-import com.example.eggyapp.utils.postEvent
-import com.hadilq.liveevent.LiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import java.util.*
 
 class SetupViewModel : ViewModel() {
 
@@ -18,11 +17,11 @@ class SetupViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val eventOpenCookScreen = LiveEvent<Unit>()
-    val openCookScreen: LiveData<Unit> = eventOpenCookScreen
-
     private val mutableCalculatedTime = MutableLiveData<Int>()
     val calculatedTime: LiveData<Int> = mutableCalculatedTime
+
+    private val mutableIsCookEnable = MutableLiveData<Boolean>()
+    val isCookEnable: LiveData<Boolean> = mutableIsCookEnable
 
     init {
         observeCalculatedTime()
@@ -33,13 +32,8 @@ class SetupViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 mutableCalculatedTime.value = it
+                mutableIsCookEnable.value = it != 0
             }.addToComposite(compositeDisposable)
-    }
-
-    fun onStartClicked() {
-        if (setupRepository.isTimeCalculated()) {
-            eventOpenCookScreen.postEvent()
-        }
     }
 
     fun onSelectTemperature(temperature: SetupTemperature?) {

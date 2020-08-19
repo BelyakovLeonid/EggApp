@@ -10,9 +10,20 @@
     </item>
 
     <item android:id="@android:id/background">
-        <shape android:shape="rectangle">
-            <corners android:radius="@dimen/cornerRadius" />
-            <solid android:color="@color/colorPrimary" />
-        </shape>
+        <selector>
+            <item android:state_enabled="true">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/cornerRadius" />
+                    <solid android:color="@color/colorPrimary" />
+                </shape>
+            </item>
+            <item android:state_enabled="false">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/cornerRadius" />
+                    <solid android:color="@color/colorGrayLight" />
+                </shape>
+            </item>
+        </selector>
+
     </item>
 </ripple>

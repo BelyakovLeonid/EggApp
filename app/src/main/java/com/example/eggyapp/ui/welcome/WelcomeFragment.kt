@@ -13,6 +13,7 @@ class WelcomeFragment : Fragment(R.layout.f_welcome) {
         super.onViewCreated(view, savedInstanceState)
         button_control.setOnClickListener {
             findNavController().navigate(WelcomeFragmentDirections.actionToSetupScreen())
+            activity?.window?.setBackgroundDrawableResource(R.drawable.workflow_background)
         }
     }
 }

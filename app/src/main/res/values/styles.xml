@@ -1,7 +1,6 @@
 <resources>
-    <!-- Base application theme. -->
+
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -19,7 +18,7 @@
         <item name="android:letterSpacing">-0.02</item>
     </style>
 
-    <style name="FilledButton">
+    <style name="FilledButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textStyle">bold</item>
     </style>

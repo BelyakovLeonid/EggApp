@@ -15,30 +15,26 @@ class SetupFragment : Fragment(R.layout.f_egg_setup) {
 
     private val viewModel: SetupViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        observeViewModel()
-    }
-
     private fun observeViewModel() {
         with(viewModel) {
             observeLiveData(calculatedTime) {
                 text_time.text = it.toTimerString()
             }
-            observeLiveData(openCookScreen) {
-                findNavController().navigate(R.id.actionToCookScreen)
+            observeLiveData(isCookEnable) {
+                button_start.isEnabled = it
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         handleView()
     }
 
     private fun handleView() {
         button_start.setOnClickListener {
-            viewModel.onStartClicked()
+            findNavController().navigate(R.id.actionToCookScreen)
         }
         group_temperature_buttons.onCheckedIndexListener = {
             viewModel.onSelectTemperature(findById(it))
@@ -50,20 +46,4 @@ class SetupFragment : Fragment(R.layout.f_egg_setup) {
             viewModel.onSelectType(findById(it))
         }
     }
-}
-
-interface Identifiable {
-    val id: Int
-}
-
-enum class SetupTemperature(override val id: Int) : Identifiable {
-    FRIDGE_TEMPERATURE(0), ROOM_TEMPERATURE(1)
-}
-
-enum class SetupSize(override val id: Int) : Identifiable {
-    SIZE_S(0), SIZE_M(1), SIZE_L(2)
-}
-
-enum class SetupType(override val id: Int) : Identifiable {
-    SOFT_TYPE(0), MEDIUM_TYPE(1), HARD_TYPE(2)
 }

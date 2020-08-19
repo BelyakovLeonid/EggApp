@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.lifecycle.MutableLiveData
 import com.example.eggyapp.R
+import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.getBitmap
 import com.example.eggyapp.utils.toTimerString
 
@@ -22,6 +23,9 @@ class TimerService : Service() {
 
     private var timer: CountDownTimer? = null
     private val timerBinder = TimerBinder()
+
+    private var millisInFuture: Long = 0
+    private var eggType: EggType? = null
 
     private val progressMutableLiveData = MutableLiveData<ProgressInformation>()
     val progressLiveData = progressMutableLiveData
@@ -55,7 +59,7 @@ class TimerService : Service() {
         manager?.createNotificationChannel(channel)
     }
 
-    private fun startTimer(millisInFuture: Long, eggType: EggType) {
+    private fun startTimer() {
         timer = object : CountDownTimer(millisInFuture, 10) {
             override fun onFinish() {
                 Log.d("MyTag", "onFinish")
@@ -65,21 +69,21 @@ class TimerService : Service() {
                 val progress = 1 - millisUntilEnd / millisInFuture.toFloat()
                 val progressInfo = ProgressInformation(progress, millisUntilEnd.toTimerString())
                 progressMutableLiveData.value = progressInfo
-                notifyProgress(progressInfo, eggType)
+                notifyProgress(progressInfo)
             }
         }
         timer?.start()
     }
 
-    private fun notifyProgress(progressInfo: ProgressInformation, eggType: EggType) {
+    private fun notifyProgress(progressInfo: ProgressInformation) {
         val currentProgress = (progressInfo.currentProgress * MAX_PROGRESS).toInt()
-        val largeIcon = getBitmap(eggType.imageResId)
+        val largeIcon = getBitmap(eggType?.imageResId)
         val contentText = getString(R.string.timer_notification_subtitle, progressInfo.timerString)
 
         val notification = Notification.Builder(this@TimerService, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_back)
             .setLargeIcon(largeIcon)
-            .setContentTitle(eggType.name)
+            .setContentTitle(eggType?.name)
             .setContentText(contentText)
             .setCategory(Notification.CATEGORY_PROGRESS)
             .setProgress(MAX_PROGRESS, currentProgress, false)
@@ -96,11 +100,21 @@ class TimerService : Service() {
     inner class TimerBinder : Binder() {
         fun getProgressLiveData() = progressLiveData
 
-        fun startTimer(millisInFuture: Long, eggType: EggType) =
-            this@TimerService.startTimer(millisInFuture, eggType)
+        fun startTimer() = this@TimerService.startTimer()
 
         fun stopTimer() = this@TimerService.stopTimer()
 
+        fun setTime(millisInFuture: Long) {
+            this@TimerService.millisInFuture = millisInFuture
+        }
+
+        fun setType(type: SetupType) {
+            this@TimerService.eggType = when (type) {
+                SetupType.SOFT_TYPE -> EggType("Soft test", R.drawable.egg_soft)
+                SetupType.MEDIUM_TYPE -> EggType("Medium test", R.drawable.egg_medium)
+                SetupType.HARD_TYPE -> EggType("Hard test", R.drawable.egg_hard)
+            }
+        }
     }
 }
 
