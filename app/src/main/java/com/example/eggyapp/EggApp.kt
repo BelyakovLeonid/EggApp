@@ -1,10 +1,10 @@
 package com.example.eggyapp
 
 import android.app.Application
-import com.example.eggyapp.data.SetupEggRepositoryImpl
+import com.example.eggyapp.di.DaggerAppComponent
 
 class EggApp: Application() {
     companion object{
-        val setupRepo = SetupEggRepositoryImpl()
+        val appComponent = DaggerAppComponent.factory().create()
     }
 }

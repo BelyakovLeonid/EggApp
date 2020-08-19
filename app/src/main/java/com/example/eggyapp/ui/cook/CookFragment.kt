@@ -12,18 +12,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType.*
+import com.example.eggyapp.di.ViewModelFactory
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.utils.observeLiveData
 import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.synthetic.main.f_egg_cook.*
+import javax.inject.Inject
 
 class CookFragment : Fragment(R.layout.f_egg_cook) {
 
     private var timerBinder: TimerBinder? = null
-    private val viewModel: CookViewModel by viewModels()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: CookViewModel by viewModels { viewModelFactory }
 
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -47,6 +54,17 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        EggApp.appComponent.inject(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        handleView()
+        observeViewModel()
+    }
+
     private fun observeViewModel() {
         with(viewModel) {
             observeLiveData(selectedType) {
@@ -67,12 +85,6 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
                 )
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        handleView()
-        observeViewModel()
     }
 
     private fun handleView() {

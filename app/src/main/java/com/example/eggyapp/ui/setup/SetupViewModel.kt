@@ -3,18 +3,18 @@ package com.example.eggyapp.ui.setup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.eggyapp.EggApp
+import com.example.eggyapp.data.SetupEggRepository
 import com.example.eggyapp.data.SetupSize
 import com.example.eggyapp.data.SetupTemperature
 import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.addToComposite
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class SetupViewModel : ViewModel() {
-
-    private val setupRepository = EggApp.setupRepo //todo inject
-
+class SetupViewModel @Inject constructor(
+    private val setupRepository: SetupEggRepository
+) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     private val mutableCalculatedTime = MutableLiveData<Int>()
