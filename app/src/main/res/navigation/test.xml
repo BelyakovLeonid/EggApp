@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/boiling_graph"
+    app:startDestination="@id/setupFragment">
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="com.example.eggyapp.ui.setup.SetupFragment"
+        tools:layout="@layout/f_egg_setup"
+        android:label="SetupFragment">
+        <action
+            android:id="@+id/actionToCookScreen"
+            app:destination="@id/cookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cookFragment"
+        android:name="com.example.eggyapp.ui.cook.CookFragment"
+        tools:layout="@layout/f_egg_cook"
+        android:label="CookFragment">
+        <action
+            android:id="@+id/actionBackToSetup"
+            app:popUpTo="@id/setupFragment" />
+    </fragment>
+</navigation>

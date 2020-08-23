@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startTimerService() {
-        startService(Intent(this, TimerService::class.java))
+        startService(Intent(this, TimerService::class.java)) //todo проверить
     }
 
     private fun setupBackPressedListener() {

@@ -88,10 +88,12 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
     }
 
     private fun handleView() {
-        button_control.onPauseListener = {
+        button_control.onCancelListener = {
+            Log.d("MyTag", "onCancelListener")
             timerBinder?.stopTimer()
         }
         button_control.onStartListener = {
+            Log.d("MyTag", "onStartListener")
             timerBinder?.startTimer()
         }
         button_back.setOnClickListener {

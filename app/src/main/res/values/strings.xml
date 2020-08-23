@@ -29,12 +29,22 @@
     <string name="cook_water_temperature">Water temperature</string>
     <string name="cook_boiled_tip_title">Boiled Tip</string>
     <string name="cook_boiled_tip">After cooking, let the eggs rest in an ice-bath to \"shock\" them</string>
-    <string name="cook_stop">stop</string>
-    <string name="cook_start">start</string>
+    <string name="cook_cancel">Cancel</string>
+    <string name="cook_start">Start</string>
 
     <string name="time_empty">00:00</string>
     <string name="time_template">%1$s min</string>
-    <string name="timer_notification_name">Egg timer</string>
-    <string name="timer_notification_description">Egg timer description</string>
-    <string name="timer_notification_subtitle">Remains %1$s</string>
+    <string name="timer_notif_name">Egg timer</string>
+    <string name="timer_notif_description">Notifies you when eggs are ready.</string>
+    <string name="timer_notif_progress_name">Egg progress notificator</string>
+    <string name="timer_notif_progress_description">Notifies you about progress of cooking</string>
+    <string name="timer_notif_soft">Cooking soft egg</string>
+    <string name="timer_notif_medium">Cooking medium egg</string>
+    <string name="timer_notif_hard">Cooking hard egg</string>
+    <string name="timer_notif_subtitle">Remains %1$s</string>
+    <string name="timer_notif_finish_title">Egg is boiled!</string>
+    <string name="timer_notif_finish_text">It\'s time! Bon appetite!</string>
+
+    <string name="cancel">Cancel</string>
+
 </resources>

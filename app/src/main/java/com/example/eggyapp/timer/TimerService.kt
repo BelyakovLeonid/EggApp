@@ -1,38 +1,113 @@
 package com.example.eggyapp.timer
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
+import android.app.*
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Icon
 import android.os.Binder
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.getBitmap
 import com.example.eggyapp.utils.toTimerString
 
-private const val NOTIFICATION_CHANNEL_ID = "eggyapp"
+private const val NOTIF_PROGRESS_CHANNEL_ID = "progress_channel"
+private const val NOTIF_FINISH_CHANNEL_ID = "finish_channel"
+private const val ACTION_CANCEL = "action_cancel"
 private const val MAX_PROGRESS = 1000
+private const val FOREGROUND_ID = 1
+private const val NOTIFICATION_ID = 2
 
 class TimerService : Service() {
 
-    private var timer: CountDownTimer? = null
+    private var manager: NotificationManager? = null
     private val timerBinder = TimerBinder()
+    private var timer: CountDownTimer? = null
+    private var action: Notification.Action? = null
+    private var intent: PendingIntent? = null
 
     private var millisInFuture: Long = 0
-    private var eggType: EggType? = null
+    private var eggType: SetupType? = null
 
     private val progressMutableLiveData = MutableLiveData<ProgressInformation>()
     val progressLiveData = progressMutableLiveData
 
+    //todo add stop/finish event
+
+    private val notificationIcon: Bitmap
+        get() = when (eggType) {
+            SetupType.SOFT_TYPE -> getBitmap(R.drawable.egg_soft)
+            SetupType.MEDIUM_TYPE -> getBitmap(R.drawable.egg_medium)
+            else -> getBitmap(R.drawable.egg_hard)
+        }
+
+    private val notificationTitle: String
+        get() = when (eggType) {
+            SetupType.SOFT_TYPE -> getString(R.string.timer_notif_soft)
+            SetupType.MEDIUM_TYPE -> getString(R.string.timer_notif_medium)
+            else -> getString(R.string.timer_notif_hard)
+        }
+
     override fun onCreate() {
         super.onCreate()
-        createNotificationChannel()
+        manager = getSystemService()
+        action = setupAction()
+        intent = setupIntent()
+        createNotifProgressChannel()
+        createNotifFinishChannel()
+    }
+
+    private fun setupAction(): Notification.Action? {
+        val actionIcon = Icon.createWithResource(this, R.drawable.ic_cancel)
+        val actionText = getString(R.string.cancel)
+        val intent = Intent(this, TimerService::class.java).putExtra(ACTION_CANCEL, true)
+        val pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        return Notification.Action.Builder(actionIcon, actionText, pendingIntent).build()
+    }
+
+    private fun setupIntent(): PendingIntent? {
+        return NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.cookFragment)
+            .createPendingIntent()
+    }
+
+    private fun createNotifProgressChannel() {
+        createChannel(
+            NOTIF_PROGRESS_CHANNEL_ID,
+            getString(R.string.timer_notif_progress_name),
+            getString(R.string.timer_notif_progress_description),
+            NotificationManager.IMPORTANCE_LOW
+        )
+    }
+
+    private fun createNotifFinishChannel() {
+        createChannel(
+            NOTIF_FINISH_CHANNEL_ID,
+            getString(R.string.timer_notif_name),
+            getString(R.string.timer_notif_description),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+    }
+
+    private fun createChannel(id: String, name: String, desc: String, importance: Int) {
+        val channel = NotificationChannel(id, name, importance)
+        channel.setShowBadge(false)
+        channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+        channel.description = desc
+        manager?.createNotificationChannel(channel)
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent?.getBooleanExtra(ACTION_CANCEL, false) == true) {
+            stopTimer()
+        }
+        return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -43,26 +118,16 @@ class TimerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         timer?.cancel()
+        //todo stop foreground?
         Log.d("MyTag", "onDestroy")
-    }
-
-    private fun createNotificationChannel() {
-        val channel = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID,
-            getString(R.string.timer_notification_name),
-            NotificationManager.IMPORTANCE_HIGH
-        )
-        channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-        channel.description = getString(R.string.timer_notification_description)
-
-        val manager: NotificationManager? = getSystemService()
-        manager?.createNotificationChannel(channel)
     }
 
     private fun startTimer() {
         timer = object : CountDownTimer(millisInFuture, 10) {
             override fun onFinish() {
-                Log.d("MyTag", "onFinish")
+                timer = null
+                stopForeground(true)
+                notifyFinish()
             }
 
             override fun onTick(millisUntilEnd: Long) {
@@ -75,26 +140,45 @@ class TimerService : Service() {
         timer?.start()
     }
 
-    private fun notifyProgress(progressInfo: ProgressInformation) {
-        val currentProgress = (progressInfo.currentProgress * MAX_PROGRESS).toInt()
-        val largeIcon = getBitmap(eggType?.imageResId)
-        val contentText = getString(R.string.timer_notification_subtitle, progressInfo.timerString)
-
-        val notification = Notification.Builder(this@TimerService, NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_back)
-            .setLargeIcon(largeIcon)
-            .setContentTitle(eggType?.name)
-            .setContentText(contentText)
-            .setCategory(Notification.CATEGORY_PROGRESS)
-            .setProgress(MAX_PROGRESS, currentProgress, false)
+    private fun notifyFinish() {
+        val finishTitle = getString(R.string.timer_notif_finish_title)
+        val finishText = getString(R.string.timer_notif_finish_text)
+        val notification = buildBaseNotification(NOTIF_FINISH_CHANNEL_ID, finishText, finishTitle)
+            .setCategory(Notification.CATEGORY_EVENT)
+            .setVisibility(Notification.VISIBILITY_PUBLIC)
             .build()
 
-        startForeground(1, notification)
+        manager?.notify(NOTIFICATION_ID, notification)
     }
+
+    private fun notifyProgress(progressInfo: ProgressInformation) {
+        val currentProgress = (progressInfo.currentProgress * MAX_PROGRESS).toInt()
+        val contentText = getString(R.string.timer_notif_subtitle, progressInfo.timerString)
+        val notification = buildBaseNotification(NOTIF_PROGRESS_CHANNEL_ID, contentText)
+            .setCategory(Notification.CATEGORY_PROGRESS)
+            .setProgress(MAX_PROGRESS, currentProgress, false)
+            .addAction(action)
+            .build()
+
+        startForeground(FOREGROUND_ID, notification)
+    }
+
+    private fun buildBaseNotification(
+        channelId: String,
+        text: String,
+        title: String? = notificationTitle
+    ) = Notification.Builder(this, channelId)
+        .setSmallIcon(R.drawable.ic_timer_gray)
+        .setLargeIcon(notificationIcon)
+        .setContentTitle(title)
+        .setContentText(text)
+        .setContentIntent(intent)
 
     private fun stopTimer() {
         timer?.cancel()
+        timer = null
         stopForeground(true)
+        progressMutableLiveData.value = ProgressInformation(0f, millisInFuture.toTimerString())
     }
 
     inner class TimerBinder : Binder() {
@@ -109,11 +193,7 @@ class TimerService : Service() {
         }
 
         fun setType(type: SetupType) {
-            this@TimerService.eggType = when (type) {
-                SetupType.SOFT_TYPE -> EggType("Soft test", R.drawable.egg_soft)
-                SetupType.MEDIUM_TYPE -> EggType("Medium test", R.drawable.egg_medium)
-                SetupType.HARD_TYPE -> EggType("Hard test", R.drawable.egg_hard)
-            }
+            this@TimerService.eggType = type
         }
     }
 }
@@ -121,9 +201,4 @@ class TimerService : Service() {
 data class ProgressInformation(
     val currentProgress: Float,
     val timerString: String
-)
-
-data class EggType(
-    val name: String,
-    val imageResId: Int
 )

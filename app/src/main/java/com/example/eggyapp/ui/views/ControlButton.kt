@@ -10,10 +10,10 @@ import kotlinx.android.parcel.Parcelize
 class ControlButton : MaterialButton {
 
     var onStartListener: (() -> Unit)? = null
-    var onPauseListener: (() -> Unit)? = null
+    var onCancelListener: (() -> Unit)? = null
 
     private var currentState =
-        ButtonState.STATE_PAUSED
+        ButtonState.STATE_IDLED
         set(value) {
             field = value
             updateText()
@@ -29,15 +29,13 @@ class ControlButton : MaterialButton {
 
     override fun performClick(): Boolean {
         when (currentState) {
-            ButtonState.STATE_PAUSED -> {
+            ButtonState.STATE_IDLED -> {
                 onStartListener?.invoke()
-                currentState =
-                    ButtonState.STATE_STARTED
+                currentState = ButtonState.STATE_STARTED
             }
             ButtonState.STATE_STARTED -> {
-                onPauseListener?.invoke()
-                currentState =
-                    ButtonState.STATE_PAUSED
+                onCancelListener?.invoke()
+                currentState = ButtonState.STATE_IDLED
             }
         }
         return super.performClick()
@@ -45,20 +43,18 @@ class ControlButton : MaterialButton {
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(null)
-        currentState = (state as ControlSavedState).currentState
+        currentState = (state as ControlSavedState).currentState //todo NPE ?
     }
 
     override fun onSaveInstanceState(): Parcelable {
         super.onSaveInstanceState()
-        return ControlSavedState(
-            currentState
-        )
+        return ControlSavedState(currentState)
     }
 
     private fun updateText() {
         text = when (currentState) {
-            ButtonState.STATE_PAUSED -> context.getString(R.string.cook_start)
-            ButtonState.STATE_STARTED -> context.getString(R.string.cook_stop)
+            ButtonState.STATE_IDLED -> context.getString(R.string.cook_start)
+            ButtonState.STATE_STARTED -> context.getString(R.string.cook_cancel)
         }
     }
 
@@ -68,6 +64,6 @@ class ControlButton : MaterialButton {
     ) : Parcelable
 
     private enum class ButtonState {
-        STATE_STARTED, STATE_PAUSED
+        STATE_STARTED, STATE_IDLED
     }
 }

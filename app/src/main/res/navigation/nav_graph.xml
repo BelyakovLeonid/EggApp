@@ -11,27 +11,32 @@
         tools:layout="@layout/f_welcome">
         <action
             android:id="@+id/actionToSetupScreen"
-            app:destination="@id/setupFragment"
+            app:destination="@id/boiling_graph"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/setupFragment"
-        android:name="com.example.eggyapp.ui.setup.SetupFragment"
-        android:label="SetupFragment"
-        tools:layout="@layout/f_egg_setup">
-        <action
-            android:id="@+id/actionToCookScreen"
-            app:destination="@id/cookFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/cookFragment"
-        android:name="com.example.eggyapp.ui.cook.CookFragment"
-        android:label="CookFragment"
-        tools:layout="@layout/f_egg_cook">
-        <action
-            android:id="@+id/actionBackToSetup"
-            app:popUpTo="@id/setupFragment" />
-    </fragment>
+
+    <navigation
+        android:id="@+id/boiling_graph"
+        app:startDestination="@id/setupFragment">
+        <fragment
+            android:id="@+id/setupFragment"
+            android:name="com.example.eggyapp.ui.setup.SetupFragment"
+            android:label="SetupFragment"
+            tools:layout="@layout/f_egg_setup">
+            <action
+                android:id="@+id/actionToCookScreen"
+                app:destination="@id/cookFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/cookFragment"
+            android:name="com.example.eggyapp.ui.cook.CookFragment"
+            android:label="CookFragment"
+            tools:layout="@layout/f_egg_cook">
+            <action
+                android:id="@+id/actionBackToSetup"
+                app:popUpTo="@id/setupFragment" />
+        </fragment>
+    </navigation>
 </navigation>
