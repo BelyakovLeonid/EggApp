@@ -10,7 +10,6 @@ import com.example.eggyapp.R
 import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.utils.findById
 import com.example.eggyapp.utils.observeLiveData
-import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.synthetic.main.f_egg_setup.*
 
 class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
@@ -31,7 +30,7 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
     private fun observeViewModel() {
         with(viewModel) {
             observeLiveData(calculatedTime) {
-                text_time.text = it.toTimerString()
+                text_time.setTime(it)
             }
             observeLiveData(isCookEnable) {
                 button_start.isEnabled = it
