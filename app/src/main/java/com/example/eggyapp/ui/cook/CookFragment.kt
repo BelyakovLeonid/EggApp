@@ -89,16 +89,23 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
 
     private fun handleView() {
         button_control.onCancelListener = {
-            Log.d("MyTag", "onCancelListener")
             timerBinder?.stopTimer()
         }
         button_control.onStartListener = {
-            Log.d("MyTag", "onStartListener")
             timerBinder?.startTimer()
         }
         button_back.setOnClickListener {
+            showExitDialog()
+        }
+    }
+
+    private fun showExitDialog() {
+        val dialog = ExitDialog.getInstance()
+        dialog.onConfirmListener = {
+            timerBinder?.stopTimer()
             findNavController().navigateUp()
         }
+        dialog.show(childFragmentManager, ExitDialog.TAG)
     }
 
     override fun onDestroyView() {

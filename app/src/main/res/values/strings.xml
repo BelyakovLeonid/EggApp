@@ -45,7 +45,11 @@
     <string name="timer_notif_finish_title">Egg is boiled!</string>
     <string name="timer_notif_finish_text">It\'s time! Bon appetite!</string>
 
+    <string name="cancel_timer_alert">Are you sure you want cancel egg timer?</string>
+
     <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="colon">:</string>
 
 </resources>
