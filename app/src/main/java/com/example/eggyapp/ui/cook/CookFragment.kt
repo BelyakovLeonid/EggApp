@@ -6,57 +6,54 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType.*
-import com.example.eggyapp.di.ViewModelFactory
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
+import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.utils.observeLiveData
 import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.synthetic.main.f_egg_cook.*
-import javax.inject.Inject
 
-class CookFragment : Fragment(R.layout.f_egg_cook) {
+class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     private var timerBinder: TimerBinder? = null
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: CookViewModel by viewModels { viewModelFactory }
 
     private val connection = object : ServiceConnection {
-        override fun onServiceDisconnected(name: ComponentName?) {
-            Log.d("MyTag", "onServiceDisconnected")
-        }
+        override fun onServiceDisconnected(name: ComponentName?) {}
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            Log.d("MyTag", "onServiceConnected")
             timerBinder = service as? TimerBinder
             timerBinder?.getProgressLiveData()?.observe(viewLifecycleOwner, Observer {
                 view_timer.setCurrentProgress(it.currentProgress, it.timerString)
             })
             observeLiveData(viewModel.calculatedTime) {
-                Log.d("MyTag", "calculatedTime")
                 timerBinder?.setTime(it.toLong())
             }
             observeLiveData(viewModel.selectedType) {
-                Log.d("MyTag", "selectedType")
                 timerBinder?.setType(it)
             }
+        }
+    }
+
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            showExitDialog()
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         EggApp.appComponent.inject(this)
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,6 +108,10 @@ class CookFragment : Fragment(R.layout.f_egg_cook) {
     override fun onDestroyView() {
         super.onDestroyView()
         requireContext().unbindService(connection)
-        Log.d("MyTag", "onDestroyView")
+    }
+
+    override fun onDetach() {
+        backPressedCallback.isEnabled = false
+        super.onDetach()
     }
 }

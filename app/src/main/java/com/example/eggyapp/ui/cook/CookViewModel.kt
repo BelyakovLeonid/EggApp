@@ -1,6 +1,5 @@
 package com.example.eggyapp.ui.cook
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +22,6 @@ class CookViewModel @Inject constructor(
     val selectedType: LiveData<SetupType> = mutableSelectedType
 
     init {
-        Log.d("MyTag", "init")
         observeCalculatedTime()
         observeSelectedType()
     }
