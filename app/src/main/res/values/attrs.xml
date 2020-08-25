@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="text" format="reference" />
+    <attr name="textSize" format="dimension" />
 
     <declare-styleable name="ButtonWithImage">
         <attr name="image" format="reference" />
         <attr name="text" />
+    </declare-styleable>
+
+    <declare-styleable name="ClockView">
+        <attr name="textSize" />
     </declare-styleable>
 </resources>

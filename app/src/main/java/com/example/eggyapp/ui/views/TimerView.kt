@@ -67,14 +67,14 @@ class TimerView @JvmOverloads constructor(
     private fun drawEmptyTimerArc(canvas: Canvas?) {
         paint.shader = null
         paint.color = emptyTimerColor
-        paint.strokeWidth = dpToPx(10) //todo make width adaptive to size
+        paint.strokeWidth = dpToPx(10f) //todo make width adaptive to size
         paint.style = Paint.Style.STROKE
         canvas?.drawArc(arcRectangle, 0f, 360f, false, paint)
     }
 
     private fun drawText(canvas: Canvas?) {
         textPaint.color = timerTitleColor
-        textPaint.textSize = dpToPx(28) //todo need sp? //todo adapt to size
+        textPaint.textSize = dpToPx(28f) //todo need sp? //todo adapt to size
         textPaint.textAlign = Paint.Align.CENTER
         val length = textPaint.measureText(currentText)
         canvas?.drawText(
@@ -85,7 +85,7 @@ class TimerView @JvmOverloads constructor(
         )
 
         textPaint.color = timerSubTitleColor
-        textPaint.textSize = dpToPx(12) //todo need sp? //todo adapt to size
+        textPaint.textSize = dpToPx(12f) //todo need sp? //todo adapt to size
         textPaint.textAlign = Paint.Align.LEFT
         canvas?.drawText(
             alwaysText,
@@ -109,7 +109,7 @@ class TimerView @JvmOverloads constructor(
         canvas?.drawCircle(
             (bigRadius + cos((currentDegree / 180f) * Math.PI) * smallRadius).toFloat(),
             (bigRadius + sin((currentDegree / 180f) * Math.PI) * smallRadius).toFloat(),
-            dpToPx(6),
+            dpToPx(6f),
             paint
         )
 
@@ -117,7 +117,7 @@ class TimerView @JvmOverloads constructor(
         canvas?.drawCircle(
             (bigRadius + cos((currentDegree / 180f) * Math.PI) * smallRadius).toFloat(),
             (bigRadius + sin((currentDegree / 180f) * Math.PI) * smallRadius).toFloat(),
-            dpToPx(3),
+            dpToPx(3f),
             paint
         )
     }

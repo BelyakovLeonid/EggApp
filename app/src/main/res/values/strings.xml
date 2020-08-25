@@ -46,5 +46,6 @@
     <string name="timer_notif_finish_text">It\'s time! Bon appetite!</string>
 
     <string name="cancel">Cancel</string>
+    <string name="colon">:</string>
 
 </resources>
