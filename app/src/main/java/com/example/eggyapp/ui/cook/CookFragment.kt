@@ -27,6 +27,8 @@ import kotlinx.android.synthetic.main.f_egg_cook.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 
+private const val FINISH_ANIMATION_DELAY = 200L
+
 class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     private var timerBinder: TimerBinder? = null
@@ -35,7 +37,6 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
-
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -122,7 +123,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     private fun showFinish() {
         buttonControl.setState(ButtonState.STATE_IDLED)
-        viewTimer.dropProgress()
+        viewTimer.dropProgress(FINISH_ANIMATION_DELAY)
         context?.showToast(getString(R.string.toast_finish_text))
         makeVibration()
         makeConfetti()

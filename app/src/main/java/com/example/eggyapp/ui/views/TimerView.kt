@@ -131,6 +131,9 @@ class TimerView @JvmOverloads constructor(
     }
 
     fun setCurrentProgress(progress: Float, timeString: String) {
+        animator?.cancel()
+        animator = null
+
         currentDegree = progress * 360f
         currentText = timeString
 
@@ -145,10 +148,11 @@ class TimerView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun dropProgress() {
+    fun dropProgress(delay: Long = 0) {
         animator?.cancel()
         animator = ValueAnimator.ofFloat(currentDegree, 0f)
         animator?.duration = (ANIMATION_DURATION * currentDegree / 360f).toLong()
+        animator?.startDelay = delay
         animator?.addUpdateListener {
             val value = it.animatedValue as Float
             currentDegree = value

@@ -47,6 +47,7 @@
 
     <string name="cancel_timer_alert">Are you sure you want cancel egg timer?</string>
     <string name="toast_finish_text">Egg is boiled! Bon appetite!</string>
+    <string name="boiled_temperature">100C</string>
 
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>

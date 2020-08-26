@@ -4,7 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
 import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.parcel.Parcelize
 
@@ -34,7 +34,7 @@ class ClockView @JvmOverloads constructor(
     private fun animateTimeChanged(newTime: Int) {
         animator = ValueAnimator.ofInt(currentTime, newTime).apply {
             duration = ANIMATION_DURATION
-            interpolator = AccelerateDecelerateInterpolator()
+            interpolator = AccelerateInterpolator()
             addUpdateListener {
                 text = (it.animatedValue as Int).toTimerString()
             }
