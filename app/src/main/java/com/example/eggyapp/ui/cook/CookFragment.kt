@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -47,6 +46,9 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             observeLiveData(timerBinder?.finish) {
                 showFinish()
             }
+            observeLiveData(timerBinder?.cancel) {
+                view_timer.dropProgress()
+            }
             observeLiveData(viewModel.calculatedTime) {
                 timerBinder?.setTime(it.toLong())
             }
@@ -84,7 +86,6 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
                 }
             }
             observeLiveData(calculatedTime) {
-                Log.d("MyTag", "calculatedTime = $it")
                 text_time.text = it.toTimerString()
                 view_timer.setCurrentProgress(it.toTimerString())
 

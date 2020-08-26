@@ -1,5 +1,6 @@
 package com.example.eggyapp.ui.views
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -14,12 +15,15 @@ import kotlin.math.sin
 
 private const val RADIUS_RATIO = 0.7f
 private const val GRADIENT_END_OFFSET = 0.1f
+private const val ANIMATION_DURATION = 1000
 
 class TimerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    private var animator: ValueAnimator? = null
 
     private val arcRectangle = RectF()
     private var background = context.getBitmap(R.drawable.timer_background)
@@ -139,5 +143,17 @@ class TimerView @JvmOverloads constructor(
         )
 
         invalidate()
+    }
+
+    fun dropProgress() {
+        animator?.cancel()
+        animator = ValueAnimator.ofFloat(currentDegree, 0f)
+        animator?.duration = (ANIMATION_DURATION * currentDegree / 360f).toLong()
+        animator?.addUpdateListener {
+            val value = it.animatedValue as Float
+            currentDegree = value
+            invalidate()
+        }
+        animator?.start()
     }
 }

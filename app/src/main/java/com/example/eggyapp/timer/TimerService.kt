@@ -37,10 +37,7 @@ class TimerService : Service() {
     private var eggType: SetupType? = null
     private var millisInFuture: Long = 0
         set(value) {
-            mutableProgress.value = ProgressInformation(
-                mutableProgress.value?.currentProgress ?: 0f,
-                value.toTimerString()
-            )
+            mutableProgress.value = ProgressInformation(0f, value.toTimerString())
             field = value
         }
 
@@ -48,7 +45,7 @@ class TimerService : Service() {
     val progress: LiveData<ProgressInformation> = mutableProgress
 
     private val finishEvent = LiveEvent<Unit>()
-    val finish = finishEvent
+    private val cancelEvent = LiveEvent<Unit>()
 
     private val notificationIcon: Bitmap
         get() = when (eggType) {
@@ -192,7 +189,11 @@ class TimerService : Service() {
         timer?.cancel()
         timer = null
         stopForeground(true)
-        mutableProgress.value = ProgressInformation(0f, millisInFuture.toTimerString())
+        cancelEvent.postEvent()
+        mutableProgress.value = ProgressInformation(
+            mutableProgress.value?.currentProgress ?: 0f,
+            millisInFuture.toTimerString()
+        )
     }
 
     inner class TimerBinder : Binder() {
@@ -200,7 +201,10 @@ class TimerService : Service() {
             get() = this@TimerService.progress
 
         val finish: LiveData<Unit>
-            get() = this@TimerService.finish
+            get() = this@TimerService.finishEvent
+
+        val cancel: LiveData<Unit>
+            get() = this@TimerService.cancelEvent
 
         fun startTimer() = this@TimerService.startTimer()
 
