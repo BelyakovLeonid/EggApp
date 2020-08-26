@@ -12,8 +12,7 @@ class ControlButton : MaterialButton {
     var onStartListener: (() -> Unit)? = null
     var onCancelListener: (() -> Unit)? = null
 
-    private var currentState =
-        ButtonState.STATE_IDLED
+    private var currentState = ButtonState.STATE_IDLED
         set(value) {
             field = value
             updateText()
@@ -41,6 +40,17 @@ class ControlButton : MaterialButton {
         return super.performClick()
     }
 
+    fun setState(state: ButtonState) {
+        currentState = state
+    }
+
+    private fun updateText() {
+        text = when (currentState) {
+            ButtonState.STATE_IDLED -> context.getString(R.string.cook_start)
+            ButtonState.STATE_STARTED -> context.getString(R.string.cook_cancel)
+        }
+    }
+
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(null)
         currentState = (state as ControlSavedState).currentState //todo NPE ?
@@ -51,19 +61,12 @@ class ControlButton : MaterialButton {
         return ControlSavedState(currentState)
     }
 
-    private fun updateText() {
-        text = when (currentState) {
-            ButtonState.STATE_IDLED -> context.getString(R.string.cook_start)
-            ButtonState.STATE_STARTED -> context.getString(R.string.cook_cancel)
-        }
-    }
-
     @Parcelize
     private data class ControlSavedState(
         val currentState: ButtonState
     ) : Parcelable
+}
 
-    private enum class ButtonState {
-        STATE_STARTED, STATE_IDLED
-    }
+enum class ButtonState {
+    STATE_STARTED, STATE_IDLED
 }

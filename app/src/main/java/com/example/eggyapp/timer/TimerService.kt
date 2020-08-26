@@ -9,12 +9,15 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 import androidx.core.content.getSystemService
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.getBitmap
+import com.example.eggyapp.utils.postEvent
 import com.example.eggyapp.utils.toTimerString
+import com.hadilq.liveevent.LiveEvent
 
 private const val NOTIF_PROGRESS_CHANNEL_ID = "progress_channel"
 private const val NOTIF_FINISH_CHANNEL_ID = "finish_channel"
@@ -34,8 +37,11 @@ class TimerService : Service() {
     private var millisInFuture: Long = 0
     private var eggType: SetupType? = null
 
-    private val progressMutableLiveData = MutableLiveData<ProgressInformation>()
-    val progressLiveData = progressMutableLiveData
+    private val mutableProgress = MutableLiveData<ProgressInformation>()
+    val progress: LiveData<ProgressInformation> = mutableProgress
+
+    private val finishEvent = LiveEvent<Unit>()
+    val finish = finishEvent
 
     //todo add stop/finish event
 
@@ -125,6 +131,7 @@ class TimerService : Service() {
     private fun startTimer() {
         timer = object : CountDownTimer(millisInFuture, 10) {
             override fun onFinish() {
+                finishEvent.postEvent()
                 timer = null
                 stopForeground(true)
                 notifyFinish()
@@ -133,7 +140,7 @@ class TimerService : Service() {
             override fun onTick(millisUntilEnd: Long) {
                 val progress = 1 - millisUntilEnd / millisInFuture.toFloat()
                 val progressInfo = ProgressInformation(progress, millisUntilEnd.toTimerString())
-                progressMutableLiveData.value = progressInfo
+                mutableProgress.value = progressInfo
                 notifyProgress(progressInfo)
             }
         }
@@ -178,11 +185,15 @@ class TimerService : Service() {
         timer?.cancel()
         timer = null
         stopForeground(true)
-        progressMutableLiveData.value = ProgressInformation(0f, millisInFuture.toTimerString())
+        mutableProgress.value = ProgressInformation(0f, millisInFuture.toTimerString())
     }
 
     inner class TimerBinder : Binder() {
-        fun getProgressLiveData() = progressLiveData
+        val progress: LiveData<ProgressInformation>
+            get() = this@TimerService.progress
+
+        val finish: LiveData<Unit>
+            get() = this@TimerService.finish
 
         fun startTimer() = this@TimerService.startTimer()
 

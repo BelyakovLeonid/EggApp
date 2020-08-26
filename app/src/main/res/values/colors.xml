@@ -15,4 +15,9 @@
     <color name="colorPrimaryLight">#E8A480</color>
     <color name="colorGraySuperLight">#F4E8DF</color>
     <color name="colorAlmostWhite">#F0F0F0</color>
+
+    <color name="confetti_yellow">#fce18a</color>
+    <color name="confetti_orange">#ff726d</color>
+    <color name="confetti_purple">#b48def</color>
+    <color name="confetti_pink">#f4306d</color>
 </resources>

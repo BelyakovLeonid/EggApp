@@ -10,14 +10,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
-        android:clipToPadding="false"
-        android:paddingTop="50dp">
+        android:clipToPadding="false">
+
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/view_confetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="6dp" />
 
         <ImageView
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:src="@drawable/ic_back"
@@ -29,6 +35,7 @@
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:text="@string/cook_eggs_soft"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +45,7 @@
             android:id="@+id/view_timer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="40dp"
             android:layout_marginTop="40dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintTop_toBottomOf="@id/text_cook_title" />
@@ -48,6 +55,7 @@
             style="@style/IconImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="40dp"
             android:src="@drawable/ic_timer_white"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,6 +79,7 @@
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
             android:text="@string/time_empty"
             app:layout_constraintBottom_toBottomOf="@id/icon_time"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +90,7 @@
             style="@style/IconImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_thermometer"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
+
             android:includeFontPadding="false"
             android:text="@string/cook_water_temperature"
             app:layout_constraintBottom_toBottomOf="@id/icon_temperature"
@@ -104,6 +115,7 @@
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
             android:text="100C"
             app:layout_constraintBottom_toBottomOf="@id/icon_temperature"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,6 +125,7 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="30dp"
             android:background="@color/colorGraySuperLight"
             app:layout_constraintTop_toBottomOf="@id/icon_temperature" />
@@ -133,6 +146,7 @@
             style="@style/SubtitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="12dp"
             android:text="@string/cook_boiled_tip"
             android:textAlignment="center"
@@ -143,6 +157,7 @@
             style="@style/FilledButton"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_tip" />

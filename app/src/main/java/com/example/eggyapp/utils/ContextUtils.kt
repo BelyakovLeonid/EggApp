@@ -17,3 +17,4 @@ fun Context.showToast(string: String): Toast =
 fun Context.getBitmap(bitmapId: Int?): Bitmap =
     BitmapFactory.decodeResource(resources, bitmapId ?: 0)
 
+

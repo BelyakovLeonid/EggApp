@@ -6,10 +6,11 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
@@ -17,9 +18,14 @@ import com.example.eggyapp.data.SetupType.*
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
+import com.example.eggyapp.ui.views.ButtonState
+import com.example.eggyapp.utils.getColor
 import com.example.eggyapp.utils.observeLiveData
+import com.example.eggyapp.utils.showToast
 import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.synthetic.main.f_egg_cook.*
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
@@ -32,9 +38,12 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as? TimerBinder
-            timerBinder?.getProgressLiveData()?.observe(viewLifecycleOwner, Observer {
+            observeLiveData(timerBinder?.progress) {
                 view_timer.setCurrentProgress(it.currentProgress, it.timerString)
-            })
+            }
+            observeLiveData(timerBinder?.finish) {
+                showFinish()
+            }
             observeLiveData(viewModel.calculatedTime) {
                 timerBinder?.setTime(it.toLong())
             }
@@ -103,6 +112,43 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             findNavController().navigateUp()
         }
         dialog.show(childFragmentManager, ExitDialog.TAG)
+    }
+
+    private fun showFinish() {
+        button_control.setState(ButtonState.STATE_IDLED)
+        context?.showToast(getString(R.string.toast_finish_text))
+        makeVibration()
+        makeConfetti()
+    }
+
+    private fun makeVibration() {
+        val vibratorService = context?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        if (vibratorService?.hasVibrator() == true) {
+            val vibrationEffect = VibrationEffect.createWaveform(
+                longArrayOf(0, 50, 50, 50, 50, 200, 100, 200, 100, 200),
+                intArrayOf(0, 100, 0, 100, 0, 220, 0, 220, 0, 220),
+                -1
+            )
+            vibratorService.vibrate(vibrationEffect)
+        }
+    }
+
+    private fun makeConfetti() {
+        view_confetti.build()
+            .addColors(
+                getColor(R.color.confetti_yellow),
+                getColor(R.color.confetti_orange),
+                getColor(R.color.confetti_purple),
+                getColor(R.color.confetti_pink)
+            )
+            .setDirection(0.0, 359.0)
+            .setSpeed(1f, 5f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000L)
+            .addShapes(Shape.Square, Shape.Circle)
+            .addSizes(Size(12))
+            .setPosition(-50f, view_confetti.width + 50f, -50f, -50f)
+            .streamFor(150, 2000L)
     }
 
     override fun onDestroyView() {
