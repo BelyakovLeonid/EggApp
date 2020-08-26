@@ -39,8 +39,8 @@ class ButtonWithImage @JvmOverloads constructor(
             try {
                 val stringResId = getResourceId(R.styleable.ButtonWithImage_text, 0)
                 val imageResId = getResourceId(R.styleable.ButtonWithImage_image, 0)
-                text_egg_type.text = resources.getText(stringResId)
-                image_egg_type.setImageResource(imageResId)
+                textEggType.text = resources.getText(stringResId)
+                imageEggType.setImageResource(imageResId)
             } finally {
                 recycle()
             }
@@ -73,8 +73,8 @@ class ButtonWithImage @JvmOverloads constructor(
     }
 
     private fun handleCheckedState() {
-        view_type_background.isActivated = checkedState
-        text_egg_type.isActivated = checkedState
+        viewTypeBackground.isActivated = checkedState
+        textEggType.isActivated = checkedState
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {

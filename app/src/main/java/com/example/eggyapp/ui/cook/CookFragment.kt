@@ -41,14 +41,14 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as? TimerBinder
             observeLiveData(timerBinder?.progress) {
-                view_timer.setCurrentProgress(it.currentProgress, it.timerString)
+                viewTimer.setCurrentProgress(it.currentProgress, it.timerString)
             }
             observeLiveData(timerBinder?.finish) {
                 showFinish()
             }
             observeLiveData(timerBinder?.cancel) {
-                button_control.setState(ButtonState.STATE_IDLED)
-                view_timer.dropProgress()
+                buttonControl.setState(ButtonState.STATE_IDLED)
+                viewTimer.dropProgress()
             }
             observeLiveData(viewModel.calculatedTime) {
                 timerBinder?.setTime(it.toLong())
@@ -80,15 +80,15 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     private fun observeViewModel() {
         with(viewModel) {
             observeLiveData(selectedType) {
-                text_cook_title.text = when (it) {
+                textCookTitle.text = when (it) {
                     SOFT_TYPE -> getString(R.string.cook_eggs_soft)
                     MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
                     HARD_TYPE -> getString(R.string.cook_eggs_hard)
                 }
             }
             observeLiveData(calculatedTime) {
-                text_time.text = it.toTimerString()
-                view_timer.setCurrentProgress(it.toTimerString())
+                textTime.text = it.toTimerString()
+                viewTimer.setCurrentProgress(it.toTimerString())
 
                 requireContext().bindService(
                     Intent(requireContext(), TimerService::class.java),
@@ -100,13 +100,13 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun handleView() {
-        button_control.onCancelListener = {
+        buttonControl.onCancelListener = {
             timerBinder?.stopTimer()
         }
-        button_control.onStartListener = {
+        buttonControl.onStartListener = {
             timerBinder?.startTimer()
         }
-        button_back.setOnClickListener {
+        buttonBack.setOnClickListener {
             showExitDialog()
         }
     }
@@ -121,8 +121,8 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun showFinish() {
-        button_control.setState(ButtonState.STATE_IDLED)
-        view_timer.dropProgress()
+        buttonControl.setState(ButtonState.STATE_IDLED)
+        viewTimer.dropProgress()
         context?.showToast(getString(R.string.toast_finish_text))
         makeVibration()
         makeConfetti()
@@ -141,7 +141,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun makeConfetti() {
-        view_confetti.build()
+        viewConfetti.build()
             .addColors(
                 getColor(R.color.confetti_yellow),
                 getColor(R.color.confetti_orange),
@@ -154,7 +154,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             .setTimeToLive(2000L)
             .addShapes(Shape.Square, Shape.Circle)
             .addSizes(Size(12))
-            .setPosition(-50f, view_confetti.width + 50f, -50f, -50f)
+            .setPosition(-50f, viewConfetti.width + 50f, -50f, -50f)
             .streamFor(150, 2000L)
     }
 

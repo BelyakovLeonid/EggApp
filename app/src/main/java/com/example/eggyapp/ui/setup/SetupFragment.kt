@@ -30,25 +30,25 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
     private fun observeViewModel() {
         with(viewModel) {
             observeLiveData(calculatedTime) {
-                text_time.setTime(it)
+                textTime.setTime(it)
             }
             observeLiveData(isCookEnable) {
-                button_start.isEnabled = it
+                buttonStart.isEnabled = it
             }
         }
     }
 
     private fun handleView() {
-        button_start.setOnClickListener {
+        buttonStart.setOnClickListener {
             findNavController().navigate(R.id.actionToCookScreen)
         }
-        group_temperature_buttons.onCheckedIndexListener = {
+        groupTemperatureButtons.onCheckedIndexListener = {
             viewModel.onSelectTemperature(findById(it))
         }
-        group_size_buttons.onCheckedIndexListener = {
+        groupSizeButtons.onCheckedIndexListener = {
             viewModel.onSelectSize(findById(it))
         }
-        group_type_buttons.onCheckedIndexListener = {
+        groupTypeButtons.onCheckedIndexListener = {
             viewModel.onSelectType(findById(it))
         }
     }

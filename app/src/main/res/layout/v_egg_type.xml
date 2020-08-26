@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/image_egg_type"
+        android:id="@+id/imageEggType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="1dp"
@@ -18,17 +18,17 @@
         tools:src="@drawable/egg_medium" />
 
     <View
-        android:id="@+id/view_type_background"
+        android:id="@+id/viewTypeBackground"
         android:layout_width="wrap_content"
         android:layout_height="130dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/ripple_outline_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/image_egg_type" />
+        app:layout_constraintTop_toTopOf="@id/imageEggType" />
 
     <TextView
-        android:id="@+id/text_egg_type"
+        android:id="@+id/textEggType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:letterSpacing="-0.02"

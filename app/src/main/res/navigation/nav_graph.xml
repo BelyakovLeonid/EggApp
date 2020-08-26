@@ -11,7 +11,7 @@
         tools:layout="@layout/f_welcome">
         <action
             android:id="@+id/actionToSetupScreen"
-            app:destination="@id/boiling_graph"
+            app:destination="@id/boilingGraph"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:launchSingleTop="true"
@@ -20,7 +20,7 @@
     </fragment>
 
     <navigation
-        android:id="@+id/boiling_graph"
+        android:id="@+id/boilingGraph"
         app:startDestination="@id/setupFragment">
         <fragment
             android:id="@+id/setupFragment"

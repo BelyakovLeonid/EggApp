@@ -7,7 +7,7 @@
     tools:context=".ui.MainActivity">
 
     <TextView
-        android:id="@+id/text_app_name"
+        android:id="@+id/textAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -16,7 +16,7 @@
         android:textColor="@color/colorPrimary"
         android:textFontWeight="800"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/text_welcome_title"
+        app:layout_constraintBottom_toTopOf="@id/textWelcomeTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/text_welcome_title"
+        android:id="@+id/textWelcomeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sigmar"
@@ -34,26 +34,26 @@
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@id/text_welcome_subtitle"
+        app:layout_constraintBottom_toTopOf="@id/textWelcomeSubtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_app_name" />
+        app:layout_constraintTop_toBottomOf="@id/textAppName" />
 
     <TextView
-        android:id="@+id/text_welcome_subtitle"
+        android:id="@+id/textWelcomeSubtitle"
         style="@style/TitleBoldText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="@string/welcome_screen_subtitle"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/image_egg"
+        app:layout_constraintBottom_toTopOf="@id/imageEgg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_welcome_title" />
+        app:layout_constraintTop_toBottomOf="@+id/textWelcomeTitle" />
 
     <ImageView
-        android:id="@+id/image_egg"
+        android:id="@+id/imageEgg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/welcome_egg"
@@ -65,12 +65,12 @@
         tools:ignore="ContentDescription" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_control"
+        android:id="@+id/buttonControl"
         style="@style/FilledButton"
         android:layout_height="70dp"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="30dp"
         android:text="@string/welcome_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_egg" />
+        app:layout_constraintTop_toBottomOf="@id/imageEgg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

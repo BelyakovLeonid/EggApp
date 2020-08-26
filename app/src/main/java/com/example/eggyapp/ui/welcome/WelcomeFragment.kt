@@ -11,7 +11,7 @@ class WelcomeFragment : Fragment(R.layout.f_welcome) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button_control.setOnClickListener {
+        buttonControl.setOnClickListener {
             findNavController().navigate(WelcomeFragmentDirections.actionToSetupScreen())
         }
     }
