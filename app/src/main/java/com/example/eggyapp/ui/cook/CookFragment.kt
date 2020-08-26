@@ -47,6 +47,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
                 showFinish()
             }
             observeLiveData(timerBinder?.cancel) {
+                button_control.setState(ButtonState.STATE_IDLED)
                 view_timer.dropProgress()
             }
             observeLiveData(viewModel.calculatedTime) {
