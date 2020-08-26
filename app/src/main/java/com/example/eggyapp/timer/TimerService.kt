@@ -34,16 +34,21 @@ class TimerService : Service() {
     private var action: Notification.Action? = null
     private var intent: PendingIntent? = null
 
-    private var millisInFuture: Long = 0
     private var eggType: SetupType? = null
+    private var millisInFuture: Long = 0
+        set(value) {
+            mutableProgress.value = ProgressInformation(
+                mutableProgress.value?.currentProgress ?: 0f,
+                value.toTimerString()
+            )
+            field = value
+        }
 
     private val mutableProgress = MutableLiveData<ProgressInformation>()
     val progress: LiveData<ProgressInformation> = mutableProgress
 
     private val finishEvent = LiveEvent<Unit>()
     val finish = finishEvent
-
-    //todo add stop/finish event
 
     private val notificationIcon: Bitmap
         get() = when (eggType) {
@@ -129,6 +134,8 @@ class TimerService : Service() {
     }
 
     private fun startTimer() {
+        manager?.cancel(NOTIFICATION_ID)
+
         timer = object : CountDownTimer(millisInFuture, 10) {
             override fun onFinish() {
                 finishEvent.postEvent()
