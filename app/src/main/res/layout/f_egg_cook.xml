@@ -15,7 +15,9 @@
         <nl.dionsegijn.konfetti.KonfettiView
             android:id="@+id/view_confetti"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/button_control"
+            android:layout_height="0dp"
             android:elevation="6dp" />
 
         <ImageView

@@ -12,6 +12,8 @@
         <action
             android:id="@+id/actionToSetupScreen"
             app:destination="@id/boiling_graph"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
@@ -27,16 +29,16 @@
             tools:layout="@layout/f_egg_setup">
             <action
                 android:id="@+id/actionToCookScreen"
-                app:destination="@id/cookFragment" />
+                app:destination="@id/cookFragment"
+                app:enterAnim="@anim/slide_in"
+                app:exitAnim="@anim/fade_out"
+                app:popEnterAnim="@anim/fade_in"
+                app:popExitAnim="@anim/slide_out" />
         </fragment>
         <fragment
             android:id="@+id/cookFragment"
             android:name="com.example.eggyapp.ui.cook.CookFragment"
             android:label="CookFragment"
-            tools:layout="@layout/f_egg_cook">
-            <action
-                android:id="@+id/actionBackToSetup"
-                app:popUpTo="@id/setupFragment" />
-        </fragment>
+            tools:layout="@layout/f_egg_cook" />
     </navigation>
 </navigation>

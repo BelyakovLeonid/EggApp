@@ -135,10 +135,14 @@ class TimerService : Service() {
 
         timer = object : CountDownTimer(millisInFuture, 10) {
             override fun onFinish() {
-                finishEvent.postEvent()
                 timer = null
                 stopForeground(true)
                 notifyFinish()
+                finishEvent.postEvent()
+                mutableProgress.value = ProgressInformation(
+                    mutableProgress.value?.currentProgress ?: 0f,
+                    millisInFuture.toTimerString()
+                )
             }
 
             override fun onTick(millisUntilEnd: Long) {

@@ -122,6 +122,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     private fun showFinish() {
         button_control.setState(ButtonState.STATE_IDLED)
+        view_timer.dropProgress()
         context?.showToast(getString(R.string.toast_finish_text))
         makeVibration()
         makeConfetti()

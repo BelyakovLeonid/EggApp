@@ -15,7 +15,7 @@ import kotlin.math.sin
 
 private const val RADIUS_RATIO = 0.7f
 private const val GRADIENT_END_OFFSET = 0.1f
-private const val ANIMATION_DURATION = 1000
+private const val ANIMATION_DURATION = 1000L
 
 class TimerView @JvmOverloads constructor(
     context: Context,

@@ -26,7 +26,7 @@ class SetupEggRepositoryImpl : SetupEggRepository {
     private var type: SetupType? = null
 
     private val timeMap: HashMap<Triple<SetupTemperature, SetupSize, SetupType>, Int> = hashMapOf(
-        Triple(FRIDGE_TEMPERATURE, SIZE_S, SOFT_TYPE) to 260_000,
+        Triple(FRIDGE_TEMPERATURE, SIZE_S, SOFT_TYPE) to 10_000,
         Triple(FRIDGE_TEMPERATURE, SIZE_S, MEDIUM_TYPE) to 350_000,
         Triple(FRIDGE_TEMPERATURE, SIZE_S, HARD_TYPE) to 480_000,
         Triple(FRIDGE_TEMPERATURE, SIZE_M, SOFT_TYPE) to 290_000,
