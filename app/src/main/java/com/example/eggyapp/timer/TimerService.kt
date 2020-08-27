@@ -126,6 +126,7 @@ class TimerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         timer?.cancel()
+        timer = null
         //todo stop foreground?
         Log.d("MyTag", "onDestroy")
     }
@@ -209,6 +210,9 @@ class TimerService : Service() {
 
         val cancel: LiveData<Unit>
             get() = this@TimerService.cancelEvent
+
+        val isRunning: Boolean
+            get() = this@TimerService.timer != null
 
         fun startTimer() = this@TimerService.startTimer()
 

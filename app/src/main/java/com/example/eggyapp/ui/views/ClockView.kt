@@ -8,7 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import com.example.eggyapp.utils.toTimerString
 import kotlinx.android.parcel.Parcelize
 
-private const val ANIMATION_DURATION = 1000L
+private const val ANIMATION_DURATION = 600L
 
 class ClockView @JvmOverloads constructor(
     context: Context,

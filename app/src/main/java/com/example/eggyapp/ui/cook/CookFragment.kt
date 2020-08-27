@@ -41,6 +41,9 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as? TimerBinder
+            if (timerBinder?.isRunning == true) {
+                buttonControl.setState(ButtonState.STATE_STARTED)
+            }
             observeLiveData(timerBinder?.progress) {
                 viewTimer.setCurrentProgress(it.currentProgress, it.timerString)
             }
@@ -76,6 +79,11 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
         super.onViewCreated(view, savedInstanceState)
         handleView()
         observeViewModel()
+        requireContext().bindService(
+            Intent(requireContext(), TimerService::class.java),
+            connection,
+            Context.BIND_AUTO_CREATE
+        )
     }
 
     private fun observeViewModel() {
@@ -90,12 +98,6 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             observeLiveData(calculatedTime) {
                 textTime.text = it.toTimerString()
                 viewTimer.setCurrentProgress(it.toTimerString())
-
-                requireContext().bindService(
-                    Intent(requireContext(), TimerService::class.java),
-                    connection,
-                    Context.BIND_AUTO_CREATE
-                )
             }
         }
     }
