@@ -37,13 +37,13 @@ class TimerService : Service() {
     private var eggType: SetupType? = null
     private var millisInFuture: Long = 0
         set(value) {
-            mutableProgress.value = ProgressInformation(0f, value.toTimerString())
+            mutableProgress.value = 0f
+            mutableTimerText.value = value.toTimerString()
             field = value
         }
 
-    private val mutableProgress = MutableLiveData<ProgressInformation>()
-    val progress: LiveData<ProgressInformation> = mutableProgress
-
+    private val mutableProgress = MutableLiveData<Float>()
+    private val mutableTimerText = MutableLiveData<String>()
     private val finishEvent = LiveEvent<Unit>()
     private val cancelEvent = LiveEvent<Unit>()
 
@@ -140,17 +140,15 @@ class TimerService : Service() {
                 stopForeground(true)
                 notifyFinish()
                 finishEvent.postEvent()
-                mutableProgress.value = ProgressInformation(
-                    mutableProgress.value?.currentProgress ?: 0f,
-                    millisInFuture.toTimerString()
-                )
+                mutableTimerText.value = millisInFuture.toTimerString()
             }
 
             override fun onTick(millisUntilEnd: Long) {
                 val progress = 1 - millisUntilEnd / millisInFuture.toFloat()
-                val progressInfo = ProgressInformation(progress, millisUntilEnd.toTimerString())
-                mutableProgress.value = progressInfo
-                notifyProgress(progressInfo)
+                val timerString = millisUntilEnd.toTimerString()
+                mutableProgress.value = progress
+                mutableTimerText.value = timerString
+                notifyProgress(progress, timerString)
             }
         }
         timer?.start()
@@ -167,9 +165,9 @@ class TimerService : Service() {
         manager?.notify(NOTIFICATION_ID, notification)
     }
 
-    private fun notifyProgress(progressInfo: ProgressInformation) {
-        val currentProgress = (progressInfo.currentProgress * MAX_PROGRESS).toInt()
-        val contentText = getString(R.string.timer_notif_subtitle, progressInfo.timerString)
+    private fun notifyProgress(progress: Float, timerString: String) {
+        val currentProgress = (progress * MAX_PROGRESS).toInt()
+        val contentText = getString(R.string.timer_notif_subtitle, timerString)
         val notification = buildBaseNotification(NOTIF_PROGRESS_CHANNEL_ID, contentText)
             .setCategory(Notification.CATEGORY_PROGRESS)
             .setProgress(MAX_PROGRESS, currentProgress, false)
@@ -195,15 +193,15 @@ class TimerService : Service() {
         timer = null
         stopForeground(true)
         cancelEvent.postEvent()
-        mutableProgress.value = ProgressInformation(
-            mutableProgress.value?.currentProgress ?: 0f,
-            millisInFuture.toTimerString()
-        )
+        mutableTimerText.value = millisInFuture.toTimerString()
     }
 
     inner class TimerBinder : Binder() {
-        val progress: LiveData<ProgressInformation>
-            get() = this@TimerService.progress
+        val progress: LiveData<Float>
+            get() = this@TimerService.mutableProgress
+
+        val timerText: LiveData<String>
+            get() = this@TimerService.mutableTimerText
 
         val finish: LiveData<Unit>
             get() = this@TimerService.finishEvent
@@ -227,8 +225,3 @@ class TimerService : Service() {
         }
     }
 }
-
-data class ProgressInformation(
-    val currentProgress: Float,
-    val timerString: String
-)

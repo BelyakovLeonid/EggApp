@@ -45,7 +45,10 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
                 buttonControl.setState(ButtonState.STATE_STARTED)
             }
             observeLiveData(timerBinder?.progress) {
-                viewTimer.setCurrentProgress(it.currentProgress, it.timerString)
+                viewTimer.setProgress(it)
+            }
+            observeLiveData(timerBinder?.timerText) {
+                viewTimer.setTimerText(it)
             }
             observeLiveData(timerBinder?.finish) {
                 showFinish()
@@ -97,7 +100,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             }
             observeLiveData(calculatedTime) {
                 textTime.text = it.toTimerString()
-                viewTimer.setCurrentProgress(it.toTimerString())
+                viewTimer.setTimerText(it.toTimerString())
             }
         }
     }

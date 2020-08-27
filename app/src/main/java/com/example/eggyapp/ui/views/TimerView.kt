@@ -126,16 +126,10 @@ class TimerView @JvmOverloads constructor(
         )
     }
 
-    fun setCurrentProgress(timeString: String) { //todo think about it
-        setCurrentProgress(0f, timeString)
-    }
-
-    fun setCurrentProgress(progress: Float, timeString: String) {
+    fun setProgress(progress: Float) {
         animator?.cancel()
         animator = null
-
         currentDegree = progress * 360f
-        currentText = timeString
 
         val gradientEndPosition = (currentDegree / 360f) - GRADIENT_END_OFFSET
         gradient = SweepGradient(
@@ -145,6 +139,11 @@ class TimerView @JvmOverloads constructor(
             floatArrayOf(0f, gradientEndPosition)
         )
 
+        invalidate()
+    }
+
+    fun setTimerText(timerString: String) {
+        currentText = timerString
         invalidate()
     }
 
