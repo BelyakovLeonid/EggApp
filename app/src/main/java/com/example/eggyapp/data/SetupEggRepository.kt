@@ -13,17 +13,18 @@ interface SetupEggRepository {
     fun postType(type: SetupType?)
 
     val calculatedTimeStream: Observable<Int>
+    val selectedTemperatureStream: Observable<SetupTemperature>
+    val selectedSizeStream: Observable<SetupSize>
     val selectedTypeStream: Observable<SetupType>
 }
 
 class SetupEggRepositoryImpl : SetupEggRepository {
 
+    private var selectedSizeSubject: BehaviorSubject<SetupSize> = BehaviorSubject.create()
     private var selectedTypeSubject: BehaviorSubject<SetupType> = BehaviorSubject.create()
-    private var calculatedTimeSubject: BehaviorSubject<Int> = BehaviorSubject.createDefault(0)
+    private var selectedTempSubject: BehaviorSubject<SetupTemperature> = BehaviorSubject.create()
 
-    private var temperature: SetupTemperature? = null
-    private var size: SetupSize? = null
-    private var type: SetupType? = null
+    private var calculatedTimeSubject: BehaviorSubject<Int> = BehaviorSubject.createDefault(0)
 
     private val timeMap: HashMap<Triple<SetupTemperature, SetupSize, SetupType>, Int> = hashMapOf(
         Triple(FRIDGE_TEMPERATURE, SIZE_S, SOFT_TYPE) to 10_000,
@@ -48,30 +49,41 @@ class SetupEggRepositoryImpl : SetupEggRepository {
     )
 
     override fun postTemperature(temperature: SetupTemperature?) {
-        this.temperature = temperature
+        selectedTempSubject.onNext(temperature ?: SetupTemperature.NONE)
         recalculateTime()
     }
 
     override fun postSize(size: SetupSize?) {
-        this.size = size
+        selectedSizeSubject.onNext(size ?: SetupSize.NONE)
         recalculateTime()
     }
 
     override fun postType(type: SetupType?) {
-        this.type = type
-        if (type != null) selectedTypeSubject.onNext(type)
+        selectedTypeSubject.onNext(type ?: SetupType.NONE)
         recalculateTime()
     }
 
     private fun recalculateTime() {
-        calculatedTimeSubject.onNext(timeMap[Triple(temperature, size, type)] ?: 0)
+        calculatedTimeSubject.onNext(
+            timeMap[Triple(
+                selectedTempSubject.value,
+                selectedSizeSubject.value,
+                selectedTypeSubject.value
+            )] ?: 0
+        )
     }
 
     override val calculatedTimeStream: Observable<Int>
         get() = calculatedTimeSubject
 
+    override val selectedSizeStream: Observable<SetupSize>
+        get() = selectedSizeSubject
+
     override val selectedTypeStream: Observable<SetupType>
         get() = selectedTypeSubject
+
+    override val selectedTemperatureStream: Observable<SetupTemperature>
+        get() = selectedTempSubject
 }
 
 interface Identifiable {
@@ -79,13 +91,13 @@ interface Identifiable {
 }
 
 enum class SetupTemperature(override val id: Int) : Identifiable {
-    FRIDGE_TEMPERATURE(0), ROOM_TEMPERATURE(1)
+    NONE(-1), FRIDGE_TEMPERATURE(0), ROOM_TEMPERATURE(1)
 }
 
 enum class SetupSize(override val id: Int) : Identifiable {
-    SIZE_S(0), SIZE_M(1), SIZE_L(2)
+    NONE(-1), SIZE_S(0), SIZE_M(1), SIZE_L(2)
 }
 
 enum class SetupType(override val id: Int) : Identifiable {
-    SOFT_TYPE(0), MEDIUM_TYPE(1), HARD_TYPE(2)
+    NONE(-1), SOFT_TYPE(0), MEDIUM_TYPE(1), HARD_TYPE(2)
 }

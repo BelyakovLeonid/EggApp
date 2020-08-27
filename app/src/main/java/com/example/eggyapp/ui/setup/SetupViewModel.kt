@@ -20,11 +20,23 @@ class SetupViewModel @Inject constructor(
     private val mutableCalculatedTime = MutableLiveData<Int>()
     val calculatedTime: LiveData<Int> = mutableCalculatedTime
 
+    private val mutableSelectedTemp = MutableLiveData<SetupTemperature>()
+    val selectedTemperature: LiveData<SetupTemperature> = mutableSelectedTemp
+
+    private val mutableSelectedSize = MutableLiveData<SetupSize>()
+    val selectedSize: LiveData<SetupSize> = mutableSelectedSize
+
+    private val mutableSelectedType = MutableLiveData<SetupType>()
+    val selectedType: LiveData<SetupType> = mutableSelectedType
+
     private val mutableIsCookEnable = MutableLiveData<Boolean>()
     val isCookEnable: LiveData<Boolean> = mutableIsCookEnable
 
     init {
         observeCalculatedTime()
+        observeSelectedTemperature()
+        observeSelectedSize()
+        observeSelectedType()
     }
 
     private fun observeCalculatedTime() {
@@ -33,6 +45,30 @@ class SetupViewModel @Inject constructor(
             .subscribe {
                 mutableCalculatedTime.value = it
                 mutableIsCookEnable.value = it != 0
+            }.addToComposite(compositeDisposable)
+    }
+
+    private fun observeSelectedType() {
+        setupRepository.selectedTypeStream
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                mutableSelectedType.value = it
+            }.addToComposite(compositeDisposable)
+    }
+
+    private fun observeSelectedSize() {
+        setupRepository.selectedSizeStream
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                mutableSelectedSize.value = it
+            }.addToComposite(compositeDisposable)
+    }
+
+    private fun observeSelectedTemperature() {
+        setupRepository.selectedTemperatureStream
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                mutableSelectedTemp.value = it
             }.addToComposite(compositeDisposable)
     }
 

@@ -2,6 +2,7 @@ package com.example.eggyapp.ui.views.checkable_views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -28,6 +29,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
     }
 
     override fun onCheckedChanged(view: CheckableListenable, index: Int, isChecked: Boolean) {
+        Log.d("MyTag", "onCheckedChanged")
         if (isChecked) {
             iterateCheckableChildren {
                 if (it != view) {
@@ -59,6 +61,13 @@ class CheckableButtonGroup @JvmOverloads constructor(
         if (this != lastCheckedIndex) {
             block.invoke(this)
             lastCheckedIndex = this
+        }
+    }
+
+
+    fun setSelectedItem(id: Int) {
+        iterateCheckableChildren {
+            it.isChecked = it.getIndex() == id
         }
     }
 }

@@ -27,7 +27,9 @@ class CheckableMaterialButton @JvmOverloads constructor(
     override fun getIndex() = index
 
     override fun setChecked(checked: Boolean) {
-        super.setChecked(checked)
-        checkedListener?.onCheckedChanged(this, index, checked)
+        if (isChecked != checked) {
+            super.setChecked(checked)
+            checkedListener?.onCheckedChanged(this, index, checked)
+        }
     }
 }

@@ -14,7 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
-import com.example.eggyapp.data.SetupType.*
+import com.example.eggyapp.data.SetupType.MEDIUM_TYPE
+import com.example.eggyapp.data.SetupType.SOFT_TYPE
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
@@ -95,7 +96,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
                 textCookTitle.text = when (it) {
                     SOFT_TYPE -> getString(R.string.cook_eggs_soft)
                     MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
-                    HARD_TYPE -> getString(R.string.cook_eggs_hard)
+                    else -> getString(R.string.cook_eggs_hard)
                 }
             }
             observeLiveData(calculatedTime) {

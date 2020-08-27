@@ -32,6 +32,16 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
             observeLiveData(calculatedTime) {
                 textTime.setTime(it)
             }
+            observeLiveData(selectedTemperature) {
+                groupTemperatureButtons.setSelectedItem(it.id)
+            }
+            observeLiveData(selectedSize) {
+                groupSizeButtons.setSelectedItem(it.id)
+            }
+            observeLiveData(selectedType) {
+                groupTypeButtons.setSelectedItem(it.id)
+            }
+
             observeLiveData(isCookEnable) {
                 buttonStart.isEnabled = it
             }
