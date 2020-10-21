@@ -29,8 +29,8 @@ class TimerView @JvmOverloads constructor(
     private var background = context.getBitmap(R.drawable.timer_background)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        paint.style = Paint.Style.FILL
-        paint.typeface = resources.getFont(R.font.monsterrat_bold)
+        style = Paint.Style.FILL
+        typeface = resources.getFont(R.font.monsterrat_bold)
     }
 
     private var bigRadius: Float = 0f
