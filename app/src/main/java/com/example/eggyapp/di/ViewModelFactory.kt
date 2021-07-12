@@ -10,10 +10,6 @@ class ViewModelFactory @Inject constructor(
     private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
-    init {
-        EggApp.appComponent.inject(this)
-    }
-
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val viewModelProvider = viewModels[modelClass]
         return (viewModelProvider?.get() as? T)

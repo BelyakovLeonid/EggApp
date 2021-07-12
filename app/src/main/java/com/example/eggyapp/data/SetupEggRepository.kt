@@ -6,6 +6,7 @@ import com.example.eggyapp.data.SetupTemperature.ROOM_TEMPERATURE
 import com.example.eggyapp.data.SetupType.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
 
 interface SetupEggRepository {
     fun postTemperature(temperature: SetupTemperature?)
@@ -18,7 +19,7 @@ interface SetupEggRepository {
     val selectedTypeStream: Observable<SetupType>
 }
 
-class SetupEggRepositoryImpl : SetupEggRepository {
+class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
 
     private var selectedSizeSubject: BehaviorSubject<SetupSize> = BehaviorSubject.create()
     private var selectedTypeSubject: BehaviorSubject<SetupType> = BehaviorSubject.create()

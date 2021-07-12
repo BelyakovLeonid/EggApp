@@ -75,7 +75,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        EggApp.appComponent.inject(this)
+        (requireActivity().application as EggApp).appComponent.inject(this)
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
     }
 

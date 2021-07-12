@@ -1,6 +1,8 @@
 package com.example.eggyapp.di.modules
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.eggyapp.di.ViewModelFactory
 import com.example.eggyapp.di.ViewModelKey
 import com.example.eggyapp.ui.cook.CookViewModel
 import com.example.eggyapp.ui.setup.SetupViewModel
@@ -9,14 +11,17 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class ViewModelModule {
+interface ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(CookViewModel::class)
-    abstract fun cookViewModel(viewModel: CookViewModel): ViewModel
+    fun bindsCookViewModel(viewModel: CookViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SetupViewModel::class)
-    abstract fun setupViewModel(viewModel: SetupViewModel): ViewModel
+    fun bindsSetupViewModel(viewModel: SetupViewModel): ViewModel
+
+    @Binds
+    fun bindsViewModelFactory(impl: ViewModelFactory): ViewModelProvider.Factory
 }

@@ -17,7 +17,6 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(fragment: SetupFragment)
     fun inject(fragment: CookFragment)
-    fun inject(factory: ViewModelFactory)
 
     @Component.Factory
     interface Factory {

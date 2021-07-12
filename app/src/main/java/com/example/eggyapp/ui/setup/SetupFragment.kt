@@ -18,7 +18,7 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        EggApp.appComponent.inject(this)
+        (requireActivity().application as EggApp).appComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
