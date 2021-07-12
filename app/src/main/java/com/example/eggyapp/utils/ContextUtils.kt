@@ -9,8 +9,8 @@ import com.example.eggyapp.R
 
 fun Context.showToast(string: String): Toast =
     Toast.makeText(this, string, Toast.LENGTH_LONG).apply {
-        view.findViewById<TextView>(android.R.id.message)
-            .setTextColor(resources.getColor(R.color.colorGrayLight, theme))
+        view?.findViewById<TextView>(android.R.id.message)
+            ?.setTextColor(resources.getColor(R.color.colorGrayLight, theme))
         show()
     }
 
