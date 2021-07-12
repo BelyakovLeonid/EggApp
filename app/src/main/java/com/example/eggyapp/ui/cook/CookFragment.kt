@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
+import com.example.eggyapp.base.VibratorManager
+import com.example.eggyapp.base.ext.makeDefaultConfetti
 import com.example.eggyapp.data.SetupType.MEDIUM_TYPE
 import com.example.eggyapp.data.SetupType.SOFT_TYPE
 import com.example.eggyapp.databinding.FEggCookBinding
@@ -133,38 +135,8 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
         binding.buttonControl.setState(ButtonState.STATE_IDLED)
         binding.viewTimer.dropProgress(FINISH_ANIMATION_DELAY)
         context?.showToast(getString(R.string.toast_finish_text))
-        makeVibration()
-        makeConfetti()
-    }
-
-    private fun makeVibration() {
-        val vibratorService = context?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        if (vibratorService?.hasVibrator() == true) {
-            val vibrationEffect = VibrationEffect.createWaveform(
-                longArrayOf(0, 50, 50, 50, 50, 200, 100, 200, 100, 200),
-                intArrayOf(0, 100, 0, 100, 0, 220, 0, 220, 0, 220),
-                -1
-            )
-            vibratorService.vibrate(vibrationEffect)
-        }
-    }
-
-    private fun makeConfetti() {
-        binding.viewConfetti.build()
-            .addColors(
-                getColor(R.color.confetti_yellow),
-                getColor(R.color.confetti_orange),
-                getColor(R.color.confetti_purple),
-                getColor(R.color.confetti_pink)
-            )
-            .setDirection(0.0, 359.0)
-            .setSpeed(1f, 5f)
-            .setFadeOutEnabled(true)
-            .setTimeToLive(2000L)
-            .addShapes(Shape.Square, Shape.Circle)
-            .addSizes(Size(12))
-            .setPosition(-50f, binding.viewConfetti.width + 50f, -50f, -50f)
-            .streamFor(150, 2000L)
+        VibratorManager(context).makeDefaultVibration()
+        binding.viewConfetti.makeDefaultConfetti()
     }
 
     override fun onDestroyView() {

@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
         })
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         setFullScreenMode()
     }
 
