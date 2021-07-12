@@ -12,10 +12,12 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType.MEDIUM_TYPE
 import com.example.eggyapp.data.SetupType.SOFT_TYPE
+import com.example.eggyapp.databinding.FEggCookBinding
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
@@ -24,7 +26,6 @@ import com.example.eggyapp.utils.getColor
 import com.example.eggyapp.utils.observeLiveData
 import com.example.eggyapp.utils.showToast
 import com.example.eggyapp.utils.toTimerString
-import kotlinx.android.synthetic.main.f_egg_cook.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 
@@ -35,6 +36,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     private var timerBinder: TimerBinder? = null
 
     private val viewModel: CookViewModel by viewModels { viewModelFactory }
+    private val binding by viewBinding(FEggCookBinding::bind)
 
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -43,20 +45,20 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as? TimerBinder
             if (timerBinder?.isRunning == true) {
-                buttonControl.setState(ButtonState.STATE_STARTED)
+                binding.buttonControl.setState(ButtonState.STATE_STARTED)
             }
             observeLiveData(timerBinder?.progress) {
-                viewTimer.setProgress(it)
+                binding.viewTimer.setProgress(it)
             }
             observeLiveData(timerBinder?.timerText) {
-                viewTimer.setTimerText(it)
+                binding.viewTimer.setTimerText(it)
             }
             observeLiveData(timerBinder?.finish) {
                 showFinish()
             }
             observeLiveData(timerBinder?.cancel) {
-                buttonControl.setState(ButtonState.STATE_IDLED)
-                viewTimer.dropProgress()
+                binding.buttonControl.setState(ButtonState.STATE_IDLED)
+                binding.viewTimer.dropProgress()
             }
             observeLiveData(viewModel.calculatedTime) {
                 timerBinder?.setTime(it.toLong())
@@ -93,27 +95,27 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     private fun observeViewModel() {
         with(viewModel) {
             observeLiveData(selectedType) {
-                textCookTitle.text = when (it) {
+                binding.textCookTitle.text = when (it) {
                     SOFT_TYPE -> getString(R.string.cook_eggs_soft)
                     MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
                     else -> getString(R.string.cook_eggs_hard)
                 }
             }
             observeLiveData(calculatedTime) {
-                textTime.text = it.toTimerString()
-                viewTimer.setTimerText(it.toTimerString())
+                binding.textTime.text = it.toTimerString()
+                binding.viewTimer.setTimerText(it.toTimerString())
             }
         }
     }
 
     private fun handleView() {
-        buttonControl.onCancelListener = {
+        binding.buttonControl.onCancelListener = {
             timerBinder?.stopTimer()
         }
-        buttonControl.onStartListener = {
+        binding.buttonControl.onStartListener = {
             timerBinder?.startTimer()
         }
-        buttonBack.setOnClickListener {
+        binding.buttonBack.setOnClickListener {
             showExitDialog()
         }
     }
@@ -128,8 +130,8 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun showFinish() {
-        buttonControl.setState(ButtonState.STATE_IDLED)
-        viewTimer.dropProgress(FINISH_ANIMATION_DELAY)
+        binding.buttonControl.setState(ButtonState.STATE_IDLED)
+        binding.viewTimer.dropProgress(FINISH_ANIMATION_DELAY)
         context?.showToast(getString(R.string.toast_finish_text))
         makeVibration()
         makeConfetti()
@@ -148,7 +150,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun makeConfetti() {
-        viewConfetti.build()
+        binding.viewConfetti.build()
             .addColors(
                 getColor(R.color.confetti_yellow),
                 getColor(R.color.confetti_orange),
@@ -161,7 +163,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             .setTimeToLive(2000L)
             .addShapes(Shape.Square, Shape.Circle)
             .addSizes(Size(12))
-            .setPosition(-50f, viewConfetti.width + 50f, -50f, -50f)
+            .setPosition(-50f, binding.viewConfetti.width + 50f, -50f, -50f)
             .streamFor(150, 2000L)
     }
 

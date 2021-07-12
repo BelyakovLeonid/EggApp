@@ -19,6 +19,5 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <include app:graph="@navigation/workflow_graph" />
-
+    <include app:graph="@navigation/content_graph" />
 </navigation>

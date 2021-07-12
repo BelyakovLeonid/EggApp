@@ -1,6 +1,7 @@
 object Dependencies {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     val singleLiveEvent = "com.github.hadilq.liveevent:liveevent:${Versions.singleLiveEvent}"
+    val viewBindingDelegate = "com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:${Versions.viewBindingDelegate}"
 
     object TopLevel{
         val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
@@ -27,7 +28,6 @@ object Dependencies {
 
     object Navigation {
         val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-        val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     }
 
     object RxJava {

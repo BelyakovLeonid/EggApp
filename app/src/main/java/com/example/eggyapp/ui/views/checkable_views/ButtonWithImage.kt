@@ -5,9 +5,10 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.R
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.synthetic.main.v_egg_type.view.*
+import com.example.eggyapp.databinding.VEggTypeBinding
+import kotlinx.parcelize.Parcelize
 
 
 class ButtonWithImage @JvmOverloads constructor(
@@ -28,9 +29,11 @@ class ButtonWithImage @JvmOverloads constructor(
             }
         }
 
+    private val binding by viewBinding(VEggTypeBinding::bind)
+
     init {
-        isClickable = true
         View.inflate(context, R.layout.v_egg_type, this)
+        isClickable = true
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.ButtonWithImage,
@@ -39,8 +42,8 @@ class ButtonWithImage @JvmOverloads constructor(
             try {
                 val stringResId = getResourceId(R.styleable.ButtonWithImage_text, 0)
                 val imageResId = getResourceId(R.styleable.ButtonWithImage_image, 0)
-                textEggType.text = resources.getText(stringResId)
-                imageEggType.setImageResource(imageResId)
+                binding.textEggType.text = resources.getText(stringResId)
+                binding.imageEggType.setImageResource(imageResId)
             } finally {
                 recycle()
             }
@@ -73,8 +76,8 @@ class ButtonWithImage @JvmOverloads constructor(
     }
 
     private fun handleCheckedState() {
-        viewTypeBackground.isActivated = checkedState
-        textEggType.isActivated = checkedState
+        binding.viewTypeBackground.isActivated = checkedState
+        binding.textEggType.isActivated = checkedState
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {

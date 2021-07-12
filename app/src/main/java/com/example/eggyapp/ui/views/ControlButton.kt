@@ -5,7 +5,7 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import com.example.eggyapp.R
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 class ControlButton : MaterialButton {
 

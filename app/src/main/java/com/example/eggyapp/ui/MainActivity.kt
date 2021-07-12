@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as? TimerService.TimerBinder
             if (timerBinder?.isRunning == true) {
-                findNavController(R.id.navHostFragment).let {
-                    it.setGraph(R.navigation.workflow_graph)
+                findNavController(R.id.mainContainer).let {
+                    it.setGraph(R.navigation.content_graph)
                     it.navigate(R.id.cookFragment)
                 }
             }
