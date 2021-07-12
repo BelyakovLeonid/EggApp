@@ -119,7 +119,6 @@ class TimerService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        Log.d("MyTag", "onBind")
         return timerBinder
     }
 
@@ -127,8 +126,6 @@ class TimerService : Service() {
         super.onDestroy()
         timer?.cancel()
         timer = null
-        //todo stop foreground?
-        Log.d("MyTag", "onDestroy")
     }
 
     private fun startTimer() {

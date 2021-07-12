@@ -29,7 +29,6 @@ class CheckableButtonGroup @JvmOverloads constructor(
     }
 
     override fun onCheckedChanged(view: CheckableListenable, index: Int, isChecked: Boolean) {
-        Log.d("MyTag", "onCheckedChanged")
         if (isChecked) {
             iterateCheckableChildren {
                 if (it != view) {
