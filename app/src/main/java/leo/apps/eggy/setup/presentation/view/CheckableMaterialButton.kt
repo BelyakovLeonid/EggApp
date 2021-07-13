@@ -1,4 +1,4 @@
-package leo.apps.eggy.setup.presentation.view.checkable_views
+package leo.apps.eggy.setup.presentation.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,6 +9,7 @@ class CheckableMaterialButton @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : MaterialButton(context, attrs, defStyleAttr), CheckableListenable {
+
     private var checkedListener: CheckedListener? = null
     private var index: Int = 0
 

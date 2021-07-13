@@ -1,4 +1,4 @@
-package leo.apps.eggy.setup.presentation.view.checkable_views
+package leo.apps.eggy.setup.presentation.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -35,8 +35,17 @@ class CheckableButtonGroup @JvmOverloads constructor(
                 }
             }
         }
-        getCheckedIndex().ifChange {
-            onCheckedIndexListener?.invoke(it)
+
+        val checkedIndex = getCheckedIndex()
+        if (checkedIndex != lastCheckedIndex) {
+            onCheckedIndexListener?.invoke(checkedIndex)
+            lastCheckedIndex = checkedIndex
+        }
+    }
+
+    fun setSelectedItem(id: Int) {
+        iterateCheckableChildren {
+            it.isChecked = it.getIndex() == id
         }
     }
 
@@ -46,7 +55,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
                 return it.getIndex()
             }
         }
-        return -1
+        return NO_ITEM_SELECTED
     }
 
     private inline fun iterateCheckableChildren(block: (child: CheckableListenable) -> Unit) {
@@ -55,16 +64,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
         }
     }
 
-    private inline fun Int.ifChange(block: (Int) -> Unit?) {
-        if (this != lastCheckedIndex) {
-            block.invoke(this)
-            lastCheckedIndex = this
-        }
-    }
-
-    fun setSelectedItem(id: Int) {
-        iterateCheckableChildren {
-            it.isChecked = it.getIndex() == id
-        }
+    private companion object{
+        const val NO_ITEM_SELECTED = -1
     }
 }

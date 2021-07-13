@@ -1,7 +1,6 @@
-package leo.apps.eggy.setup.presentation.view.checkable_views
+package leo.apps.eggy.setup.presentation.view
 
 import android.content.Context
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout

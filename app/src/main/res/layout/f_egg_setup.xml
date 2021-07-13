@@ -51,7 +51,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageEggTop" />
 
-        <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableButtonGroup
+        <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupTemperatureButtons"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTemperatureTitle">
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonTemperatureFridge"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_temperature_fridge" />
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonTemperatureRoom"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -79,7 +79,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_temperature_room" />
-        </leo.apps.eggy.setup.presentation.view.checkable_views.CheckableButtonGroup>
+        </leo.apps.eggy.setup.presentation.view.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/textSizeTitle"
@@ -91,7 +91,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/groupTemperatureButtons" />
 
-        <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableButtonGroup
+        <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupSizeButtons"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -102,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textSizeTitle">
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonSizeS"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_S" />
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonSizeM"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -120,7 +120,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_M" />
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonSizeL"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -128,7 +128,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_L" />
-        </leo.apps.eggy.setup.presentation.view.checkable_views.CheckableButtonGroup>
+        </leo.apps.eggy.setup.presentation.view.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/textTypeTitle"
@@ -140,7 +140,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/groupSizeButtons" />
 
-        <leo.apps.eggy.setup.presentation.view.checkable_views.CheckableButtonGroup
+        <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupTypeButtons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTypeTitle">
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.ButtonWithImage
+            <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeSoft"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                 app:image="@drawable/egg_soft"
                 app:text="@string/setup_egg_type_soft" />
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.ButtonWithImage
+            <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
                 app:image="@drawable/egg_medium"
                 app:text="@string/setup_egg_type_medium" />
 
-            <leo.apps.eggy.setup.presentation.view.checkable_views.ButtonWithImage
+            <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeHard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                 android:layout_weight="1"
                 app:image="@drawable/egg_hard"
                 app:text="@string/setup_egg_type_hard" />
-        </leo.apps.eggy.setup.presentation.view.checkable_views.CheckableButtonGroup>
+        </leo.apps.eggy.setup.presentation.view.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/textTimeTitle"

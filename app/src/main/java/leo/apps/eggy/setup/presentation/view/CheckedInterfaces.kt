@@ -1,4 +1,4 @@
-package leo.apps.eggy.setup.presentation.view.checkable_views
+package leo.apps.eggy.setup.presentation.view
 
 import android.widget.Checkable
 
