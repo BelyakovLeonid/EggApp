@@ -1,11 +1,11 @@
 package com.example.eggyapp.ui.setup
 
 import androidx.lifecycle.ViewModel
-import com.example.eggyapp.data.SetupEggRepository
-import com.example.eggyapp.data.SetupSize
-import com.example.eggyapp.data.SetupTemperature
-import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.base.utils.addToComposite
+import com.example.eggyapp.data.SetupEggRepository
+import com.example.eggyapp.data.model.SetupSize
+import com.example.eggyapp.data.model.SetupTemperature
+import com.example.eggyapp.data.model.SetupType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,14 +63,14 @@ class SetupViewModel @Inject constructor(
     }
 
     fun onSelectTemperature(temperature: SetupTemperature?) {
-        setupRepository.postTemperature(temperature)
+        setupRepository.setTemperature(temperature)
     }
 
     fun onSelectSize(size: SetupSize?) {
-        setupRepository.postSize(size)
+        setupRepository.setSize(size)
     }
 
     fun onSelectType(type: SetupType?) {
-        setupRepository.postType(type)
+        setupRepository.setType(type)
     }
 }

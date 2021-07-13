@@ -2,7 +2,6 @@ package com.example.eggyapp.ui.views.checkable_views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -14,7 +13,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), CheckedListener {
 
-    var onCheckedIndexListener: ((Int?) -> Unit)? = null
+    var onCheckedIndexListener: ((Int) -> Unit)? = null
     private var lastCheckedIndex: Int? = null
     private var itemsCount = 0
 
@@ -41,13 +40,13 @@ class CheckableButtonGroup @JvmOverloads constructor(
         }
     }
 
-    private fun getCheckedIndex(): Int? {
+    private fun getCheckedIndex(): Int {
         iterateCheckableChildren {
             if (it.isChecked) {
                 return it.getIndex()
             }
         }
-        return null
+        return -1
     }
 
     private inline fun iterateCheckableChildren(block: (child: CheckableListenable) -> Unit) {
@@ -56,7 +55,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
         }
     }
 
-    private inline fun Int?.ifChange(block: (Int?) -> Unit?) {
+    private inline fun Int.ifChange(block: (Int) -> Unit?) {
         if (this != lastCheckedIndex) {
             block.invoke(this)
             lastCheckedIndex = this

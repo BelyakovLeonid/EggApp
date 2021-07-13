@@ -10,9 +10,9 @@ import android.os.IBinder
 import androidx.core.content.getSystemService
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.eggyapp.R
-import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.base.utils.getBitmap
 import com.example.eggyapp.base.utils.toTimerString
+import com.example.eggyapp.data.model.SetupType
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,15 +50,15 @@ class TimerService : Service() {
 
     private val notificationIcon: Bitmap
         get() = when (eggType) {
-            SetupType.SOFT_TYPE -> getBitmap(R.drawable.egg_soft)
-            SetupType.MEDIUM_TYPE -> getBitmap(R.drawable.egg_medium)
+            SetupType.SOFT -> getBitmap(R.drawable.egg_soft)
+            SetupType.MEDIUM -> getBitmap(R.drawable.egg_medium)
             else -> getBitmap(R.drawable.egg_hard)
         }
 
     private val notificationTitle: String
         get() = when (eggType) {
-            SetupType.SOFT_TYPE -> getString(R.string.timer_notif_soft)
-            SetupType.MEDIUM_TYPE -> getString(R.string.timer_notif_medium)
+            SetupType.SOFT -> getString(R.string.timer_notif_soft)
+            SetupType.MEDIUM -> getString(R.string.timer_notif_medium)
             else -> getString(R.string.timer_notif_hard)
         }
 

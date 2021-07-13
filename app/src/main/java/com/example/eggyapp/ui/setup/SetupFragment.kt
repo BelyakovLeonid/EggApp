@@ -8,10 +8,12 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
+import com.example.eggyapp.base.utils.observeFlow
+import com.example.eggyapp.data.model.SetupSize
+import com.example.eggyapp.data.model.SetupTemperature
+import com.example.eggyapp.data.model.SetupType
 import com.example.eggyapp.databinding.FEggSetupBinding
 import com.example.eggyapp.ui.base.BaseFragment
-import com.example.eggyapp.base.utils.findById
-import com.example.eggyapp.base.utils.observeFlow
 
 class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
 
@@ -34,13 +36,13 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
             binding.textTime.setTime(it)
         }
         observeFlow(viewModel.selectedTemperature) {
-            binding.groupTemperatureButtons.setSelectedItem(it.id)
+            binding.groupTemperatureButtons.setSelectedItem(SetupTemperature.values().indexOf(it))
         }
         observeFlow(viewModel.selectedSize) {
-            binding.groupSizeButtons.setSelectedItem(it.id)
+            binding.groupSizeButtons.setSelectedItem(SetupSize.values().indexOf(it))
         }
         observeFlow(viewModel.selectedType) {
-            binding.groupTypeButtons.setSelectedItem(it.id)
+            binding.groupTypeButtons.setSelectedItem(SetupType.values().indexOf(it))
         }
         observeFlow(viewModel.isCookEnable) {
             binding.buttonStart.isEnabled = it
@@ -52,13 +54,13 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
             findNavController().navigate(R.id.actionToCookScreen)
         }
         binding.groupTemperatureButtons.onCheckedIndexListener = {
-            viewModel.onSelectTemperature(findById(it))
+            viewModel.onSelectTemperature(SetupTemperature.values().get(it))
         }
         binding.groupSizeButtons.onCheckedIndexListener = {
-            viewModel.onSelectSize(findById(it))
+            viewModel.onSelectSize(SetupSize.values().get(it))
         }
         binding.groupTypeButtons.onCheckedIndexListener = {
-            viewModel.onSelectType(findById(it))
+            viewModel.onSelectType(SetupType.values().get(it))
         }
     }
 }

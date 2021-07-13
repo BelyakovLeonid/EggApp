@@ -15,16 +15,15 @@ import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.base.VibratorManager
 import com.example.eggyapp.base.utils.makeDefaultConfetti
-import com.example.eggyapp.data.SetupType.MEDIUM_TYPE
-import com.example.eggyapp.data.SetupType.SOFT_TYPE
+import com.example.eggyapp.base.utils.observeFlow
+import com.example.eggyapp.base.utils.showToast
+import com.example.eggyapp.base.utils.toTimerString
+import com.example.eggyapp.data.model.SetupType
 import com.example.eggyapp.databinding.FEggCookBinding
 import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.ui.views.ButtonState
-import com.example.eggyapp.base.utils.observeFlow
-import com.example.eggyapp.base.utils.showToast
-import com.example.eggyapp.base.utils.toTimerString
 
 class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
@@ -93,8 +92,8 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
         }
         observeFlow(viewModel.selectedType) {
             binding.textCookTitle.text = when (it) {
-                SOFT_TYPE -> getString(R.string.cook_eggs_soft)
-                MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
+                SetupType.SOFT -> getString(R.string.cook_eggs_soft)
+                SetupType.MEDIUM -> getString(R.string.cook_eggs_medium)
                 else -> getString(R.string.cook_eggs_hard)
             }
         }

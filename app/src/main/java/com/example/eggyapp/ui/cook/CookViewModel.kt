@@ -1,9 +1,9 @@
 package com.example.eggyapp.ui.cook
 
 import androidx.lifecycle.ViewModel
-import com.example.eggyapp.data.SetupEggRepository
-import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.base.utils.addToComposite
+import com.example.eggyapp.data.SetupEggRepository
+import com.example.eggyapp.data.model.SetupType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
