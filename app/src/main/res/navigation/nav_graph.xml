@@ -6,7 +6,7 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.eggyapp.ui.welcome.WelcomeFragment"
+        android:name="leo.apps.eggy.welcome.presentation.WelcomeFragment"
         android:label="WelcomeFragment"
         tools:layout="@layout/f_welcome">
         <action

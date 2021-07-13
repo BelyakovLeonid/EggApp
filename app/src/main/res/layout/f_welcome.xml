@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingVertical="20dp"
-    tools:context=".ui.MainActivity">
+    android:paddingVertical="20dp">
 
     <TextView
         android:id="@+id/textAppName"
@@ -24,7 +23,7 @@
         app:layout_constraintVertical_bias="0.35"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <com.example.eggyapp.base.view.NoPaddingTextView
+    <leo.apps.eggy.base.presentation.view.NoPaddingTextView
         android:id="@+id/textWelcomeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

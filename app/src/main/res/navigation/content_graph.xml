@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <fragment
         android:id="@+id/setupFragment"
-        android:name="com.example.eggyapp.ui.setup.SetupFragment"
+        android:name="leo.apps.eggy.setup.presentation.SetupFragment"
         android:label="SetupFragment"
         tools:layout="@layout/f_egg_setup">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/cookFragment"
-        android:name="com.example.eggyapp.ui.cook.CookFragment"
+        android:name="leo.apps.eggy.cook.presentation.CookFragment"
         android:label="CookFragment"
         tools:layout="@layout/f_egg_cook" />
 </navigation>

@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.eggyapp.ui.views.TimerView
+        <leo.apps.eggy.cook.presentation.view.TimerView
             android:id="@+id/viewTimer"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -162,7 +162,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTipTitle" />
 
-        <com.example.eggyapp.ui.views.ControlButton
+        <leo.apps.eggy.cook.presentation.view.ControlButton
             android:id="@+id/buttonControl"
             style="@style/FilledButton"
             android:layout_width="0dp"
