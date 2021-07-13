@@ -1,17 +1,15 @@
 package leo.apps.eggy.cook.presentation.view;
 
 import android.content.Context
-import android.os.Parcelable
 import android.util.AttributeSet
-import leo.apps.eggy.R
 import com.google.android.material.button.MaterialButton
-import kotlinx.parcelize.Parcelize
+import leo.apps.eggy.R
 
 class ControlButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): MaterialButton(context, attrs, defStyleAttr) {
+) : MaterialButton(context, attrs, defStyleAttr) {
 
     var onStartListener: (() -> Unit)? = null
     var onCancelListener: (() -> Unit)? = null
@@ -50,21 +48,6 @@ class ControlButton @JvmOverloads constructor(
             ButtonState.STATE_STARTED -> context.getString(R.string.cook_cancel)
         }
     }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        super.onRestoreInstanceState(null)
-        currentState = (state as ControlSavedState).currentState
-    }
-
-    override fun onSaveInstanceState(): Parcelable {
-        super.onSaveInstanceState()
-        return ControlSavedState(currentState)
-    }
-
-    @Parcelize
-    private data class ControlSavedState(
-        val currentState: ButtonState
-    ) : Parcelable
 }
 
 enum class ButtonState {

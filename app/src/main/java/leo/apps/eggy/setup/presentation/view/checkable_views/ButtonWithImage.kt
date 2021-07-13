@@ -9,8 +9,6 @@ import androidx.core.content.res.use
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
 import leo.apps.eggy.databinding.VEggTypeBinding
-import kotlinx.parcelize.Parcelize
-
 
 class ButtonWithImage @JvmOverloads constructor(
     context: Context,
@@ -76,19 +74,4 @@ class ButtonWithImage @JvmOverloads constructor(
         binding.viewTypeBackground.isActivated = checkedState
         binding.textEggType.isActivated = checkedState
     }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        super.onRestoreInstanceState(null)
-        checkedState = (state as SavedState).checkedState
-    }
-
-    override fun onSaveInstanceState(): Parcelable {
-        super.onSaveInstanceState()
-        return SavedState(checkedState)
-    }
-
-    @Parcelize
-    private data class SavedState(
-        val checkedState: Boolean
-    ) : Parcelable
 }

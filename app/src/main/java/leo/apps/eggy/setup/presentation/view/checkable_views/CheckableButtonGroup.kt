@@ -62,7 +62,6 @@ class CheckableButtonGroup @JvmOverloads constructor(
         }
     }
 
-
     fun setSelectedItem(id: Int) {
         iterateCheckableChildren {
             it.isChecked = it.getIndex() == id
