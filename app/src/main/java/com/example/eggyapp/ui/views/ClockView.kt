@@ -3,9 +3,8 @@ package com.example.eggyapp.ui.views
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.animation.AccelerateInterpolator
-import com.example.eggyapp.utils.toTimerString
+import com.example.eggyapp.base.utils.toTimerString
 
 private const val ANIMATION_DURATION = 600L
 

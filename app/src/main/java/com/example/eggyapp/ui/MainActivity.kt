@@ -16,8 +16,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.R
 import com.example.eggyapp.databinding.AMainBinding
 import com.example.eggyapp.timer.TimerService
-import com.example.eggyapp.utils.isShowing
-import com.example.eggyapp.utils.showToast
+import com.example.eggyapp.base.utils.isShowing
+import com.example.eggyapp.base.utils.showToast
 
 class MainActivity : AppCompatActivity(R.layout.a_main) {
 

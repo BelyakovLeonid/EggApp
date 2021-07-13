@@ -10,8 +10,8 @@ import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.databinding.FEggSetupBinding
 import com.example.eggyapp.ui.base.BaseFragment
-import com.example.eggyapp.utils.findById
-import com.example.eggyapp.utils.observeFlow
+import com.example.eggyapp.base.utils.findById
+import com.example.eggyapp.base.utils.observeFlow
 
 class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
 

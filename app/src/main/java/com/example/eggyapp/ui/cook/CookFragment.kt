@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -15,7 +14,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.base.VibratorManager
-import com.example.eggyapp.base.ext.makeDefaultConfetti
+import com.example.eggyapp.base.utils.makeDefaultConfetti
 import com.example.eggyapp.data.SetupType.MEDIUM_TYPE
 import com.example.eggyapp.data.SetupType.SOFT_TYPE
 import com.example.eggyapp.databinding.FEggCookBinding
@@ -23,9 +22,9 @@ import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.ui.views.ButtonState
-import com.example.eggyapp.utils.observeFlow
-import com.example.eggyapp.utils.showToast
-import com.example.eggyapp.utils.toTimerString
+import com.example.eggyapp.base.utils.observeFlow
+import com.example.eggyapp.base.utils.showToast
+import com.example.eggyapp.base.utils.toTimerString
 
 class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 

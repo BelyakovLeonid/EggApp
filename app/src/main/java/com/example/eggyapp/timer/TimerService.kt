@@ -7,13 +7,12 @@ import android.graphics.drawable.Icon
 import android.os.Binder
 import android.os.CountDownTimer
 import android.os.IBinder
-import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType
-import com.example.eggyapp.utils.getBitmap
-import com.example.eggyapp.utils.toTimerString
+import com.example.eggyapp.base.utils.getBitmap
+import com.example.eggyapp.base.utils.toTimerString
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

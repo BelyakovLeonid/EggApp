@@ -1,4 +1,4 @@
-package com.example.eggyapp.base.ext
+package com.example.eggyapp.base.utils
 
 import com.example.eggyapp.R
 import nl.dionsegijn.konfetti.KonfettiView
@@ -27,6 +27,11 @@ fun KonfettiView.makeDefaultConfetti(){
         .setTimeToLive(ANIMATION_DURATION)
         .addShapes(Shape.Square, Shape.Circle)
         .addSizes(Size(CONFETTI_PIECES_SIZE_DP))
-        .setPosition(-50f, width + 50f, -50f, -50f)
+        .setPosition(
+            0f,
+            width.toFloat(),
+            -dpToPx(CONFETTI_PIECES_SIZE_DP),
+            -dpToPx(CONFETTI_PIECES_SIZE_DP)
+        )
         .streamFor(CONFETTI_PIECES, ANIMATION_DURATION)
 }

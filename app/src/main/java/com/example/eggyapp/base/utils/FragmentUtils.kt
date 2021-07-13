@@ -1,6 +1,5 @@
-package com.example.eggyapp.utils
+package com.example.eggyapp.base.utils
 
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.Flow

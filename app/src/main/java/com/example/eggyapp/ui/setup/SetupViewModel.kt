@@ -1,14 +1,11 @@
 package com.example.eggyapp.ui.setup
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eggyapp.data.SetupEggRepository
 import com.example.eggyapp.data.SetupSize
 import com.example.eggyapp.data.SetupTemperature
 import com.example.eggyapp.data.SetupType
-import com.example.eggyapp.utils.addToComposite
+import com.example.eggyapp.base.utils.addToComposite
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow

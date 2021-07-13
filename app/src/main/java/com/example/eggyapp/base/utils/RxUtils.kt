@@ -1,4 +1,4 @@
-package com.example.eggyapp.utils
+package com.example.eggyapp.base.utils
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

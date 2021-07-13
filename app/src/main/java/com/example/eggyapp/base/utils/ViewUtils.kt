@@ -1,4 +1,4 @@
-package com.example.eggyapp.utils
+package com.example.eggyapp.base.utils
 
 import android.view.View
 import android.widget.Toast

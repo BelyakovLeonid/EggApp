@@ -8,9 +8,9 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.res.use
 import com.example.eggyapp.R
-import com.example.eggyapp.base.ext.toRadians
-import com.example.eggyapp.utils.dpToPx
-import com.example.eggyapp.utils.getBitmap
+import com.example.eggyapp.base.utils.toRadians
+import com.example.eggyapp.base.utils.dpToPx
+import com.example.eggyapp.base.utils.getBitmap
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
