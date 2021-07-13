@@ -11,9 +11,9 @@ class CheckableButtonGroup @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), CheckedListener {
+) : LinearLayout(context, attrs, defStyleAttr), CheckedChangedListener {
 
-    var onCheckedIndexListener: ((Int) -> Unit)? = null
+    private var onCheckedIndexListener: CheckedIndexListener? = null
     private var lastCheckedIndex: Int? = null
     private var itemsCount = 0
 
@@ -38,7 +38,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
 
         val checkedIndex = getCheckedIndex()
         if (checkedIndex != lastCheckedIndex) {
-            onCheckedIndexListener?.invoke(checkedIndex)
+            onCheckedIndexListener?.onCheckedIndex(this, checkedIndex)
             lastCheckedIndex = checkedIndex
         }
     }
@@ -47,6 +47,10 @@ class CheckableButtonGroup @JvmOverloads constructor(
         iterateCheckableChildren {
             it.isChecked = it.getIndex() == id
         }
+    }
+
+    fun setOnCheckedIndexListener(listener: CheckedIndexListener){
+        onCheckedIndexListener = listener
     }
 
     private fun getCheckedIndex(): Int {

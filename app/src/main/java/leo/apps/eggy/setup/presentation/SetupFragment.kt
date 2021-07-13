@@ -8,27 +8,43 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
 import leo.apps.eggy.databinding.FEggSetupBinding
-import leo.apps.eggy.base.EggApp
 import leo.apps.eggy.base.data.model.SetupSize
 import leo.apps.eggy.base.data.model.SetupTemperature
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.presentation.BaseFragment
+import leo.apps.eggy.base.utils.getInjector
 import leo.apps.eggy.base.utils.observeFlow
+import leo.apps.eggy.setup.presentation.view.CheckableListenable
+import leo.apps.eggy.setup.presentation.view.CheckedIndexListener
 
-class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
+class SetupFragment : BaseFragment(R.layout.f_egg_setup), CheckedIndexListener {
 
     private val viewModel: SetupViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding(FEggSetupBinding::bind)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as EggApp).appComponent.inject(this)
+        getInjector().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         handleView()
+    }
+
+    override fun onCheckedIndex(view: View, index: Int) {
+        when(view.id){
+            binding.groupTemperatureButtons.id -> {
+                viewModel.onSelectTemperature(SetupTemperature.values().get(index))
+            }
+            binding.groupSizeButtons.id -> {
+                viewModel.onSelectSize(SetupSize.values().get(index))
+            }
+            binding.groupTypeButtons.id -> {
+                viewModel.onSelectType(SetupType.values().get(index))
+            }
+        }
     }
 
     private fun observeViewModel() {
@@ -50,17 +66,11 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
     }
 
     private fun handleView() {
+        binding.groupTemperatureButtons.setOnCheckedIndexListener(this)
+        binding.groupSizeButtons.setOnCheckedIndexListener(this)
+        binding.groupTypeButtons.setOnCheckedIndexListener(this)
         binding.buttonStart.setOnClickListener {
             findNavController().navigate(R.id.actionToCookScreen)
-        }
-        binding.groupTemperatureButtons.onCheckedIndexListener = {
-            viewModel.onSelectTemperature(SetupTemperature.values().get(it))
-        }
-        binding.groupSizeButtons.onCheckedIndexListener = {
-            viewModel.onSelectSize(SetupSize.values().get(it))
-        }
-        binding.groupTypeButtons.onCheckedIndexListener = {
-            viewModel.onSelectType(SetupType.values().get(it))
         }
     }
 }

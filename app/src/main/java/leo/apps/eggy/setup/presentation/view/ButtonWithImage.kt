@@ -15,14 +15,14 @@ class ButtonWithImage @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), CheckableListenable {
 
-    private var onCheckedListener: CheckedListener? = null
+    private var listener: CheckedChangedListener? = null
     private var index: Int = 0
 
     private var checkedState = false
         set(value) {
             if (value != field) {
                 field = value
-                onCheckedListener?.onCheckedChanged(this, index, value)
+                listener?.onCheckedChanged(this, index, value)
                 handleCheckedState()
             }
         }
@@ -44,8 +44,8 @@ class ButtonWithImage @JvmOverloads constructor(
         }
     }
 
-    override fun addOnCheckListener(listener: CheckedListener) {
-        onCheckedListener = listener
+    override fun addOnCheckListener(listener: CheckedChangedListener) {
+        this.listener = listener
     }
 
     override fun setIndex(index: Int) {

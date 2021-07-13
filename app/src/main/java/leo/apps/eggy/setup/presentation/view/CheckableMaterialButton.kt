@@ -10,15 +10,15 @@ class CheckableMaterialButton @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialButton(context, attrs, defStyleAttr), CheckableListenable {
 
-    private var checkedListener: CheckedListener? = null
+    private var listener: CheckedChangedListener? = null
     private var index: Int = 0
 
     init {
         isCheckable = true
     }
 
-    override fun addOnCheckListener(listener: CheckedListener) {
-        checkedListener = listener
+    override fun addOnCheckListener(listener: CheckedChangedListener) {
+        this.listener = listener
     }
 
     override fun setIndex(index: Int) {
@@ -30,7 +30,7 @@ class CheckableMaterialButton @JvmOverloads constructor(
     override fun setChecked(checked: Boolean) {
         if (isChecked != checked) {
             super.setChecked(checked)
-            checkedListener?.onCheckedChanged(this, index, checked)
+            listener?.onCheckedChanged(this, index, checked)
         }
     }
 }

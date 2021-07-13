@@ -12,15 +12,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
-import leo.apps.eggy.databinding.FEggCookBinding
-import leo.apps.eggy.cook.presentation.view.ButtonState
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.presentation.BaseFragment
 import leo.apps.eggy.base.presentation.vibrator.VibratorManager
-import leo.apps.eggy.base.utils.makeDefaultConfetti
-import leo.apps.eggy.base.utils.observeFlow
-import leo.apps.eggy.base.utils.showToast
-import leo.apps.eggy.base.utils.toTimerString
+import leo.apps.eggy.base.utils.*
+import leo.apps.eggy.cook.presentation.view.ButtonState
+import leo.apps.eggy.databinding.FEggCookBinding
 import leo.apps.eggy.timer.TimerService
 
 class CookFragment : BaseFragment(R.layout.f_egg_cook) {
@@ -67,7 +64,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as leo.apps.eggy.base.EggApp).appComponent.inject(this)
+        getInjector().inject(this)
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
     }
 
