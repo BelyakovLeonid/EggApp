@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.use
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.R
 import com.example.eggyapp.databinding.VEggTypeBinding
@@ -38,15 +39,11 @@ class ButtonWithImage @JvmOverloads constructor(
             attrs,
             R.styleable.ButtonWithImage,
             defStyleAttr, 0
-        ).apply {
-            try {
-                val stringResId = getResourceId(R.styleable.ButtonWithImage_text, 0)
-                val imageResId = getResourceId(R.styleable.ButtonWithImage_image, 0)
-                binding.textEggType.text = resources.getText(stringResId)
-                binding.imageEggType.setImageResource(imageResId)
-            } finally {
-                recycle()
-            }
+        ).use { a ->
+            val stringResId = a.getResourceId(R.styleable.ButtonWithImage_text, 0)
+            val imageResId = a.getResourceId(R.styleable.ButtonWithImage_image, 0)
+            binding.textEggType.text = resources.getText(stringResId)
+            binding.imageEggType.setImageResource(imageResId)
         }
     }
 

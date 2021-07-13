@@ -6,8 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -24,14 +22,9 @@ import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.ui.views.ButtonState
-import com.example.eggyapp.utils.getColor
 import com.example.eggyapp.utils.observeLiveData
 import com.example.eggyapp.utils.showToast
 import com.example.eggyapp.utils.toTimerString
-import nl.dionsegijn.konfetti.models.Shape
-import nl.dionsegijn.konfetti.models.Size
-
-private const val FINISH_ANIMATION_DELAY = 200L
 
 class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
@@ -147,5 +140,9 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     override fun onDetach() {
         backPressedCallback.isEnabled = false
         super.onDetach()
+    }
+
+    private companion object {
+        const val FINISH_ANIMATION_DELAY = 200L
     }
 }

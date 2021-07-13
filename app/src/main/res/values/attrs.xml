@@ -11,4 +11,9 @@
     <declare-styleable name="ClockView">
         <attr name="textSize" />
     </declare-styleable>
+
+    <declare-styleable name="TimerView">
+        <attr name="digitsTextSize" format="dimension" />
+        <attr name="minutesTextSize" format="dimension" />
+    </declare-styleable>
 </resources>
