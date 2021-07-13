@@ -5,6 +5,7 @@ import com.example.eggyapp.data.model.SetupTemperature
 import com.example.eggyapp.data.model.SetupType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 interface SetupEggRepository {
@@ -20,10 +21,17 @@ interface SetupEggRepository {
 
 class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
 
-    override var calculatedTimeFlow= MutableStateFlow(0)
-    override var selectedTemperatureFlow= MutableStateFlow(SetupTemperature.NONE)
-    override var selectedSizeFlow= MutableStateFlow(SetupSize.NONE)
-    override var selectedTypeFlow= MutableStateFlow(SetupType.NONE)
+    override var selectedTemperatureFlow = MutableStateFlow(SetupTemperature.NONE)
+    override var selectedSizeFlow = MutableStateFlow(SetupSize.NONE)
+    override var selectedTypeFlow = MutableStateFlow(SetupType.NONE)
+
+    override var calculatedTimeFlow = combine(
+        selectedTemperatureFlow,
+        selectedSizeFlow,
+        selectedTypeFlow
+    ) { temp, size, type ->
+        timeMap[Triple(temp, size, type)] ?: 0
+    }
 
     private val timeMap: HashMap<Triple<SetupTemperature, SetupSize, SetupType>, Int> = hashMapOf(
         Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.SOFT) to 10_000,
@@ -49,25 +57,13 @@ class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
 
     override fun setTemperature(temperature: SetupTemperature?) {
         selectedTemperatureFlow.value = temperature ?: SetupTemperature.NONE
-        recalculateTime()
     }
 
     override fun setSize(size: SetupSize?) {
         selectedSizeFlow.value = size ?: SetupSize.NONE
-        recalculateTime()
     }
 
     override fun setType(type: SetupType?) {
         selectedTypeFlow.value = type ?: SetupType.NONE
-        recalculateTime()
-    }
-
-    private fun recalculateTime() {
-        calculatedTimeFlow.value =
-            timeMap[Triple(
-                selectedTemperatureFlow.value,
-                selectedSizeFlow.value,
-                selectedTypeFlow.value
-            )] ?: 0
     }
 }
