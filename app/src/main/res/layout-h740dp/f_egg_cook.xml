@@ -13,10 +13,12 @@
 
         <nl.dionsegijn.konfetti.KonfettiView
             android:id="@+id/viewConfetti"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:elevation="6dp"
             app:layout_constraintBottom_toBottomOf="@id/buttonControl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -27,6 +29,7 @@
             android:layout_marginTop="30dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,11 +47,13 @@
 
         <com.example.eggyapp.ui.views.TimerView
             android:id="@+id/viewTimer"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="40dp"
             app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textCookTitle" />
 
         <ImageView
@@ -144,22 +149,26 @@
         <TextView
             android:id="@+id/textTip"
             style="@style/SubtitleText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="12dp"
             android:text="@string/cook_boiled_tip"
             android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTipTitle" />
 
         <com.example.eggyapp.ui.views.ControlButton
             android:id="@+id/buttonControl"
             style="@style/FilledButton"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTip" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -52,11 +52,13 @@
 
         <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
             android:id="@+id/groupTemperatureButtons"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTemperatureTitle">
 
             <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
@@ -90,11 +92,13 @@
 
         <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
             android:id="@+id/groupSizeButtons"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textSizeTitle">
 
             <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
@@ -137,11 +141,13 @@
 
         <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
             android:id="@+id/groupTypeButtons"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTypeTitle">
 
             <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
