@@ -11,6 +11,7 @@ import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.addToComposite
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 class SetupViewModel @Inject constructor(
@@ -18,20 +19,11 @@ class SetupViewModel @Inject constructor(
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    private val mutableCalculatedTime = MutableLiveData<Int>()
-    val calculatedTime: LiveData<Int> = mutableCalculatedTime
-
-    private val mutableSelectedTemp = MutableLiveData<SetupTemperature>()
-    val selectedTemperature: LiveData<SetupTemperature> = mutableSelectedTemp
-
-    private val mutableSelectedSize = MutableLiveData<SetupSize>()
-    val selectedSize: LiveData<SetupSize> = mutableSelectedSize
-
-    private val mutableSelectedType = MutableLiveData<SetupType>()
-    val selectedType: LiveData<SetupType> = mutableSelectedType
-
-    private val mutableIsCookEnable = MutableLiveData<Boolean>()
-    val isCookEnable: LiveData<Boolean> = mutableIsCookEnable
+    val calculatedTime = MutableStateFlow(0)
+    val selectedTemperature = MutableStateFlow(SetupTemperature.NONE)
+    val selectedSize = MutableStateFlow(SetupSize.NONE)
+    val selectedType = MutableStateFlow(SetupType.NONE)
+    val isCookEnable = MutableStateFlow(false)
 
     init {
         observeCalculatedTime()
@@ -44,8 +36,8 @@ class SetupViewModel @Inject constructor(
         setupRepository.calculatedTimeStream
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                mutableCalculatedTime.value = it
-                mutableIsCookEnable.value = it != 0
+                calculatedTime.value = it
+                isCookEnable.value = it != 0
             }.addToComposite(compositeDisposable)
     }
 
@@ -53,7 +45,7 @@ class SetupViewModel @Inject constructor(
         setupRepository.selectedTypeStream
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                mutableSelectedType.value = it
+                selectedType.value = it
             }.addToComposite(compositeDisposable)
     }
 
@@ -61,7 +53,7 @@ class SetupViewModel @Inject constructor(
         setupRepository.selectedSizeStream
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                mutableSelectedSize.value = it
+                selectedSize.value = it
             }.addToComposite(compositeDisposable)
     }
 
@@ -69,7 +61,7 @@ class SetupViewModel @Inject constructor(
         setupRepository.selectedTemperatureStream
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                mutableSelectedTemp.value = it
+                selectedTemperature.value = it
             }.addToComposite(compositeDisposable)
     }
 

@@ -1,6 +1,5 @@
 object Versions {
     val kotlin = "1.5.20"
-    val singleLiveEvent = "1.2.0"
     val viewBindingDelegate = "1.4.2"
     val gradle = "4.2.2"
     val navigation = "2.4.0-alpha04"

@@ -1,13 +1,12 @@
 package com.example.eggyapp.ui.cook
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eggyapp.data.SetupEggRepository
 import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.addToComposite
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 class CookViewModel @Inject constructor(
@@ -15,11 +14,8 @@ class CookViewModel @Inject constructor(
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    private val mutableCalculatedTime = MutableLiveData<Int>()
-    val calculatedTime: LiveData<Int> = mutableCalculatedTime
-
-    private val mutableSelectedType = MutableLiveData<SetupType>()
-    val selectedType: LiveData<SetupType> = mutableSelectedType
+    val calculatedTime = MutableStateFlow(0)
+    val selectedType = MutableStateFlow(SetupType.NONE)
 
     init {
         observeCalculatedTime()
@@ -30,7 +26,7 @@ class CookViewModel @Inject constructor(
         setupRepository.calculatedTimeStream
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                mutableCalculatedTime.value = it
+                calculatedTime.value = it
             }.addToComposite(compositeDisposable)
     }
 
@@ -38,7 +34,7 @@ class CookViewModel @Inject constructor(
         setupRepository.selectedTypeStream
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                mutableSelectedType.value = it
+                selectedType.value = it
             }.addToComposite(compositeDisposable)
     }
 

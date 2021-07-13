@@ -42,7 +42,6 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlin)
-    implementation(Dependencies.singleLiveEvent)
     implementation(Dependencies.viewBindingDelegate)
     implementation(Dependencies.Tests.junit)
     implementation(Dependencies.Tests.androidJunit)

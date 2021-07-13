@@ -9,15 +9,16 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 import androidx.core.content.getSystemService
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.eggyapp.R
 import com.example.eggyapp.data.SetupType
 import com.example.eggyapp.utils.getBitmap
-import com.example.eggyapp.utils.postEvent
 import com.example.eggyapp.utils.toTimerString
-import com.hadilq.liveevent.LiveEvent
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 private const val NOTIF_PROGRESS_CHANNEL_ID = "progress_channel"
 private const val NOTIF_FINISH_CHANNEL_ID = "finish_channel"
@@ -42,10 +43,11 @@ class TimerService : Service() {
             field = value
         }
 
-    private val mutableProgress = MutableLiveData<Float>()
-    private val mutableTimerText = MutableLiveData<String>()
-    private val finishEvent = LiveEvent<Unit>()
-    private val cancelEvent = LiveEvent<Unit>()
+    private val mutableProgress = MutableStateFlow(0F)
+    private val mutableTimerText = MutableStateFlow(0.toTimerString())
+
+    private val finishEvent = Channel<Unit>(Channel.BUFFERED)
+    private val cancelEvent = Channel<Unit>(Channel.BUFFERED)
 
     private val notificationIcon: Bitmap
         get() = when (eggType) {
@@ -136,7 +138,7 @@ class TimerService : Service() {
                 timer = null
                 stopForeground(true)
                 notifyFinish()
-                finishEvent.postEvent()
+                finishEvent.trySend(Unit)
                 mutableTimerText.value = millisInFuture.toTimerString()
             }
 
@@ -189,22 +191,22 @@ class TimerService : Service() {
         timer?.cancel()
         timer = null
         stopForeground(true)
-        cancelEvent.postEvent()
+        cancelEvent.trySend(Unit)
         mutableTimerText.value = millisInFuture.toTimerString()
     }
 
     inner class TimerBinder : Binder() {
-        val progress: LiveData<Float>
-            get() = this@TimerService.mutableProgress
+        val progress: Flow<Float>
+            get() = this@TimerService.mutableProgress.asStateFlow()
 
-        val timerText: LiveData<String>
-            get() = this@TimerService.mutableTimerText
+        val timerText: Flow<String>
+            get() = this@TimerService.mutableTimerText.asStateFlow()
 
-        val finish: LiveData<Unit>
-            get() = this@TimerService.finishEvent
+        val finish: Flow<Unit>
+            get() = this@TimerService.finishEvent.receiveAsFlow()
 
-        val cancel: LiveData<Unit>
-            get() = this@TimerService.cancelEvent
+        val cancel: Flow<Unit>
+            get() = this@TimerService.cancelEvent.receiveAsFlow()
 
         val isRunning: Boolean
             get() = this@TimerService.timer != null

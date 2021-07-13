@@ -11,7 +11,7 @@ import com.example.eggyapp.R
 import com.example.eggyapp.databinding.FEggSetupBinding
 import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.utils.findById
-import com.example.eggyapp.utils.observeLiveData
+import com.example.eggyapp.utils.observeFlow
 
 class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
 
@@ -30,22 +30,20 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup) {
     }
 
     private fun observeViewModel() {
-        with(viewModel) {
-            observeLiveData(calculatedTime) {
-                binding.textTime.setTime(it)
-            }
-            observeLiveData(selectedTemperature) {
-                binding.groupTemperatureButtons.setSelectedItem(it.id)
-            }
-            observeLiveData(selectedSize) {
-                binding.groupSizeButtons.setSelectedItem(it.id)
-            }
-            observeLiveData(selectedType) {
-                binding.groupTypeButtons.setSelectedItem(it.id)
-            }
-            observeLiveData(isCookEnable) {
-                binding.buttonStart.isEnabled = it
-            }
+        observeFlow(viewModel.calculatedTime) {
+            binding.textTime.setTime(it)
+        }
+        observeFlow(viewModel.selectedTemperature) {
+            binding.groupTemperatureButtons.setSelectedItem(it.id)
+        }
+        observeFlow(viewModel.selectedSize) {
+            binding.groupSizeButtons.setSelectedItem(it.id)
+        }
+        observeFlow(viewModel.selectedType) {
+            binding.groupTypeButtons.setSelectedItem(it.id)
+        }
+        observeFlow(viewModel.isCookEnable) {
+            binding.buttonStart.isEnabled = it
         }
     }
 

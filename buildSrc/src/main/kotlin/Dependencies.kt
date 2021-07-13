@@ -1,6 +1,5 @@
 object Dependencies {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
-    val singleLiveEvent = "com.github.hadilq.liveevent:liveevent:${Versions.singleLiveEvent}"
     val viewBindingDelegate = "com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:${Versions.viewBindingDelegate}"
 
     object TopLevel{

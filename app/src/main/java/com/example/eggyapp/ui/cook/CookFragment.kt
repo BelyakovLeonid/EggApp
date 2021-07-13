@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -22,7 +23,7 @@ import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.timer.TimerService.TimerBinder
 import com.example.eggyapp.ui.base.BaseFragment
 import com.example.eggyapp.ui.views.ButtonState
-import com.example.eggyapp.utils.observeLiveData
+import com.example.eggyapp.utils.observeFlow
 import com.example.eggyapp.utils.showToast
 import com.example.eggyapp.utils.toTimerString
 
@@ -42,24 +43,22 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             if (timerBinder?.isRunning == true) {
                 binding.buttonControl.setState(ButtonState.STATE_STARTED)
             }
-            observeLiveData(timerBinder?.progress) {
-                binding.viewTimer.setProgress(it)
-            }
-            observeLiveData(timerBinder?.timerText) {
-                binding.viewTimer.setTimerText(it)
-            }
-            observeLiveData(timerBinder?.finish) {
-                showFinish()
-            }
-            observeLiveData(timerBinder?.cancel) {
-                binding.buttonControl.setState(ButtonState.STATE_IDLE)
-                binding.viewTimer.dropProgress()
-            }
-            observeLiveData(viewModel.calculatedTime) {
-                timerBinder?.setTime(it.toLong())
-            }
-            observeLiveData(viewModel.selectedType) {
-                timerBinder?.setType(it)
+
+            timerBinder?.let {
+                observeFlow(it.progress) {
+                    binding.viewTimer.setProgress(it)
+                }
+                observeFlow(it.timerText) {
+                    binding.viewTimer.setTimerText(it)
+                }
+                observeFlow(it.finish) {
+                    showFinish()
+                }
+                observeFlow(it.cancel) {
+                    binding.buttonControl.setState(ButtonState.STATE_IDLE)
+                    binding.viewTimer.dropProgress()
+                }
+                observeViewModel()
             }
         }
     }
@@ -79,7 +78,6 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleView()
-        observeViewModel()
         requireContext().bindService(
             Intent(requireContext(), TimerService::class.java),
             connection,
@@ -88,18 +86,22 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun observeViewModel() {
-        with(viewModel) {
-            observeLiveData(selectedType) {
-                binding.textCookTitle.text = when (it) {
-                    SOFT_TYPE -> getString(R.string.cook_eggs_soft)
-                    MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
-                    else -> getString(R.string.cook_eggs_hard)
-                }
+        observeFlow(viewModel.calculatedTime) {
+            timerBinder?.setTime(it.toLong())
+        }
+        observeFlow(viewModel.selectedType) {
+            timerBinder?.setType(it)
+        }
+        observeFlow(viewModel.selectedType) {
+            binding.textCookTitle.text = when (it) {
+                SOFT_TYPE -> getString(R.string.cook_eggs_soft)
+                MEDIUM_TYPE -> getString(R.string.cook_eggs_medium)
+                else -> getString(R.string.cook_eggs_hard)
             }
-            observeLiveData(calculatedTime) {
-                binding.textTime.text = it.toTimerString()
-                binding.viewTimer.setTimerText(it.toTimerString())
-            }
+        }
+        observeFlow(viewModel.calculatedTime) {
+            binding.textTime.text = it.toTimerString()
+            binding.viewTimer.setTimerText(it.toTimerString())
         }
     }
 
