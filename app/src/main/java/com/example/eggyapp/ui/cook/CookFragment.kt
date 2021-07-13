@@ -8,16 +8,14 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.EggApp
 import com.example.eggyapp.R
 import com.example.eggyapp.base.VibratorManager
-import com.example.eggyapp.base.utils.makeDefaultConfetti
-import com.example.eggyapp.base.utils.observeFlow
-import com.example.eggyapp.base.utils.showToast
-import com.example.eggyapp.base.utils.toTimerString
+import com.example.eggyapp.base.utils.*
 import com.example.eggyapp.data.model.SetupType
 import com.example.eggyapp.databinding.FEggCookBinding
 import com.example.eggyapp.timer.TimerService
@@ -116,12 +114,12 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun showExitDialog() {
-        val dialog = ExitDialog.getInstance()
+        val dialog = ExitDialog()
         dialog.onConfirmListener = {
             timerBinder?.stopTimer()
             findNavController().navigateUp()
         }
-        dialog.show(childFragmentManager, ExitDialog.TAG)
+        dialog.show(childFragmentManager, null)
     }
 
     private fun showFinish() {

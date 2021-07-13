@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
         android:paddingStart="30dp">
 
         <TextView
@@ -16,7 +17,6 @@
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/setup_title"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +34,10 @@
 
         <ImageView
             android:id="@+id/imageEggTop"
+            app:layout_constraintHeight_percent="0.15"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="0px"
+            android:adjustViewBounds="true"
             android:src="@drawable/setup_egg_half"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -192,7 +193,6 @@
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

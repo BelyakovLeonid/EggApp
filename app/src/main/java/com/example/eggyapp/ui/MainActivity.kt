@@ -5,24 +5,22 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.*
 import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.eggyapp.R
-import com.example.eggyapp.databinding.AMainBinding
-import com.example.eggyapp.timer.TimerService
 import com.example.eggyapp.base.utils.isShowing
 import com.example.eggyapp.base.utils.showToast
+import com.example.eggyapp.databinding.AMainBinding
+import com.example.eggyapp.timer.TimerService
 
 class MainActivity : AppCompatActivity(R.layout.a_main) {
 
     private var toast: Toast? = null
-    private val binding by viewBinding(AMainBinding::bind)
 
     private var timerBinder: TimerService.TimerBinder? = null
     private val connection = object : ServiceConnection {
@@ -42,6 +40,7 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setupBackPressedListener()
         startTimerService()
     }
@@ -65,18 +64,5 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
                 }
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setFullScreenMode()
-    }
-
-    private fun setFullScreenMode() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.mainContainer).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
     }
 }

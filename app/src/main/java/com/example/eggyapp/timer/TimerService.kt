@@ -67,8 +67,8 @@ class TimerService : Service() {
         manager = getSystemService()
         action = setupAction()
         intent = setupIntent()
-        createNotifProgressChannel()
-        createNotifFinishChannel()
+//        createNotifProgressChannel()
+//        createNotifFinishChannel()
     }
 
     private fun setupAction(): Notification.Action? {

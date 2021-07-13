@@ -9,21 +9,7 @@ import com.example.eggyapp.R
 
 class ExitDialog : DialogFragment() {
 
-    companion object {
-        const val TAG = "exit_dialog"
-
-        fun getInstance() = ExitDialog()
-    }
-
     var onConfirmListener: (() -> Unit)? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(context)
