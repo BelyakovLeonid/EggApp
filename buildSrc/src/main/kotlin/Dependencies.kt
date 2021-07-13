@@ -29,15 +29,8 @@ object Dependencies {
         val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     }
 
-    object RxJava {
-        val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
-        val rxJavaAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxJavaAndroid}"
-    }
-
     object Dagger {
         val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-        val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
         val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-        val daggerProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
     }
 }

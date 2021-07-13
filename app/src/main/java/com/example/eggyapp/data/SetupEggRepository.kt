@@ -3,8 +3,8 @@ package com.example.eggyapp.data
 import com.example.eggyapp.data.model.SetupSize
 import com.example.eggyapp.data.model.SetupTemperature
 import com.example.eggyapp.data.model.SetupType
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 interface SetupEggRepository {
@@ -12,19 +12,18 @@ interface SetupEggRepository {
     fun setSize(size: SetupSize?)
     fun setType(type: SetupType?)
 
-    val calculatedTimeStream: Observable<Int>
-    val selectedTemperatureStream: Observable<SetupTemperature>
-    val selectedSizeStream: Observable<SetupSize>
-    val selectedTypeStream: Observable<SetupType>
+    val calculatedTimeFlow: Flow<Int>
+    val selectedTemperatureFlow: Flow<SetupTemperature>
+    val selectedSizeFlow: Flow<SetupSize>
+    val selectedTypeFlow: Flow<SetupType>
 }
 
 class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
 
-    private var selectedSizeSubject: BehaviorSubject<SetupSize> = BehaviorSubject.create()
-    private var selectedTypeSubject: BehaviorSubject<SetupType> = BehaviorSubject.create()
-    private var selectedTempSubject: BehaviorSubject<SetupTemperature> = BehaviorSubject.create()
-
-    private var calculatedTimeSubject: BehaviorSubject<Int> = BehaviorSubject.createDefault(0)
+    override var calculatedTimeFlow= MutableStateFlow(0)
+    override var selectedTemperatureFlow= MutableStateFlow(SetupTemperature.NONE)
+    override var selectedSizeFlow= MutableStateFlow(SetupSize.NONE)
+    override var selectedTypeFlow= MutableStateFlow(SetupType.NONE)
 
     private val timeMap: HashMap<Triple<SetupTemperature, SetupSize, SetupType>, Int> = hashMapOf(
         Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.SOFT) to 10_000,
@@ -49,39 +48,26 @@ class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
     )
 
     override fun setTemperature(temperature: SetupTemperature?) {
-        selectedTempSubject.onNext(temperature ?: SetupTemperature.NONE)
+        selectedTemperatureFlow.value = temperature ?: SetupTemperature.NONE
         recalculateTime()
     }
 
     override fun setSize(size: SetupSize?) {
-        selectedSizeSubject.onNext(size ?: SetupSize.NONE)
+        selectedSizeFlow.value = size ?: SetupSize.NONE
         recalculateTime()
     }
 
     override fun setType(type: SetupType?) {
-        selectedTypeSubject.onNext(type ?: SetupType.NONE)
+        selectedTypeFlow.value = type ?: SetupType.NONE
         recalculateTime()
     }
 
     private fun recalculateTime() {
-        calculatedTimeSubject.onNext(
+        calculatedTimeFlow.value =
             timeMap[Triple(
-                selectedTempSubject.value,
-                selectedSizeSubject.value,
-                selectedTypeSubject.value
+                selectedTemperatureFlow.value,
+                selectedSizeFlow.value,
+                selectedTypeFlow.value
             )] ?: 0
-        )
     }
-
-    override val calculatedTimeStream: Observable<Int>
-        get() = calculatedTimeSubject
-
-    override val selectedSizeStream: Observable<SetupSize>
-        get() = selectedSizeSubject
-
-    override val selectedTypeStream: Observable<SetupType>
-        get() = selectedTypeSubject
-
-    override val selectedTemperatureStream: Observable<SetupTemperature>
-        get() = selectedTempSubject
 }

@@ -11,7 +11,5 @@ object Versions {
     val constraint = "2.0.4"
     val material = "1.5.0-alpha01"
     val konfetti = "1.2.2"
-    val rxJava = "2.2.10"
-    val rxJavaAndroid = "2.1.1"
     val dagger = "2.36"
 }

@@ -1,20 +1,21 @@
 package com.example.eggyapp.ui.setup
 
 import androidx.lifecycle.ViewModel
-import com.example.eggyapp.base.utils.addToComposite
+import androidx.lifecycle.viewModelScope
 import com.example.eggyapp.data.SetupEggRepository
 import com.example.eggyapp.data.model.SetupSize
 import com.example.eggyapp.data.model.SetupTemperature
 import com.example.eggyapp.data.model.SetupType
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 class SetupViewModel @Inject constructor(
     private val setupRepository: SetupEggRepository
 ) : ViewModel() {
-    private val compositeDisposable = CompositeDisposable()
 
     val calculatedTime = MutableStateFlow(0)
     val selectedTemperature = MutableStateFlow(SetupTemperature.NONE)
@@ -30,36 +31,32 @@ class SetupViewModel @Inject constructor(
     }
 
     private fun observeCalculatedTime() {
-        setupRepository.calculatedTimeStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+        setupRepository.calculatedTimeFlow
+            .onEach {
                 calculatedTime.value = it
                 isCookEnable.value = it != 0
-            }.addToComposite(compositeDisposable)
+            }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedType() {
-        setupRepository.selectedTypeStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+        setupRepository.selectedTypeFlow
+            .onEach {
                 selectedType.value = it
-            }.addToComposite(compositeDisposable)
+            }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedSize() {
-        setupRepository.selectedSizeStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+        setupRepository.selectedSizeFlow
+            .onEach {
                 selectedSize.value = it
-            }.addToComposite(compositeDisposable)
+            }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedTemperature() {
-        setupRepository.selectedTemperatureStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+        setupRepository.selectedTemperatureFlow
+            .onEach {
                 selectedTemperature.value = it
-            }.addToComposite(compositeDisposable)
+            }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     fun onSelectTemperature(temperature: SetupTemperature?) {

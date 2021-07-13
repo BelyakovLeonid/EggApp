@@ -1,19 +1,19 @@
 package com.example.eggyapp.ui.cook
 
 import androidx.lifecycle.ViewModel
-import com.example.eggyapp.base.utils.addToComposite
+import androidx.lifecycle.viewModelScope
 import com.example.eggyapp.data.SetupEggRepository
 import com.example.eggyapp.data.model.SetupType
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 class CookViewModel @Inject constructor(
     private val setupRepository: SetupEggRepository
 ) : ViewModel() {
-    private val compositeDisposable = CompositeDisposable()
-
     val calculatedTime = MutableStateFlow(0)
     val selectedType = MutableStateFlow(SetupType.NONE)
 
@@ -23,23 +23,14 @@ class CookViewModel @Inject constructor(
     }
 
     private fun observeCalculatedTime() {
-        setupRepository.calculatedTimeStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                calculatedTime.value = it
-            }.addToComposite(compositeDisposable)
+        setupRepository.calculatedTimeFlow
+            .onEach { calculatedTime.value = it }
+            .launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedType() {
-        setupRepository.selectedTypeStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                selectedType.value = it
-            }.addToComposite(compositeDisposable)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+        setupRepository.selectedTypeFlow
+            .onEach { selectedType.value = it }
+            .launchIn(viewModelScope + Dispatchers.IO)
     }
 }

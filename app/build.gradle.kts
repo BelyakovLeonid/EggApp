@@ -52,10 +52,6 @@ dependencies {
     implementation(Dependencies.Ui.material)
     implementation(Dependencies.Ui.konfetti)
     implementation(Dependencies.Navigation.navigation)
-    implementation(Dependencies.RxJava.rxJava)
-    implementation(Dependencies.RxJava.rxJavaAndroid)
     implementation(Dependencies.Dagger.dagger)
-    implementation(Dependencies.Dagger.daggerAndroid)
     kapt(Dependencies.Dagger.daggerCompiler)
-    kapt(Dependencies.Dagger.daggerProcessor)
 }
