@@ -52,7 +52,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
                 showFinish()
             }
             observeLiveData(timerBinder?.cancel) {
-                binding.buttonControl.setState(ButtonState.STATE_IDLED)
+                binding.buttonControl.setState(ButtonState.STATE_IDLE)
                 binding.viewTimer.dropProgress()
             }
             observeLiveData(viewModel.calculatedTime) {
@@ -125,7 +125,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun showFinish() {
-        binding.buttonControl.setState(ButtonState.STATE_IDLED)
+        binding.buttonControl.setState(ButtonState.STATE_IDLE)
         binding.viewTimer.dropProgress(FINISH_ANIMATION_DELAY)
         context?.showToast(getString(R.string.toast_finish_text))
         VibratorManager(context).makeDefaultVibration()

@@ -2,11 +2,10 @@ package com.example.eggyapp.ui.views
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.animation.AccelerateInterpolator
 import com.example.eggyapp.utils.toTimerString
-import kotlinx.android.parcel.Parcelize
 
 private const val ANIMATION_DURATION = 600L
 
@@ -16,12 +15,8 @@ class ClockView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyleAttr) {
 
-    private var currentTime: Int = 0
+    private var currentTime: Int = NO_VALUE_SET
     private var animator: ValueAnimator? = null
-
-    init {
-        text = 0.toTimerString()
-    }
 
     fun setTime(time: Int) {
         if (time != currentTime) {
@@ -38,25 +33,13 @@ class ClockView @JvmOverloads constructor(
             addUpdateListener {
                 text = (it.animatedValue as Int).toTimerString()
             }
+            start()
         }
 
-        animator?.start()
         currentTime = newTime
     }
 
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        super.onRestoreInstanceState(null)
-        currentTime = (state as SavedState).currentTime
-        text = currentTime.toTimerString()
+    private companion object{
+        const val NO_VALUE_SET = -1
     }
-
-    override fun onSaveInstanceState(): Parcelable? {
-        super.onSaveInstanceState()
-        return SavedState(currentTime)
-    }
-
-    @Parcelize
-    private data class SavedState(
-        val currentTime: Int
-    ) : Parcelable
 }
