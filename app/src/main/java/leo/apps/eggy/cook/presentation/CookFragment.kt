@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -76,6 +77,24 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             connection,
             Context.BIND_AUTO_CREATE
         )
+    }
+
+    override fun setupInsets() {
+        binding.buttonBack.registerSystemInsetsListener { v, insets, margins, _ ->
+            v.updateMargins(
+                top = margins.top + insets.top,
+            )
+        }
+        binding.textCookTitle.registerSystemInsetsListener { v, insets, margins, _ ->
+            v.updateMargins(
+                top = margins.top + insets.top,
+            )
+        }
+        binding.root.registerSystemInsetsListener { v, insets, _, paddings ->
+            v.updatePadding(
+                bottom = paddings.bottom + insets.bottom,
+            )
+        }
     }
 
     private fun observeViewModel() {

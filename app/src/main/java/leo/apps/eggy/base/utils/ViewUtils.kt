@@ -35,3 +35,17 @@ fun View.registerInsetsListener(
     }
     ViewCompat.requestApplyInsets(this)
 }
+
+fun View.updateMargins(
+    left: Int? = null,
+    top: Int? = null,
+    right: Int? = null,
+    bottom: Int? = null
+) {
+    (layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+        left ?: marginLeft,
+        top ?: marginTop,
+        right ?: marginRight,
+        bottom ?: marginBottom
+    )
+}

@@ -14,7 +14,11 @@ open class BaseFragment(layoutId: Int) : Fragment(layoutId) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.registerSystemInsetsListener { v, insets, _, paddings ->
+        setupInsets()
+    }
+
+    protected open fun setupInsets() {
+        view?.registerSystemInsetsListener { v, insets, _, paddings ->
             v.updatePadding(
                 top = paddings.top + insets.top,
                 bottom = paddings.bottom + insets.bottom,

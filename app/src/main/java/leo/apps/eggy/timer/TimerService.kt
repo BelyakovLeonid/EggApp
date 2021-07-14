@@ -3,18 +3,20 @@ package leo.apps.eggy.timer
 import android.app.*
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.Icon
 import android.os.Binder
+import android.os.Build
 import android.os.CountDownTimer
 import android.os.IBinder
+import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
+import androidx.core.graphics.drawable.IconCompat
 import androidx.navigation.NavDeepLinkBuilder
-import leo.apps.eggy.R
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import leo.apps.eggy.R
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.utils.getBitmap
 import leo.apps.eggy.base.utils.toTimerString
@@ -31,7 +33,7 @@ class TimerService : Service() {
     private var manager: NotificationManager? = null
     private val timerBinder = TimerBinder()
     private var timer: CountDownTimer? = null
-    private var action: Notification.Action? = null
+    private var action: NotificationCompat.Action? = null
     private var intent: PendingIntent? = null
 
     private var eggType: SetupType? = null
@@ -67,49 +69,8 @@ class TimerService : Service() {
         manager = getSystemService()
         action = setupAction()
         intent = setupIntent()
-        createNotifProgressChannel()
-        createNotifFinishChannel()
-    }
-
-    private fun setupAction(): Notification.Action? {
-        val actionIcon = Icon.createWithResource(this, R.drawable.ic_cancel)
-        val actionText = getString(R.string.cancel)
-        val intent = Intent(this, TimerService::class.java).putExtra(ACTION_CANCEL, true)
-        val pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-        return Notification.Action.Builder(actionIcon, actionText, pendingIntent).build()
-    }
-
-    private fun setupIntent(): PendingIntent? {
-        return NavDeepLinkBuilder(this)
-            .setGraph(R.navigation.nav_graph)
-            .setDestination(R.id.cookFragment)
-            .createPendingIntent()
-    }
-
-    private fun createNotifProgressChannel() {
-        createChannel(
-            NOTIF_PROGRESS_CHANNEL_ID,
-            getString(R.string.timer_notif_progress_name),
-            getString(R.string.timer_notif_progress_description),
-            NotificationManager.IMPORTANCE_LOW
-        )
-    }
-
-    private fun createNotifFinishChannel() {
-        createChannel(
-            NOTIF_FINISH_CHANNEL_ID,
-            getString(R.string.timer_notif_name),
-            getString(R.string.timer_notif_description),
-            NotificationManager.IMPORTANCE_HIGH
-        )
-    }
-
-    private fun createChannel(id: String, name: String, desc: String, importance: Int) {
-        val channel = NotificationChannel(id, name, importance)
-        channel.setShowBadge(false)
-        channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-        channel.description = desc
-        manager?.createNotificationChannel(channel)
+        createNotificationProgressChannel()
+        createNotificationFinishChannel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -127,6 +88,49 @@ class TimerService : Service() {
         super.onDestroy()
         timer?.cancel()
         timer = null
+    }
+
+    private fun setupAction(): NotificationCompat.Action {
+        val actionIcon = IconCompat.createWithResource(this, R.drawable.ic_cancel)
+        val actionText = getString(R.string.cancel)
+        val intent = Intent(this, TimerService::class.java).putExtra(ACTION_CANCEL, true)
+        val pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        return NotificationCompat.Action.Builder(actionIcon, actionText, pendingIntent).build()
+    }
+
+    private fun setupIntent(): PendingIntent {
+        return NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.cookFragment)
+            .createPendingIntent()
+    }
+
+    private fun createNotificationProgressChannel() {
+        createChannel(
+            NOTIF_PROGRESS_CHANNEL_ID,
+            getString(R.string.timer_notif_progress_name),
+            getString(R.string.timer_notif_progress_description),
+            NotificationManager.IMPORTANCE_LOW
+        )
+    }
+
+    private fun createNotificationFinishChannel() {
+        createChannel(
+            NOTIF_FINISH_CHANNEL_ID,
+            getString(R.string.timer_notif_name),
+            getString(R.string.timer_notif_description),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+    }
+
+    private fun createChannel(id: String, name: String, desc: String, importance: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(id, name, importance)
+            channel.setShowBadge(false)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            channel.description = desc
+            manager?.createNotificationChannel(channel)
+        }
     }
 
     private fun startTimer() {
@@ -157,7 +161,7 @@ class TimerService : Service() {
         val finishText = getString(R.string.timer_notif_finish_text)
         val notification = buildBaseNotification(NOTIF_FINISH_CHANNEL_ID, finishText, finishTitle)
             .setCategory(Notification.CATEGORY_EVENT)
-            .setVisibility(Notification.VISIBILITY_PUBLIC)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
 
         manager?.notify(NOTIFICATION_ID, notification)
@@ -179,7 +183,7 @@ class TimerService : Service() {
         channelId: String,
         text: String,
         title: String? = notificationTitle
-    ) = Notification.Builder(this, channelId)
+    ) = NotificationCompat.Builder(this, channelId)
         .setSmallIcon(R.drawable.ic_timer_gray)
         .setLargeIcon(notificationIcon)
         .setContentTitle(title)
