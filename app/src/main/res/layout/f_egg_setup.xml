@@ -4,13 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/workflow_background"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="16dp"
-        android:paddingStart="30dp">
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingVertical="@dimen/setupOffsetTop"
+        android:paddingStart="@dimen/setupOffsetHorizontal">
 
         <TextView
             android:id="@+id/textSetupTitle"
@@ -18,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/setup_title"
-            android:textSize="20sp"
+            android:textSize="@dimen/setupTitleTextSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,9 +58,9 @@
         <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupTemperatureButtons"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/setupButtonsSize"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,9 +98,9 @@
         <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupSizeButtons"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/setupButtonsSize"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,9 +147,9 @@
         <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupTypeButtons"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/setupImagedButtonsSize"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +158,7 @@
             <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeSoft"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:elevation="10dp"
@@ -164,7 +168,7 @@
             <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeMedium"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
                 app:image="@drawable/egg_medium"
@@ -173,7 +177,7 @@
             <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeHard"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 app:image="@drawable/egg_hard"
@@ -199,7 +203,7 @@
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="@dimen/setupClockTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTimeTitle" />
@@ -209,7 +213,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginVertical="5dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:background="@drawable/ripple_filled_background"
             android:elevation="2dp"
             android:src="@drawable/ic_next"

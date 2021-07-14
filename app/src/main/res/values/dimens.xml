@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="textButtonSize">12sp</dimen>
-    <dimen name="textSubtitleSize">14sp</dimen>
-    <dimen name="textTitleSize">16sp</dimen>
     <dimen name="cornerRadius">8dp</dimen>
+
+    <dimen name="textButtonSize">10sp</dimen>
+    <dimen name="textSubtitleSize">12sp</dimen>
+    <dimen name="textTitleSize">14sp</dimen>
+    <dimen name="setupTitleTextSize">18sp</dimen>
+    <dimen name="setupClockTextSize">24sp</dimen>
+
+    <dimen name="setupOffsetTop">16dp</dimen>
+    <dimen name="setupImagedButtonTextOffset">10dp</dimen>
+    <dimen name="setupOffsetHorizontal">20dp</dimen>
+    <dimen name="setupButtonsSize">50dp</dimen>
+    <dimen name="setupImagedButtonsSize">100dp</dimen>
 </resources>
