@@ -8,9 +8,15 @@
     <dimen name="setupTitleTextSize">18sp</dimen>
     <dimen name="setupClockTextSize">24sp</dimen>
 
-    <dimen name="setupOffsetTop">16dp</dimen>
-    <dimen name="setupImagedButtonTextOffset">10dp</dimen>
+    <dimen name="setupOffsetVertical">16dp</dimen>
     <dimen name="setupOffsetHorizontal">20dp</dimen>
+    <dimen name="setupImagedButtonTextOffset">10dp</dimen>
     <dimen name="setupButtonsSize">50dp</dimen>
     <dimen name="setupImagedButtonsSize">100dp</dimen>
+
+    <dimen name="cookOffsetVertical">16dp</dimen>
+    <dimen name="cookOffsetHorizontal">20dp</dimen>
+    <dimen name="cookIconSize">40dp</dimen>
+    <dimen name="cookItemsOffset">12dp</dimen>
+    <dimen name="cookItemsOffsetHalf">6dp</dimen>
 </resources>
