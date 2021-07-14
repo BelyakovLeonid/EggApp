@@ -3,6 +3,5 @@
     <dimen name="textButtonSize">12sp</dimen>
     <dimen name="textSubtitleSize">14sp</dimen>
     <dimen name="textTitleSize">16sp</dimen>
-
     <dimen name="cornerRadius">8dp</dimen>
 </resources>

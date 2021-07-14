@@ -16,10 +16,10 @@ private const val SPEED_MAX = 5F
 fun KonfettiView.makeDefaultConfetti(){
     this.build()
         .addColors(
-            context.getColor(R.color.confetti_yellow),
-            context.getColor(R.color.confetti_orange),
-            context.getColor(R.color.confetti_purple),
-            context.getColor(R.color.confetti_pink)
+            context.getColor(R.color.confettiYellow),
+            context.getColor(R.color.confettiOrange),
+            context.getColor(R.color.confettiPurple),
+            context.getColor(R.color.confettiPink)
         )
         .setDirection(CONFETTI_START_ANGLE, CONFETTI_END_ANGLE)
         .setSpeed(SPEED_MIN, SPEED_MAX)
