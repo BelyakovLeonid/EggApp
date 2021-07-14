@@ -4,9 +4,8 @@ import android.view.View
 import android.widget.Checkable
 
 interface CheckableListenable : Checkable {
+    var index: Int
     fun addOnCheckListener(listener: CheckedChangedListener)
-    fun setIndex(index: Int)
-    fun getIndex(): Int
 }
 
 interface CheckedChangedListener {

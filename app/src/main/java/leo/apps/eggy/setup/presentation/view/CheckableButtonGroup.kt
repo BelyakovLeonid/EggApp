@@ -21,7 +21,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
         when (child) {
             is CheckableListenable -> {
                 child.addOnCheckListener(this)
-                child.setIndex(itemsCount++)
+                child.index = itemsCount++
             }
         }
         super.addView(child, index, params)
@@ -45,7 +45,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
 
     fun setSelectedItem(id: Int) {
         iterateCheckableChildren {
-            it.isChecked = it.getIndex() == id
+            it.isChecked = it.index == id
         }
     }
 
@@ -56,7 +56,7 @@ class CheckableButtonGroup @JvmOverloads constructor(
     private fun getCheckedIndex(): Int {
         iterateCheckableChildren {
             if (it.isChecked) {
-                return it.getIndex()
+                return it.index
             }
         }
         return NO_ITEM_SELECTED
