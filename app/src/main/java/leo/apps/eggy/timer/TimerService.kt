@@ -119,13 +119,13 @@ class TimerService : Service() {
             this@TimerService.millisInFuture = millisInFuture
         }
 
-        fun setType(type: SetupType) {
+        fun setType(type: SetupType?) {
             this@TimerService.notificationHelper?.setEggType(type)
         }
     }
 
     companion object {
-        const val ACTION_CANCEL = "action_cancel"
+        const val ACTION_CANCEL = "leo_apps_eggy_action_cancel"
         const val MAX_PROGRESS = 1000
         private const val FOREGROUND_ID = 1
     }

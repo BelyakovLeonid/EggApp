@@ -15,7 +15,7 @@ class CookViewModel @Inject constructor(
     private val setupRepository: SetupEggRepository
 ) : ViewModel() {
     val calculatedTime = MutableStateFlow(0)
-    val selectedType = MutableStateFlow(SetupType.NONE)
+    val selectedType = MutableStateFlow<SetupType?>(null)
 
     init {
         observeCalculatedTime()

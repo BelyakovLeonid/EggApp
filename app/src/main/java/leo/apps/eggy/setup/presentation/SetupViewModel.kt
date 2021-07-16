@@ -11,6 +11,8 @@ import leo.apps.eggy.base.data.SetupEggRepository
 import leo.apps.eggy.base.data.model.SetupSize
 import leo.apps.eggy.base.data.model.SetupTemperature
 import leo.apps.eggy.base.data.model.SetupType
+import leo.apps.eggy.base.utils.getByIndex
+import leo.apps.eggy.base.utils.getIndexOf
 import javax.inject.Inject
 
 class SetupViewModel @Inject constructor(
@@ -18,9 +20,9 @@ class SetupViewModel @Inject constructor(
 ) : ViewModel() {
 
     val calculatedTime = MutableStateFlow(0)
-    val selectedTemperature = MutableStateFlow(SetupTemperature.NONE)
-    val selectedSize = MutableStateFlow(SetupSize.NONE)
-    val selectedType = MutableStateFlow(SetupType.NONE)
+    val selectedTemperature = MutableStateFlow(-1)
+    val selectedSize = MutableStateFlow(-1)
+    val selectedType = MutableStateFlow(-1)
     val isCookEnable = MutableStateFlow(false)
 
     init {
@@ -41,33 +43,36 @@ class SetupViewModel @Inject constructor(
     private fun observeSelectedType() {
         setupRepository.selectedTypeFlow
             .onEach {
-                selectedType.value = it
+                selectedType.value = getIndexOf(it)
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedSize() {
         setupRepository.selectedSizeFlow
             .onEach {
-                selectedSize.value = it
+                selectedSize.value = getIndexOf(it)
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedTemperature() {
         setupRepository.selectedTemperatureFlow
             .onEach {
-                selectedTemperature.value = it
+                selectedTemperature.value = getIndexOf(it)
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
-    fun onSelectTemperature(temperature: SetupTemperature?) {
+    fun onSelectTemperatureIndex(index: Int) {
+        val temperature = getByIndex<SetupTemperature>(index)
         setupRepository.setTemperature(temperature)
     }
 
-    fun onSelectSize(size: SetupSize?) {
+    fun onSelectSizeIndex(index: Int) {
+        val size = getByIndex<SetupSize>(index)
         setupRepository.setSize(size)
     }
 
-    fun onSelectType(type: SetupType?) {
+    fun onSelectTypeIndex(index: Int) {
+        val type = getByIndex<SetupType>(index)
         setupRepository.setType(type)
     }
 }

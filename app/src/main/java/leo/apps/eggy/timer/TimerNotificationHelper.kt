@@ -49,7 +49,7 @@ class TimerNotificationHelper(
         }
     }
 
-    fun setEggType(type: SetupType){
+    fun setEggType(type: SetupType?){
         eggType = type
     }
 

@@ -14,16 +14,16 @@ interface SetupEggRepository {
     fun setType(type: SetupType?)
 
     val calculatedTimeFlow: Flow<Int>
-    val selectedTemperatureFlow: Flow<SetupTemperature>
-    val selectedSizeFlow: Flow<SetupSize>
-    val selectedTypeFlow: Flow<SetupType>
+    val selectedTemperatureFlow: Flow<SetupTemperature?>
+    val selectedSizeFlow: Flow<SetupSize?>
+    val selectedTypeFlow: Flow<SetupType?>
 }
 
 class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
 
-    override var selectedTemperatureFlow = MutableStateFlow(SetupTemperature.NONE)
-    override var selectedSizeFlow = MutableStateFlow(SetupSize.NONE)
-    override var selectedTypeFlow = MutableStateFlow(SetupType.NONE)
+    override var selectedTemperatureFlow = MutableStateFlow<SetupTemperature?>(null)
+    override var selectedSizeFlow = MutableStateFlow<SetupSize?>(null)
+    override var selectedTypeFlow = MutableStateFlow<SetupType?>(null)
 
     override var calculatedTimeFlow = combine(
         selectedTemperatureFlow,
@@ -56,14 +56,14 @@ class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
     )
 
     override fun setTemperature(temperature: SetupTemperature?) {
-        selectedTemperatureFlow.value = temperature ?: SetupTemperature.NONE
+        selectedTemperatureFlow.value = temperature
     }
 
     override fun setSize(size: SetupSize?) {
-        selectedSizeFlow.value = size ?: SetupSize.NONE
+        selectedSizeFlow.value = size
     }
 
     override fun setType(type: SetupType?) {
-        selectedTypeFlow.value = type ?: SetupType.NONE
+        selectedTypeFlow.value = type
     }
 }
