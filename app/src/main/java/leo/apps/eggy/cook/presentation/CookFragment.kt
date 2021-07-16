@@ -98,22 +98,12 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     }
 
     private fun observeViewModel() {
-        observeFlow(viewModel.calculatedTime) {
-            timerBinder?.setTime(it.toLong())
-        }
-        observeFlow(viewModel.selectedType) {
-            timerBinder?.setType(it)
-        }
-        observeFlow(viewModel.selectedType) {
-            binding.textCookTitle.text = when (it) {
-                SetupType.SOFT -> getString(R.string.cook_eggs_soft)
-                SetupType.MEDIUM -> getString(R.string.cook_eggs_medium)
-                else -> getString(R.string.cook_eggs_hard)
-            }
-        }
-        observeFlow(viewModel.calculatedTime) {
-            binding.textTime.text = it.toTimerString()
-            binding.viewTimer.setTimerText(it.toTimerString())
+        observeFlow(viewModel.state) {state ->
+            timerBinder?.setTime(state.calculatedTime.toLong())
+            timerBinder?.setType(state.selectedType)
+            binding.textCookTitle.setText(state.titleTextId)
+            binding.textTime.text = state.timerText
+            binding.viewTimer.setTimerText(state.timerText)
         }
     }
 

@@ -41,20 +41,12 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup), CheckedIndexListener {
     }
 
     private fun observeViewModel() {
-        observeFlow(viewModel.calculatedTime) {
-            binding.textTime.setTime(it)
-        }
-        observeFlow(viewModel.selectedTemperature) {index ->
-            binding.groupTemperatureButtons.setSelectedItem(index)
-        }
-        observeFlow(viewModel.selectedSize) {index ->
-            binding.groupSizeButtons.setSelectedItem(index)
-        }
-        observeFlow(viewModel.selectedType) { index ->
-            binding.groupTypeButtons.setSelectedItem(index)
-        }
-        observeFlow(viewModel.isCookEnable) {
-            binding.buttonStart.isEnabled = it
+        observeFlow(viewModel.state) { state ->
+            binding.textTime.setTime(state.calculatedTime)
+            binding.groupTemperatureButtons.setSelectedItem(state.selectedTemperatureIndex)
+            binding.groupSizeButtons.setSelectedItem(state.selectedSizeIndex)
+            binding.groupTypeButtons.setSelectedItem(state.selectedTypeIndex)
+            binding.buttonStart.isEnabled = state.isButtonNextEnable
         }
     }
 

@@ -14,19 +14,19 @@ class ClockView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyleAttr) {
 
-    private var currentTime: Int = NO_VALUE_SET
     private var animator: ValueAnimator? = null
+    private var currentTime: Int? = null
 
-    fun setTime(time: Int) {
-        if (time != currentTime) {
-            animator?.cancel()
-            animator = null
-            animateTimeChanged(time)
+    fun setTime(newTime: Int) {
+        if (newTime != currentTime) {
+            animateTimeChanged(currentTime ?: 0, newTime)
+            currentTime = newTime
         }
     }
 
-    private fun animateTimeChanged(newTime: Int) {
-        animator = ValueAnimator.ofInt(currentTime, newTime).apply {
+    private fun animateTimeChanged(fromTime: Int, newTime: Int) {
+        animator?.cancel()
+        animator = ValueAnimator.ofInt(fromTime, newTime).apply {
             duration = ANIMATION_DURATION
             interpolator = AccelerateInterpolator()
             addUpdateListener {
@@ -34,11 +34,11 @@ class ClockView @JvmOverloads constructor(
             }
             start()
         }
-
-        currentTime = newTime
     }
 
-    private companion object{
-        const val NO_VALUE_SET = -1
+    override fun onDetachedFromWindow() {
+        animator?.cancel()
+        animator = null
+        super.onDetachedFromWindow()
     }
 }

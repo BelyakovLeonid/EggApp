@@ -13,17 +13,14 @@ import leo.apps.eggy.base.data.model.SetupTemperature
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.utils.getByIndex
 import leo.apps.eggy.base.utils.getIndexOf
+import leo.apps.eggy.setup.presentation.model.SetupUiState
 import javax.inject.Inject
 
 class SetupViewModel @Inject constructor(
     private val setupRepository: SetupEggRepository
 ) : ViewModel() {
 
-    val calculatedTime = MutableStateFlow(0)
-    val selectedTemperature = MutableStateFlow(-1)
-    val selectedSize = MutableStateFlow(-1)
-    val selectedType = MutableStateFlow(-1)
-    val isCookEnable = MutableStateFlow(false)
+    val state = MutableStateFlow(SetupUiState.DEFAULT)
 
     init {
         observeCalculatedTime()
@@ -34,30 +31,38 @@ class SetupViewModel @Inject constructor(
 
     private fun observeCalculatedTime() {
         setupRepository.calculatedTimeFlow
-            .onEach {
-                calculatedTime.value = it
-                isCookEnable.value = it != 0
+            .onEach { time ->
+                state.value = state.value.copy(
+                    calculatedTime =  time,
+                    isButtonNextEnable =  time != 0
+                )
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedType() {
         setupRepository.selectedTypeFlow
             .onEach {
-                selectedType.value = getIndexOf(it)
+                state.value = state.value.copy(
+                    selectedTypeIndex =  getIndexOf(it)
+                )
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedSize() {
         setupRepository.selectedSizeFlow
             .onEach {
-                selectedSize.value = getIndexOf(it)
+                state.value = state.value.copy(
+                    selectedSizeIndex = getIndexOf(it)
+                )
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedTemperature() {
         setupRepository.selectedTemperatureFlow
             .onEach {
-                selectedTemperature.value = getIndexOf(it)
+                state.value = state.value.copy(
+                    selectedTemperatureIndex =  getIndexOf(it)
+                )
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
