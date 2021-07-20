@@ -60,7 +60,7 @@ class TimerNotificationHelper(
         progress: Int,
         text: String,
     ): Notification {
-        return buildBaseNotification(NOTIF_PROGRESS_CHANNEL_ID, text)
+        return buildBaseNotification(NOTIFICATION_PROGRESS_CHANNEL_ID, text)
             .setCategory(Notification.CATEGORY_PROGRESS)
             .setProgress(TimerService.MAX_PROGRESS, progress, false)
             .addAction(action)
@@ -70,7 +70,7 @@ class TimerNotificationHelper(
     fun notifyFinish() {
         val finishTitle = context.getString(R.string.timer_notif_finish_title)
         val finishText = context.getString(R.string.timer_notif_finish_text)
-        val notification = buildBaseNotification(NOTIF_FINISH_CHANNEL_ID, finishText, finishTitle)
+        val notification = buildBaseNotification(NOTIFICATION_FINISH_CHANNEL_ID, finishText, finishTitle)
             .setCategory(Notification.CATEGORY_EVENT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
@@ -109,7 +109,7 @@ class TimerNotificationHelper(
             context,
             0,
             intent,
-            PendingIntent.FLAG_ONE_SHOT
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
         return NotificationCompat.Action.Builder(actionIcon, actionText, pendingIntent).build()
     }
@@ -117,7 +117,7 @@ class TimerNotificationHelper(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationProgressChannel() {
         createChannel(
-            NOTIF_PROGRESS_CHANNEL_ID,
+            NOTIFICATION_PROGRESS_CHANNEL_ID,
             context.getString(R.string.timer_notif_progress_name),
             context.getString(R.string.timer_notif_progress_description),
             NotificationManager.IMPORTANCE_LOW
@@ -127,7 +127,7 @@ class TimerNotificationHelper(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationFinishChannel() {
         createChannel(
-            NOTIF_FINISH_CHANNEL_ID,
+            NOTIFICATION_FINISH_CHANNEL_ID,
             context.getString(R.string.timer_notif_name),
             context.getString(R.string.timer_notif_description),
             NotificationManager.IMPORTANCE_HIGH
@@ -144,8 +144,8 @@ class TimerNotificationHelper(
     }
 
     companion object {
-        private const val NOTIF_PROGRESS_CHANNEL_ID = "progress_channel"
-        private const val NOTIF_FINISH_CHANNEL_ID = "finish_channel"
+        private const val NOTIFICATION_PROGRESS_CHANNEL_ID = "progress_channel"
+        private const val NOTIFICATION_FINISH_CHANNEL_ID = "finish_channel"
         private const val NOTIFICATION_ID = 2
     }
 }
