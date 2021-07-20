@@ -170,6 +170,7 @@
             style="@style/FilledButton"
             android:layout_width="0dp"
             android:layout_height="70dp"
+            app:layout_constraintVertical_bias="0.8"
             android:layout_marginHorizontal="@dimen/cookOffsetHorizontal"
             android:layout_marginVertical="@dimen/cookItemsOffset"
             app:layout_constraintBottom_toBottomOf="parent"

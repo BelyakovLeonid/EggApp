@@ -17,7 +17,6 @@ import leo.apps.eggy.R
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.utils.getBitmap
 
-
 class TimerNotificationHelper(
     private val context: Context
 ) {
@@ -49,11 +48,11 @@ class TimerNotificationHelper(
         }
     }
 
-    fun setEggType(type: SetupType?){
+    fun setEggType(type: SetupType?) {
         eggType = type
     }
 
-    fun cancelNotification(){
+    fun cancelNotification() {
         manager?.cancel(NOTIFICATION_ID)
     }
 
@@ -68,7 +67,7 @@ class TimerNotificationHelper(
             .build()
     }
 
-    fun notifyFinish(){
+    fun notifyFinish() {
         val finishTitle = context.getString(R.string.timer_notif_finish_title)
         val finishText = context.getString(R.string.timer_notif_finish_text)
         val notification = buildBaseNotification(NOTIF_FINISH_CHANNEL_ID, finishText, finishTitle)
