@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
     id("androidx.navigation.safeargs")
+    id("kotlin-parcelize")
     kotlin("kapt")
     kotlin("android")
-    kotlin("android.extensions")
 }
 
 
@@ -16,13 +16,17 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.eggyapp"
+        applicationId = "leo.apps.eggy"
         minSdkVersion(AppConfig.minSdk)
         targetSdkVersion(AppConfig.targetSdk)
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -38,7 +42,7 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlin)
-    implementation(Dependencies.singleLiveEvent)
+    implementation(Dependencies.viewBindingDelegate)
     implementation(Dependencies.Tests.junit)
     implementation(Dependencies.Tests.androidJunit)
     implementation(Dependencies.Tests.espresso)
@@ -48,11 +52,6 @@ dependencies {
     implementation(Dependencies.Ui.material)
     implementation(Dependencies.Ui.konfetti)
     implementation(Dependencies.Navigation.navigation)
-    implementation(Dependencies.Navigation.navigationUi)
-    implementation(Dependencies.RxJava.rxJava)
-    implementation(Dependencies.RxJava.rxJavaAndroid)
     implementation(Dependencies.Dagger.dagger)
-    implementation(Dependencies.Dagger.daggerAndroid)
     kapt(Dependencies.Dagger.daggerCompiler)
-    kapt(Dependencies.Dagger.daggerProcessor)
 }

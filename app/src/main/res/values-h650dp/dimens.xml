@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textButtonSize">14sp</dimen>
+    <dimen name="textSubtitleSize">16sp</dimen>
+    <dimen name="textTitleSize">18sp</dimen>
+    <dimen name="setupTitleTextSize">22sp</dimen>
+    <dimen name="setupClockTextSize">34sp</dimen>
+
+    <dimen name="setupOffsetVertical">30dp</dimen>
+    <dimen name="setupImagedButtonTextOffset">20dp</dimen>
+    <dimen name="setupOffsetHorizontal">30dp</dimen>
+    <dimen name="setupButtonsSize">90dp</dimen>
+    <dimen name="setupImagedButtonsSize">170dp</dimen>
+
+    <dimen name="cookOffsetVertical">24dp</dimen>
+    <dimen name="cookOffsetHorizontal">30dp</dimen>
+    <dimen name="cookIconSize">50dp</dimen>
+    <dimen name="cookItemsOffset">18dp</dimen>
+    <dimen name="cookItemsOffsetHalf">9dp</dimen>
+</resources>

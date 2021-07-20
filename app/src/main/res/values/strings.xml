@@ -13,9 +13,9 @@
     <string name="setup_egg_temperature_fridge"><b>Fridge</b> temperature</string>
     <string name="setup_egg_temperature_room"><b>Room</b> temperature</string>
     <string name="setup_egg_size">Egg <b>size</b></string>
-    <string name="setup_egg_size_S">S</string>
-    <string name="setup_egg_size_M">M</string>
-    <string name="setup_egg_size_L">L</string>
+    <string name="setup_egg_size_S"><b>S</b></string>
+    <string name="setup_egg_size_M"><b>M</b></string>
+    <string name="setup_egg_size_L"><b>L</b></string>
     <string name="setup_egg_type">Egg <b>boiled type</b></string>
     <string name="setup_egg_type_soft"><b>Soft</b>\nboiled</string>
     <string name="setup_egg_type_medium"><b>Medium</b>\nboiled</string>
@@ -54,4 +54,5 @@
     <string name="no">No</string>
     <string name="colon">:</string>
 
+    <string name="timer_minutes">\u0020MIN</string>
 </resources>

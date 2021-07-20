@@ -1,5 +1,5 @@
 object AppConfig {
-    val compileSdk = 30
-    val targetSdk = 30
-    val minSdk = 23
+    const val compileSdk = 30
+    const val targetSdk = 30
+    const val minSdk = 23
 }

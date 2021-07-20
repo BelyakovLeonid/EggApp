@@ -4,21 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/workflow_background"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="30dp">
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingVertical="@dimen/setupOffsetVertical"
+        android:paddingStart="@dimen/setupOffsetHorizontal">
 
         <TextView
             android:id="@+id/textSetupTitle"
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/setup_title"
-            android:textSize="20sp"
+            android:textSize="@dimen/setupTitleTextSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,10 +39,11 @@
         <ImageView
             android:id="@+id/imageEggTop"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="0px"
+            android:adjustViewBounds="true"
             android:src="@drawable/setup_egg_half"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.15"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -50,16 +55,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageEggTop" />
 
-        <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
+        <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupTemperatureButtons"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/setupButtonsSize"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTemperatureTitle">
 
-            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonTemperatureFridge"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -68,7 +75,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_temperature_fridge" />
 
-            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonTemperatureRoom"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -76,7 +83,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_temperature_room" />
-        </com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup>
+        </leo.apps.eggy.setup.presentation.view.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/textSizeTitle"
@@ -88,16 +95,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/groupTemperatureButtons" />
 
-        <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
+        <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupSizeButtons"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/setupButtonsSize"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textSizeTitle">
 
-            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonSizeS"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -106,7 +115,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_S" />
 
-            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonSizeM"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -115,7 +124,7 @@
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_M" />
 
-            <com.example.eggyapp.ui.views.checkable_views.CheckableMaterialButton
+            <leo.apps.eggy.setup.presentation.view.CheckableMaterialButton
                 android:id="@+id/buttonSizeL"
                 style="@style/OutlinedButton"
                 android:layout_width="0dp"
@@ -123,7 +132,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:text="@string/setup_egg_size_L" />
-        </com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup>
+        </leo.apps.eggy.setup.presentation.view.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/textTypeTitle"
@@ -135,43 +144,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/groupSizeButtons" />
 
-        <com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup
+        <leo.apps.eggy.setup.presentation.view.CheckableButtonGroup
             android:id="@+id/groupTypeButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/setupImagedButtonsSize"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTypeTitle">
 
-            <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
+            <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeSoft"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:elevation="10dp"
                 app:image="@drawable/egg_soft"
                 app:text="@string/setup_egg_type_soft" />
 
-            <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
+            <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeMedium"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
                 app:image="@drawable/egg_medium"
                 app:text="@string/setup_egg_type_medium" />
 
-            <com.example.eggyapp.ui.views.checkable_views.ButtonWithImage
+            <leo.apps.eggy.setup.presentation.view.ButtonWithImage
                 android:id="@+id/buttonTypeHard"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 app:image="@drawable/egg_hard"
                 app:text="@string/setup_egg_type_hard" />
-        </com.example.eggyapp.ui.views.checkable_views.CheckableButtonGroup>
+        </leo.apps.eggy.setup.presentation.view.CheckableButtonGroup>
 
         <TextView
             android:id="@+id/textTimeTitle"
@@ -187,13 +198,12 @@
             app:layout_constraintVertical_bias="1.0"
             app:layout_constraintVertical_chainStyle="packed" />
 
-        <com.example.eggyapp.ui.views.ClockView
+        <leo.apps.eggy.setup.presentation.view.ClockView
             android:id="@+id/textTime"
             style="@style/TitleBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:textSize="30sp"
+            android:textSize="@dimen/setupClockTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTimeTitle" />
@@ -203,7 +213,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginVertical="5dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/setupOffsetHorizontal"
             android:background="@drawable/ripple_filled_background"
             android:elevation="2dp"
             android:src="@drawable/ic_next"

@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <ImageView
         android:id="@+id/imageEggType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
         android:elevation="1dp"
         android:outlineProvider="none"
-        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.45"
         tools:src="@drawable/egg_medium" />
 
     <View
         android:id="@+id/viewTypeBackground"
         android:layout_width="wrap_content"
-        android:layout_height="130dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:background="@drawable/ripple_outline_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,13 +32,13 @@
         android:id="@+id/textEggType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/setupImagedButtonTextOffset"
         android:letterSpacing="-0.02"
         android:textColor="@color/color_button"
-        android:textSize="12sp"
-        app:layout_constraintHorizontal_bias="0.35"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/textButtonSize"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/setup_egg_type_hard" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
