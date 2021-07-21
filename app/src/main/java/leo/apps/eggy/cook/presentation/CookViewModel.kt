@@ -3,7 +3,6 @@ package leo.apps.eggy.cook.presentation
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +17,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.plus
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import leo.apps.eggy.R
 import leo.apps.eggy.base.data.SetupEggRepository
 import leo.apps.eggy.base.data.model.SetupType
@@ -53,6 +54,8 @@ class CookViewModel @Inject constructor(
 
     private var binder: TimerService.TimerBinder? = null
     private var binderObserveScope: CoroutineScope? = null
+
+    private val updateStateMutex = Mutex()
 
     init {
         observeCalculatedTime()
@@ -98,11 +101,13 @@ class CookViewModel @Inject constructor(
 
     private fun CoroutineScope.observeBinderState(){
         binder?.state?.onEach { timerState ->
-            mutableState.value = mutableState.value.copy(
-                progress = timerState.progress,
-                timerText = timerState.timerText,
-                buttonTextId = if (timerState.isRunning) R.string.cook_cancel else R.string.cook_start
-            )
+            updateStateMutex.withLock {
+                mutableState.value = mutableState.value.copy(
+                    progress = timerState.progress,
+                    timerText = timerState.timerText,
+                    buttonTextId = if (timerState.isRunning) R.string.cook_cancel else R.string.cook_start
+                )
+            }
         }?.launchIn(this)
     }
 
@@ -121,20 +126,24 @@ class CookViewModel @Inject constructor(
     private fun observeCalculatedTime() {
         setupRepository.calculatedTimeFlow
             .onEach { time ->
-                mutableState.value = state.value.copy(
-                    calculatedTime = time,
-                    boiledTimeText = time.toTimerString()
-                )
+                updateStateMutex.withLock {
+                    mutableState.value = state.value.copy(
+                        calculatedTime = time,
+                        boiledTimeText = time.toTimerString()
+                    )
+                }
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedType() {
         setupRepository.selectedTypeFlow
             .onEach { type ->
-                mutableState.value = state.value.copy(
-                    selectedType = type,
-                    titleTextId = getTitleByType(type)
-                )
+                updateStateMutex.withLock {
+                    mutableState.value = state.value.copy(
+                        selectedType = type,
+                        titleTextId = getTitleByType(type)
+                    )
+                }
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
