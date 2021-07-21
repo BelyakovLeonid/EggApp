@@ -7,9 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
-import leo.apps.eggy.base.data.model.SetupSize
-import leo.apps.eggy.base.data.model.SetupTemperature
-import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.presentation.BaseFragment
 import leo.apps.eggy.base.utils.getInjector
 import leo.apps.eggy.base.utils.observeFlow

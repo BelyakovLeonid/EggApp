@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
 
     private var timerBinder: TimerService.TimerBinder? = null
     private val connection = object : ServiceConnection {
-        override fun onServiceDisconnected(name: ComponentName?) {
-        }
+        override fun onServiceDisconnected(name: ComponentName?) {}
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerBinder = service as? TimerService.TimerBinder
@@ -43,12 +42,9 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
     }
 
     private fun startTimerService() {
-        startService(Intent(this, TimerService::class.java)) //todo проверить
-        bindService(
-            Intent(this, TimerService::class.java),
-            connection,
-            BIND_AUTO_CREATE
-        )
+        val intent = Intent(this, TimerService::class.java)
+        startService(intent)
+        bindService(intent, connection, BIND_AUTO_CREATE)
     }
 
     private fun setupBackPressedListener() {

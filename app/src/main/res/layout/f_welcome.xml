@@ -72,7 +72,7 @@
         android:id="@+id/buttonControl"
         style="@style/FilledButton"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/buttonHeight"
         android:layout_marginHorizontal="30dp"
         android:text="@string/welcome_button"
         app:layout_constraintBottom_toBottomOf="parent"

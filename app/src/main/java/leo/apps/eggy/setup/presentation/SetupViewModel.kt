@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.plus
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import leo.apps.eggy.base.data.SetupEggRepository
 import leo.apps.eggy.base.data.model.SetupSize
 import leo.apps.eggy.base.data.model.SetupTemperature
@@ -20,7 +23,10 @@ class SetupViewModel @Inject constructor(
     private val setupRepository: SetupEggRepository
 ) : ViewModel() {
 
-    val state = MutableStateFlow(SetupUiState.DEFAULT)
+    private val mutableState = MutableStateFlow(SetupUiState.DEFAULT)
+    val state = mutableState.asStateFlow()
+
+    private val updateStateMutex = Mutex()
 
     init {
         observeCalculatedTime()
@@ -32,37 +38,45 @@ class SetupViewModel @Inject constructor(
     private fun observeCalculatedTime() {
         setupRepository.calculatedTimeFlow
             .onEach { time ->
-                state.value = state.value.copy(
-                    calculatedTime =  time,
-                    isButtonNextEnable =  time != 0
-                )
+                updateStateMutex.withLock {
+                    mutableState.value = state.value.copy(
+                        calculatedTime = time,
+                        isButtonNextEnable = time != 0
+                    )
+                }
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedType() {
         setupRepository.selectedTypeFlow
             .onEach {
-                state.value = state.value.copy(
-                    selectedTypeIndex =  getIndexOf(it)
-                )
+                updateStateMutex.withLock {
+                    mutableState.value = state.value.copy(
+                        selectedTypeIndex = getIndexOf(it)
+                    )
+                }
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedSize() {
         setupRepository.selectedSizeFlow
             .onEach {
-                state.value = state.value.copy(
-                    selectedSizeIndex = getIndexOf(it)
-                )
+                updateStateMutex.withLock {
+                    mutableState.value = state.value.copy(
+                        selectedSizeIndex = getIndexOf(it)
+                    )
+                }
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
     private fun observeSelectedTemperature() {
         setupRepository.selectedTemperatureFlow
             .onEach {
-                state.value = state.value.copy(
-                    selectedTemperatureIndex =  getIndexOf(it)
-                )
+                updateStateMutex.withLock {
+                    mutableState.value = state.value.copy(
+                        selectedTemperatureIndex = getIndexOf(it)
+                    )
+                }
             }.launchIn(viewModelScope + Dispatchers.IO)
     }
 
