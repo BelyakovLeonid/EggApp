@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import leo.apps.eggy.R
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.utils.toTimerString
+import leo.apps.eggy.timer.model.TimerServiceState
 
 class TimerService : Service() {
 
@@ -22,13 +23,13 @@ class TimerService : Service() {
 
     private var millisInFuture: Long = 0
         set(value) {
-            mutableProgress.value = 0f
-            mutableTimerText.value = value.toTimerString()
+            state.value = state.value.copy(
+                timerText = value.toTimerString()
+            )
             field = value
         }
 
-    private val mutableProgress = MutableStateFlow(0F)
-    private val mutableTimerText = MutableStateFlow(0.toTimerString())
+    private val state = MutableStateFlow(TimerServiceState.DEFAULT)
 
     private val finishEvent = Channel<Unit>(Channel.BUFFERED)
     private val cancelEvent = Channel<Unit>(Channel.BUFFERED)
@@ -57,6 +58,7 @@ class TimerService : Service() {
 
     private fun startTimer() {
         notificationHelper?.cancelNotification()
+        timer?.cancel()
 
         timer = object : CountDownTimer(millisInFuture, 10) {
             override fun onFinish() {
@@ -64,15 +66,21 @@ class TimerService : Service() {
                 stopForeground(true)
                 notificationHelper?.notifyFinish()
                 finishEvent.trySend(Unit)
-                mutableTimerText.value = millisInFuture.toTimerString()
+                state.value = state.value.copy(
+                    isRunning = false,
+                    timerText = millisInFuture.toTimerString()
+                )
             }
 
             override fun onTick(millisUntilEnd: Long) {
                 val progress = 1 - millisUntilEnd / millisInFuture.toFloat()
                 val timerString = millisUntilEnd.toTimerString()
-                mutableProgress.value = progress
-                mutableTimerText.value = timerString
                 notifyProgress(progress, timerString)
+                state.value = state.value.copy(
+                    isRunning = true,
+                    progress = progress,
+                    timerText = timerString
+                )
             }
         }
         timer?.start()
@@ -92,15 +100,16 @@ class TimerService : Service() {
         timer = null
         stopForeground(true)
         cancelEvent.trySend(Unit)
-        mutableTimerText.value = millisInFuture.toTimerString()
+        state.value = TimerServiceState(
+            isRunning = false,
+            progress = 0f,
+            timerText = millisInFuture.toTimerString()
+        )
     }
 
     inner class TimerBinder : Binder() {
-        val progress: Flow<Float>
-            get() = this@TimerService.mutableProgress.asStateFlow()
-
-        val timerText: Flow<String>
-            get() = this@TimerService.mutableTimerText.asStateFlow()
+        val state: Flow<TimerServiceState>
+            get() = this@TimerService.state.asStateFlow()
 
         val finish: Flow<Unit>
             get() = this@TimerService.finishEvent.receiveAsFlow()

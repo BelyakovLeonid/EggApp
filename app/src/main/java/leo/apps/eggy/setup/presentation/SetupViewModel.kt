@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,7 +22,8 @@ class SetupViewModel @Inject constructor(
     private val setupRepository: SetupEggRepository
 ) : ViewModel() {
 
-    val state = MutableStateFlow(SetupUiState.DEFAULT)
+    private val mutableState = MutableStateFlow(SetupUiState.DEFAULT)
+    val state = mutableState.asStateFlow()
 
     init {
         observeSetupData()
@@ -42,7 +44,7 @@ class SetupViewModel @Inject constructor(
                 selectedTemperatureIndex = getIndexOf(temperature)
             )
         }.onEach { model ->
-            state.value = model
+            mutableState.value = model
         }.launchIn(viewModelScope + Dispatchers.Default)
     }
 

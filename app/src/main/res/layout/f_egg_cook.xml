@@ -165,11 +165,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTipTitle" />
 
-        <leo.apps.eggy.cook.presentation.view.ControlButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonControl"
             style="@style/FilledButton"
+            android:text="@string/cook_start"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/buttonHeight"
             app:layout_constraintVertical_bias="0.8"
             android:layout_marginHorizontal="@dimen/cookOffsetHorizontal"
             android:layout_marginVertical="@dimen/cookItemsOffset"

@@ -13,6 +13,9 @@ interface SetupEggRepository {
     fun setSize(size: SetupSize?)
     fun setType(type: SetupType?)
 
+    fun getCalculatedTime(): Int
+    fun getSelectedType(): SetupType?
+
     val calculatedTimeFlow: Flow<Int>
     val selectedTemperatureFlow: Flow<SetupTemperature?>
     val selectedSizeFlow: Flow<SetupSize?>
@@ -24,17 +27,10 @@ class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
     override var selectedTemperatureFlow = MutableStateFlow<SetupTemperature?>(null)
     override var selectedSizeFlow = MutableStateFlow<SetupSize?>(null)
     override var selectedTypeFlow = MutableStateFlow<SetupType?>(null)
-
-    override var calculatedTimeFlow = combine(
-        selectedTemperatureFlow,
-        selectedSizeFlow,
-        selectedTypeFlow
-    ) { temp, size, type ->
-        timeMap[Triple(temp, size, type)] ?: 0
-    }
+    override var calculatedTimeFlow = MutableStateFlow(0)
 
     private val timeMap: HashMap<Triple<SetupTemperature, SetupSize, SetupType>, Int> = hashMapOf(
-        Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.SOFT) to 10_000,
+        Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.SOFT) to 4_000,
         Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.MEDIUM) to 350_000,
         Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.HARD) to 480_000,
         Triple(SetupTemperature.FRIDGE, SetupSize.M, SetupType.SOFT) to 290_000,
@@ -57,13 +53,30 @@ class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
 
     override fun setTemperature(temperature: SetupTemperature?) {
         selectedTemperatureFlow.value = temperature
+        recalculateTime()
     }
 
     override fun setSize(size: SetupSize?) {
         selectedSizeFlow.value = size
+        recalculateTime()
     }
 
     override fun setType(type: SetupType?) {
         selectedTypeFlow.value = type
+        recalculateTime()
+    }
+
+    override fun getCalculatedTime(): Int {
+        return calculatedTimeFlow.value
+    }
+
+    override fun getSelectedType(): SetupType? {
+        return selectedTypeFlow.value
+    }
+
+    private fun recalculateTime() {
+        calculatedTimeFlow.value = timeMap[
+            Triple(selectedTemperatureFlow.value, selectedSizeFlow.value, selectedTypeFlow.value)
+        ] ?: 0
     }
 }
