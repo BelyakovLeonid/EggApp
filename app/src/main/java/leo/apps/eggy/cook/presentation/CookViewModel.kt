@@ -22,6 +22,7 @@ import leo.apps.eggy.R
 import leo.apps.eggy.base.data.SetupEggRepository
 import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.utils.toTimerString
+import leo.apps.eggy.cook.presentation.model.CookNavigationCommand
 import leo.apps.eggy.cook.presentation.model.CookSideEffect
 import leo.apps.eggy.cook.presentation.model.CookUiState
 import leo.apps.eggy.timer.TimerService
@@ -36,6 +37,9 @@ class CookViewModel @Inject constructor(
 
     private val mutableSideEffects = Channel<CookSideEffect>(Channel.BUFFERED)
     val sideEffects = mutableSideEffects.receiveAsFlow()
+
+    private val mutableNavigationCommands = Channel<CookNavigationCommand>(Channel.BUFFERED)
+    val navigationCommands = mutableNavigationCommands.receiveAsFlow()
 
     val serviceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -64,6 +68,7 @@ class CookViewModel @Inject constructor(
 
     fun onExitConfirm() {
         binder?.stopTimer()
+        mutableNavigationCommands.trySend(CookNavigationCommand.PopUp)
     }
 
     fun onUnbindService(){

@@ -3,7 +3,6 @@ package leo.apps.eggy.cook.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.updatePadding
@@ -19,11 +18,12 @@ import leo.apps.eggy.base.utils.observeFlow
 import leo.apps.eggy.base.utils.registerSystemInsetsListener
 import leo.apps.eggy.base.utils.showToast
 import leo.apps.eggy.base.utils.updateMargins
+import leo.apps.eggy.cook.presentation.model.CookNavigationCommand
 import leo.apps.eggy.cook.presentation.model.CookSideEffect
 import leo.apps.eggy.databinding.FEggCookBinding
 import leo.apps.eggy.timer.TimerService
 
-class CookFragment : BaseFragment(R.layout.f_egg_cook) {
+class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
 
     private val viewModel: CookViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding(FEggCookBinding::bind)
@@ -63,6 +63,12 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
         }
     }
 
+    override fun onClick(v: View?) = when (v?.id) {
+        binding.buttonBack.id -> showExitDialog()
+        binding.buttonControl.id -> viewModel.onControlClick()
+        else -> throw NotImplementedError()
+    }
+
     private fun observeViewModel() {
         observeFlow(viewModel.state) { state ->
             binding.textCookTitle.setText(state.titleTextId)
@@ -77,24 +83,20 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
                 is CookSideEffect.Cancel -> binding.viewTimer.dropProgress()
             }
         }
+        observeFlow(viewModel.navigationCommands) { command ->
+            when (command) {
+                is CookNavigationCommand.PopUp -> findNavController().navigateUp()
+            }
+        }
     }
 
     private fun handleView() {
-        binding.buttonControl.setOnClickListener {
-            viewModel.onControlClick()
-        }
-        binding.buttonBack.setOnClickListener {
-            showExitDialog()
-        }
+        binding.buttonControl.setOnClickListener(this)
+        binding.buttonBack.setOnClickListener(this)
     }
 
     private fun showExitDialog() {
-        val dialog = ExitDialog()
-        dialog.onConfirmListener = {
-            viewModel.onExitConfirm()
-            findNavController().navigateUp()
-        }
-        dialog.show(childFragmentManager, null)
+        ExitDialog().show(childFragmentManager, null)
     }
 
     private fun showFinish() {
