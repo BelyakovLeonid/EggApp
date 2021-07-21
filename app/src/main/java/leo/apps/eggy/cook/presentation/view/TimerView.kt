@@ -147,8 +147,6 @@ class TimerView @JvmOverloads constructor(
     }
 
     fun setProgress(progress: Float) {
-        animator?.cancel()
-        animator = null
         currentDegree = progress * MAX_DEGREE
 
         val gradientEndPosition = (currentDegree / MAX_DEGREE) - GRADIENT_END_OFFSET

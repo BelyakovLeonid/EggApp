@@ -1,11 +1,8 @@
 package leo.apps.eggy.cook.presentation
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.updatePadding
@@ -13,49 +10,23 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
-import leo.apps.eggy.base.data.model.SetupType
 import leo.apps.eggy.base.presentation.BaseFragment
 import leo.apps.eggy.base.presentation.vibrator.VibratorManager
-import leo.apps.eggy.base.utils.*
-import leo.apps.eggy.cook.presentation.view.ButtonState
+import leo.apps.eggy.base.utils.getInjector
+import leo.apps.eggy.base.utils.makeDefaultConfetti
+import leo.apps.eggy.base.utils.observeFlow
+import leo.apps.eggy.base.utils.registerSystemInsetsListener
+import leo.apps.eggy.base.utils.showToast
+import leo.apps.eggy.base.utils.updateMargins
+import leo.apps.eggy.cook.presentation.model.CookNavigationCommand
+import leo.apps.eggy.cook.presentation.model.CookSideEffect
 import leo.apps.eggy.databinding.FEggCookBinding
 import leo.apps.eggy.timer.TimerService
 
-class CookFragment : BaseFragment(R.layout.f_egg_cook) {
-
-    private var timerBinder: TimerService.TimerBinder? = null
+class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
 
     private val viewModel: CookViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding(FEggCookBinding::bind)
-
-    private val connection = object : ServiceConnection {
-        override fun onServiceDisconnected(name: ComponentName?) {
-        }
-
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            timerBinder = service as? TimerService.TimerBinder
-            if (timerBinder?.isRunning == true) {
-                binding.buttonControl.setState(ButtonState.STATE_STARTED)
-            }
-
-            timerBinder?.let {
-                observeFlow(it.progress) {
-                    binding.viewTimer.setProgress(it)
-                }
-                observeFlow(it.timerText) {
-                    binding.viewTimer.setTimerText(it)
-                }
-                observeFlow(it.finish) {
-                    showFinish()
-                }
-                observeFlow(it.cancel) {
-                    binding.buttonControl.setState(ButtonState.STATE_IDLE)
-                    binding.viewTimer.dropProgress()
-                }
-                observeViewModel()
-            }
-        }
-    }
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -72,64 +43,63 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleView()
+        observeViewModel()
         requireContext().bindService(
             Intent(requireContext(), TimerService::class.java),
-            connection,
+            viewModel.serviceConnection,
             Context.BIND_AUTO_CREATE
         )
     }
 
     override fun setupInsets() {
         binding.buttonBack.registerSystemInsetsListener { v, insets, margins, _ ->
-            v.updateMargins(
-                top = margins.top + insets.top,
-            )
+            v.updateMargins(top = margins.top + insets.top)
         }
         binding.textCookTitle.registerSystemInsetsListener { v, insets, margins, _ ->
-            v.updateMargins(
-                top = margins.top + insets.top,
-            )
+            v.updateMargins(top = margins.top + insets.top)
         }
         binding.root.registerSystemInsetsListener { v, insets, _, paddings ->
-            v.updatePadding(
-                bottom = paddings.bottom + insets.bottom,
-            )
+            v.updatePadding(bottom = paddings.bottom + insets.bottom)
         }
     }
 
+    override fun onClick(v: View?) = when (v?.id) {
+        binding.buttonBack.id -> showExitDialog()
+        binding.buttonControl.id -> viewModel.onControlClick()
+        else -> throw NotImplementedError()
+    }
+
     private fun observeViewModel() {
-        observeFlow(viewModel.state) {state ->
-            timerBinder?.setTime(state.calculatedTime.toLong())
-            timerBinder?.setType(state.selectedType)
+        observeFlow(viewModel.state) { state ->
             binding.textCookTitle.setText(state.titleTextId)
-            binding.textTime.text = state.timerText
+            binding.textTime.text = state.boiledTimeText
+            binding.viewTimer.setProgress(state.progress)
             binding.viewTimer.setTimerText(state.timerText)
+            binding.buttonControl.setText(state.buttonTextId)
+        }
+        observeFlow(viewModel.sideEffects) { effect ->
+            when (effect) {
+                is CookSideEffect.Finish -> showFinish()
+                is CookSideEffect.Cancel -> binding.viewTimer.dropProgress()
+            }
+        }
+        observeFlow(viewModel.navigationCommands) { command ->
+            when (command) {
+                is CookNavigationCommand.PopUp -> findNavController().navigateUp()
+            }
         }
     }
 
     private fun handleView() {
-        binding.buttonControl.onCancelListener = {
-            timerBinder?.stopTimer()
-        }
-        binding.buttonControl.onStartListener = {
-            timerBinder?.startTimer()
-        }
-        binding.buttonBack.setOnClickListener {
-            showExitDialog()
-        }
+        binding.buttonControl.setOnClickListener(this)
+        binding.buttonBack.setOnClickListener(this)
     }
 
     private fun showExitDialog() {
-        val dialog = ExitDialog()
-        dialog.onConfirmListener = {
-            timerBinder?.stopTimer()
-            findNavController().navigateUp()
-        }
-        dialog.show(childFragmentManager, null)
+        ExitDialog().show(childFragmentManager, null)
     }
 
     private fun showFinish() {
-        binding.buttonControl.setState(ButtonState.STATE_IDLE)
         binding.viewTimer.dropProgress(FINISH_ANIMATION_DELAY)
         context?.showToast(getString(R.string.toast_finish_text))
         VibratorManager(context).makeDefaultVibration()
@@ -138,7 +108,8 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        requireContext().unbindService(connection)
+        requireContext().unbindService(viewModel.serviceConnection)
+        viewModel.onUnbindService()
     }
 
     override fun onDetach() {
