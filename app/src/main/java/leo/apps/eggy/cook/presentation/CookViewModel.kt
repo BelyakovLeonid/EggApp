@@ -72,7 +72,6 @@ class CookViewModel @Inject constructor(
 
     private fun onServiceDisconnected() {
         binder = null
-        Log.d("MyTag", "onServiceDisconnected")
         binderObserveScope?.cancel()
         binderObserveScope = null
     }
@@ -85,7 +84,6 @@ class CookViewModel @Inject constructor(
     }
 
     private fun observeBinder() {
-        Log.d("MyTag", "observeBinder")
         binderObserveScope?.cancel()
         binderObserveScope = viewModelScope + Job()
         binderObserveScope?.observeBinderState()
@@ -111,7 +109,6 @@ class CookViewModel @Inject constructor(
 
     private fun CoroutineScope.observeBinderFinish(){
         binder?.finish?.onEach {
-            Log.d("MyTag", "observeBinderFinish")
             mutableSideEffects.send(CookSideEffect.Finish)
         }?.launchIn(this)
     }

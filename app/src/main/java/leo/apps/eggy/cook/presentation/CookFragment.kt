@@ -72,7 +72,6 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook) {
             binding.buttonControl.setText(state.buttonTextId)
         }
         observeFlow(viewModel.sideEffects) { effect ->
-            Log.d("MyTag", "sideEffects $effect")
             when (effect) {
                 is CookSideEffect.Finish -> showFinish()
                 is CookSideEffect.Cancel -> binding.viewTimer.dropProgress()
