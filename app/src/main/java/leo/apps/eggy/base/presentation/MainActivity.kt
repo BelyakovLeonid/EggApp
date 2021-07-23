@@ -19,12 +19,11 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
 
     private var toast: Toast? = null
 
-    private var timerBinder: TimerService.TimerBinder? = null
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {}
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            timerBinder = service as? TimerService.TimerBinder
+            val timerBinder = service as? TimerService.TimerBinder
             if (timerBinder?.isRunning == true) {
                 findNavController(R.id.mainContainer).let {
                     it.setGraph(R.navigation.content_graph)

@@ -78,6 +78,14 @@ class CookViewModel @Inject constructor(
         onServiceDisconnected()
     }
 
+    fun onBackPressed() {
+        if(binder?.isRunning == true){
+            mutableNavigationCommands.trySend(CookNavigationCommand.ShowExitDialog)
+        }else{
+            mutableNavigationCommands.trySend(CookNavigationCommand.PopUp)
+        }
+    }
+
     private fun onServiceDisconnected() {
         binder = null
         binderObserveScope?.cancel()

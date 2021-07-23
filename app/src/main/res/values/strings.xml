@@ -29,7 +29,7 @@
     <string name="cook_water_temperature">Water temperature</string>
     <string name="cook_boiled_tip_title">Boiled Tip</string>
     <string name="cook_boiled_tip">After cooking, let the eggs rest in an ice-bath to \"shock\" them</string>
-    <string name="cook_cancel">Cancel</string>
+    <string name="cook_cancel">Stop</string>
     <string name="cook_start">Start</string>
 
     <string name="time_empty">00:00</string>
