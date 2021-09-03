@@ -8,6 +8,14 @@ plugins {
 
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:\\Users\\lenya\\Downloads\\EggyKeystore.jks")
+            storePassword = "76812476P@ssw0rd"
+            keyPassword = "76812476P@ssw0rd"
+            keyAlias = "EggyKeystore"
+        }
+    }
     compileSdkVersion(AppConfig.compileSdk)
 
     compileOptions {
@@ -23,6 +31,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("release")
     }
 
     buildFeatures {
@@ -31,7 +40,8 @@ android {
 
     buildTypes {
         getByName("release") {
-            minifyEnabled(false)
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -30,7 +30,7 @@ class SetupEggRepositoryImpl @Inject constructor() : SetupEggRepository {
     override var calculatedTimeFlow = MutableStateFlow(0)
 
     private val timeMap: HashMap<Triple<SetupTemperature, SetupSize, SetupType>, Int> = hashMapOf(
-        Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.SOFT) to 4_000,
+        Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.SOFT) to 240_000,
         Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.MEDIUM) to 350_000,
         Triple(SetupTemperature.FRIDGE, SetupSize.S, SetupType.HARD) to 480_000,
         Triple(SetupTemperature.FRIDGE, SetupSize.M, SetupType.SOFT) to 290_000,
