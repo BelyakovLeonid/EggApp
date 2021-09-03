@@ -1,7 +1,7 @@
 object Dependencies {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val viewBindingDelegate =
-        "com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:${Versions.viewBindingDelegate}"
+        "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Versions.viewBindingDelegate}"
 
     object TopLevel {
         const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"

@@ -1,7 +1,7 @@
 object Versions {
-    const val kotlin = "1.5.20"
-    const val viewBindingDelegate = "1.4.2"
-    const val gradle = "4.2.2"
+    const val kotlin = "1.5.30"
+    const val viewBindingDelegate = "1.5.0-beta01"
+    const val gradle = "7.0.2"
     const val navigation = "2.4.0-alpha04"
     const val junit = "4.13.2"
     const val androidJunit = "1.1.3"

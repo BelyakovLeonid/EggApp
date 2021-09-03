@@ -6,17 +6,7 @@ plugins {
     kotlin("android")
 }
 
-
 android {
-    signingConfigs {
-        create("release") {
-            storeFile = file("C:\\Users\\lenya\\Downloads\\EggyKeystore.jks")
-            storePassword = "76812476P@ssw0rd"
-            keyPassword = "76812476P@ssw0rd"
-            keyAlias = "EggyKeystore"
-        }
-    }
-    compileSdkVersion(AppConfig.compileSdk)
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -25,13 +15,13 @@ android {
 
     defaultConfig {
         applicationId = "leo.apps.eggy"
-        minSdkVersion(AppConfig.minSdk)
-        targetSdkVersion(AppConfig.targetSdk)
+        compileSdk = AppConfig.compileSdk
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig = signingConfigs.getByName("release")
     }
 
     buildFeatures {
