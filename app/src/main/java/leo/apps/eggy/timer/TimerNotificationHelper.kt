@@ -12,9 +12,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.IconCompat
-import androidx.navigation.NavDeepLinkBuilder
 import leo.apps.eggy.R
 import leo.apps.eggy.base.data.model.SetupType
+import leo.apps.eggy.base.presentation.MainActivity
 import leo.apps.eggy.base.utils.getBitmap
 
 class TimerNotificationHelper(
@@ -90,10 +90,12 @@ class TimerNotificationHelper(
         .setContentIntent(intent)
 
     private fun setupIntent(): PendingIntent {
-        return NavDeepLinkBuilder(context)
-            .setGraph(R.navigation.nav_graph)
-            .setDestination(R.id.cookFragment)
-            .createPendingIntent()
+        return PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     private fun setupAction(): NotificationCompat.Action {
@@ -109,7 +111,7 @@ class TimerNotificationHelper(
             context,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         return NotificationCompat.Action.Builder(actionIcon, actionText, pendingIntent).build()
     }
