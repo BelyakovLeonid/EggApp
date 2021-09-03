@@ -5,9 +5,9 @@
 
     <string name="welcome_screen_title">Cook\neggs</string>
     <string name="welcome_screen_subtitle">as you like!</string>
-    <string name="welcome_button">Let\'s cooking!</string>
+    <string name="welcome_button">Let\'s cook!</string>
 
-    <string name="setup_title">Set <b>boiled details</b></string>
+    <string name="setup_title">Set <b>boiling details</b></string>
     <string name="setup_subtitle">Prepare eggs as you like!</string>
     <string name="setup_egg_temperature">Egg <b>temperature</b></string>
     <string name="setup_egg_temperature_fridge"><b>Fridge</b> temperature</string>
