@@ -3,12 +3,12 @@ plugins {
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     kotlin("kapt")
     kotlin("android")
 }
 
 android {
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -19,9 +19,8 @@ android {
         compileSdk = AppConfig.compileSdk
         minSdk = AppConfig.minSdk
         targetSdk = AppConfig.targetSdk
-        versionCode = 2
-        versionName = "1.1"
-
+        versionCode = 3
+        versionName = "1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,6 +29,9 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+        }
         getByName("release") {
             isShrinkResources = true
             isMinifyEnabled = true
@@ -57,4 +59,5 @@ dependencies {
     kapt(Dependencies.Dagger.daggerCompiler)
     implementation(platform(Dependencies.Firebase.bom))
     implementation(Dependencies.Firebase.analytics)
+    implementation(Dependencies.Firebase.crashlytics)
 }

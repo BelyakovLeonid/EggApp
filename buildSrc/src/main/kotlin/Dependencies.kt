@@ -1,6 +1,3 @@
-import org.gradle.api.artifacts.MinimalExternalModuleDependency
-import org.gradle.api.provider.Provider
-
 object Dependencies {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val viewBindingDelegate =
@@ -43,6 +40,7 @@ object Dependencies {
         const val core = "com.google.gms:google-services:${Versions.Firebase.core}"
         const val bom = "com.google.firebase:firebase-bom:${Versions.Firebase.bom}"
         const val analytics = "com.google.firebase:firebase-analytics-ktx"
-
+        const val crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.crashlytics}"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 }

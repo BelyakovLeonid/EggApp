@@ -14,6 +14,7 @@ object Versions {
     const val dagger = "2.36"
 
     object Firebase {
+        const val crashlytics = "2.7.1"
         const val core = "4.3.10"
         const val bom = "28.4.0"
     }

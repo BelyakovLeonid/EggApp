@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import leo.apps.eggy.R
 import leo.apps.eggy.base.di.ViewModelFactory
+import leo.apps.eggy.base.utils.getInjector
 import leo.apps.eggy.base.utils.isShowing
 import leo.apps.eggy.base.utils.showToast
 import leo.apps.eggy.timer.TimerService
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity(R.layout.a_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getInjector().inject(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setupBackPressedListener()
         startTimerService()
