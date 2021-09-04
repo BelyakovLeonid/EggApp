@@ -6,6 +6,6 @@ import leo.apps.eggy.base.di.DaggerAppComponent
 class EggApp : Application() {
 
     val appComponent by lazy {
-        DaggerAppComponent.factory().create()
+        DaggerAppComponent.factory().create(applicationContext)
     }
 }

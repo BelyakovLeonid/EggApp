@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
+import leo.apps.eggy.base.analytics.Analytics
 import leo.apps.eggy.base.presentation.BaseFragment
 import leo.apps.eggy.base.presentation.vibrator.VibratorManager
 import leo.apps.eggy.base.utils.getInjector
@@ -24,8 +25,8 @@ import leo.apps.eggy.databinding.FEggCookBinding
 import leo.apps.eggy.timer.TimerService
 
 class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
-
-    private val viewModel: CookViewModel by viewModels { viewModelFactory }
+    override val screenName = Analytics.Cook.SCREEN_NAME
+    override val viewModel: CookViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding(FEggCookBinding::bind)
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {

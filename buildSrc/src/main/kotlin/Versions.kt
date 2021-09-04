@@ -12,4 +12,9 @@ object Versions {
     const val material = "1.5.0-alpha01"
     const val konfetti = "1.2.2"
     const val dagger = "2.36"
+
+    object Firebase {
+        const val core = "4.3.10"
+        const val bom = "28.4.0"
+    }
 }

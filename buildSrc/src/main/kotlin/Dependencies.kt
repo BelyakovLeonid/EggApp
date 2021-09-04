@@ -1,3 +1,6 @@
+import org.gradle.api.artifacts.MinimalExternalModuleDependency
+import org.gradle.api.provider.Provider
+
 object Dependencies {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val viewBindingDelegate =
@@ -34,5 +37,12 @@ object Dependencies {
     object Dagger {
         const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
         const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    }
+
+    object Firebase {
+        const val core = "com.google.gms:google-services:${Versions.Firebase.core}"
+        const val bom = "com.google.firebase:firebase-bom:${Versions.Firebase.bom}"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx"
+
     }
 }

@@ -1,6 +1,9 @@
 package leo.apps.eggy.base.di
 
+import android.content.Context
+import dagger.BindsInstance
 import dagger.Component
+import leo.apps.eggy.base.di.modules.BaseModule
 import leo.apps.eggy.base.di.modules.SetupModule
 import leo.apps.eggy.base.di.modules.ViewModelModule
 import leo.apps.eggy.cook.presentation.CookFragment
@@ -10,6 +13,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        BaseModule::class,
         ViewModelModule::class,
         SetupModule::class
     ]
@@ -20,6 +24,8 @@ interface AppComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(): AppComponent
+        fun create(
+            @BindsInstance context: Context
+        ): AppComponent
     }
 }

@@ -14,7 +14,7 @@ import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.IconCompat
 import leo.apps.eggy.R
 import leo.apps.eggy.base.data.model.SetupType
-import leo.apps.eggy.base.presentation.MainActivity
+import leo.apps.eggy.root.presentation.MainActivity
 import leo.apps.eggy.base.utils.getBitmap
 
 class TimerNotificationHelper(

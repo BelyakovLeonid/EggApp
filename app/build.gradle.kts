@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
     kotlin("kapt")
     kotlin("android")
 }
@@ -54,4 +55,6 @@ dependencies {
     implementation(Dependencies.Navigation.navigation)
     implementation(Dependencies.Dagger.dagger)
     kapt(Dependencies.Dagger.daggerCompiler)
+    implementation(platform(Dependencies.Firebase.bom))
+    implementation(Dependencies.Firebase.analytics)
 }
