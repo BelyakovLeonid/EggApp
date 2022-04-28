@@ -30,7 +30,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            showExitDialog()
+            viewModel.onBackPressed()
         }
     }
 
@@ -64,7 +64,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
     }
 
     override fun onClick(v: View?) = when (v?.id) {
-        binding.buttonBack.id -> showExitDialog()
+        binding.buttonBack.id -> viewModel.onBackPressed()
         binding.buttonControl.id -> viewModel.onControlClick()
         else -> throw NotImplementedError()
     }
@@ -86,6 +86,7 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
         observeFlow(viewModel.navigationCommands) { command ->
             when (command) {
                 is CookNavigationCommand.PopUp -> findNavController().navigateUp()
+                is CookNavigationCommand.ShowExitDialog -> ExitDialog().show(childFragmentManager, null)
             }
         }
     }
@@ -93,10 +94,6 @@ class CookFragment : BaseFragment(R.layout.f_egg_cook), View.OnClickListener {
     private fun handleView() {
         binding.buttonControl.setOnClickListener(this)
         binding.buttonBack.setOnClickListener(this)
-    }
-
-    private fun showExitDialog() {
-        ExitDialog().show(childFragmentManager, null)
     }
 
     private fun showFinish() {

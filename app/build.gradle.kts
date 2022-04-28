@@ -6,9 +6,7 @@ plugins {
     kotlin("android")
 }
 
-
 android {
-    compileSdkVersion(AppConfig.compileSdk)
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -17,10 +15,11 @@ android {
 
     defaultConfig {
         applicationId = "leo.apps.eggy"
-        minSdkVersion(AppConfig.minSdk)
-        targetSdkVersion(AppConfig.targetSdk)
-        versionCode = 1
-        versionName = "1.0"
+        compileSdk = AppConfig.compileSdk
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,7 +30,8 @@ android {
 
     buildTypes {
         getByName("release") {
-            minifyEnabled(false)
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

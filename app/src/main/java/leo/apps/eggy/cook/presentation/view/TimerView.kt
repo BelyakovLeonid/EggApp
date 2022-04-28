@@ -2,7 +2,12 @@ package leo.apps.eggy.cook.presentation.view
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
+import android.graphics.SweepGradient
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
@@ -167,11 +172,10 @@ class TimerView @JvmOverloads constructor(
 
     fun dropProgress(delay: Long = 0) {
         animator?.cancel()
-        animator = ValueAnimator.ofFloat(currentDegree, MIN_DEGREE).apply {
+        animator = ValueAnimator.ofFloat(currentDegree / MAX_DEGREE, 0f).apply {
             addUpdateListener {
                 val value = it.animatedValue as Float
-                currentDegree = value
-                invalidate()
+                setProgress(value)
             }
             duration = (ANIMATION_DURATION * currentDegree / MAX_DEGREE).toLong()
             startDelay = delay

@@ -100,6 +100,10 @@ class TimerService : Service() {
         timer = null
         stopForeground(true)
         cancelEvent.trySend(Unit)
+        clearTimer()
+    }
+
+    private fun clearTimer() {
         state.value = TimerServiceState(
             isRunning = false,
             progress = 0f,
@@ -123,6 +127,8 @@ class TimerService : Service() {
         fun startTimer() = this@TimerService.startTimer()
 
         fun stopTimer() = this@TimerService.stopTimer()
+
+        fun clearTimer() = this@TimerService.clearTimer()
 
         fun setTime(millisInFuture: Long) {
             this@TimerService.millisInFuture = millisInFuture
