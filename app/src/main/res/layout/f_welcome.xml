@@ -69,7 +69,7 @@
         tools:ignore="ContentDescription" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonControl"
+        android:id="@+id/button"
         style="@style/FilledButton"
         android:layout_width="0dp"
         android:layout_height="@dimen/buttonHeight"
