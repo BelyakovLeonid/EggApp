@@ -35,4 +35,12 @@ object Dependencies {
         const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
         const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     }
+
+    object Firebase {
+        const val core = "com.google.gms:google-services:${Versions.Firebase.core}"
+        const val bom = "com.google.firebase:firebase-bom:${Versions.Firebase.bom}"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx"
+        const val crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.crashlytics}"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    }
 }

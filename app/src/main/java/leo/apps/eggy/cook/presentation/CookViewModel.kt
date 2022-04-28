@@ -4,7 +4,6 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
 import androidx.annotation.StringRes
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +18,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.plus
 import leo.apps.eggy.R
+import leo.apps.eggy.base.analytics.Analytics
+import leo.apps.eggy.base.analytics.domain.AnalyticsInteractor
 import leo.apps.eggy.base.data.SetupEggRepository
 import leo.apps.eggy.base.data.model.SetupType
+import leo.apps.eggy.base.presentation.BaseViewModel
 import leo.apps.eggy.base.utils.toTimerString
 import leo.apps.eggy.cook.presentation.model.CookNavigationCommand
 import leo.apps.eggy.cook.presentation.model.CookSideEffect
@@ -29,8 +31,9 @@ import leo.apps.eggy.timer.TimerService
 import javax.inject.Inject
 
 class CookViewModel @Inject constructor(
-    private val setupRepository: SetupEggRepository
-) : ViewModel() {
+    private val setupRepository: SetupEggRepository,
+    private val analyticsInteractor: AnalyticsInteractor
+) : BaseViewModel(analyticsInteractor) {
 
     private val mutableState = MutableStateFlow(CookUiState.DEFAULT)
     val state = mutableState.asStateFlow()
@@ -60,12 +63,28 @@ class CookViewModel @Inject constructor(
 
     fun onControlClick() {
         when (binder?.isRunning) {
-            true -> binder?.stopTimer()
-            else -> binder?.startTimer()
+            true -> {
+                analyticsInteractor.trackEvent(
+                    Analytics.Cook.EVENT_NAME,
+                    Analytics.Cook.CANCEL_ACTION
+                )
+                binder?.stopTimer()
+            }
+            else -> {
+                analyticsInteractor.trackEvent(
+                    Analytics.Cook.EVENT_NAME,
+                    Analytics.Cook.START_ACTION
+                )
+                binder?.startTimer()
+            }
         }
     }
 
     fun onExitConfirm() {
+        analyticsInteractor.trackEvent(
+            Analytics.Cook.EVENT_NAME,
+            Analytics.Cook.BACK_CONFIRM_ACTION
+        )
         binder?.stopTimer()
         mutableNavigationCommands.trySend(CookNavigationCommand.PopUp)
     }
@@ -75,6 +94,11 @@ class CookViewModel @Inject constructor(
     }
 
     fun onBackPressed() {
+        analyticsInteractor.trackEvent(
+            Analytics.Cook.EVENT_NAME,
+            Analytics.Cook.BACK_ACTION
+        )
+
         if (binder?.isRunning == true) {
             mutableNavigationCommands.trySend(CookNavigationCommand.ShowExitDialog)
         } else {

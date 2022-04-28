@@ -9,6 +9,8 @@ buildscript {
         classpath(Dependencies.TopLevel.gradle)
         classpath(Dependencies.TopLevel.gradlePlugin)
         classpath(Dependencies.TopLevel.safeArgs)
+        classpath(Dependencies.Firebase.core)
+        classpath(Dependencies.Firebase.crashlyticsGradle)
     }
 }
 

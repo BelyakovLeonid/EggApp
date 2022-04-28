@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import leo.apps.eggy.R
+import leo.apps.eggy.base.analytics.Analytics
 import leo.apps.eggy.base.presentation.BaseFragment
 import leo.apps.eggy.base.utils.getInjector
 import leo.apps.eggy.base.utils.observeFlow
@@ -14,8 +15,8 @@ import leo.apps.eggy.databinding.FEggSetupBinding
 import leo.apps.eggy.setup.presentation.view.CheckedIndexListener
 
 class SetupFragment : BaseFragment(R.layout.f_egg_setup), CheckedIndexListener {
-
-    private val viewModel: SetupViewModel by viewModels { viewModelFactory }
+    override val screenName = Analytics.Setup.SCREEN_NAME
+    override val viewModel: SetupViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding(FEggSetupBinding::bind)
 
     override fun onAttach(context: Context) {
@@ -52,6 +53,7 @@ class SetupFragment : BaseFragment(R.layout.f_egg_setup), CheckedIndexListener {
         binding.groupSizeButtons.setOnCheckedIndexListener(this)
         binding.groupTypeButtons.setOnCheckedIndexListener(this)
         binding.buttonStart.setOnClickListener {
+            viewModel.onStartClick()
             findNavController().navigate(R.id.actionToCookScreen)
         }
     }
